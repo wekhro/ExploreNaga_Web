@@ -1,0 +1,518 @@
+/* =========================
+   GENERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #183326;
+    background: white;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    height: 78px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 6%;
+
+    border-bottom: 1px solid #e3e8e4;
+
+    position: sticky;
+    top: 0;
+
+    background: white;
+
+    z-index: 10;
+}
+
+
+/* Hamburger */
+
+.menu-button {
+    border: none;
+    background: none;
+
+    font-size: 32px;
+
+    color: #064c2f;
+
+    cursor: pointer;
+
+    margin-right: 25px;
+}
+
+
+/* Logo */
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.logo-icon {
+    color: #28734e;
+
+    font-size: 32px;
+
+    transform: rotate(-10deg);
+}
+
+.logo h2 {
+    color: #075b36;
+
+    font-size: 22px;
+}
+
+.logo p {
+    color: #66736b;
+
+    font-size: 10px;
+
+    margin-top: 2px;
+}
+
+
+/* Header buttons */
+
+.header-buttons {
+    margin-left: auto;
+
+    display: flex;
+
+    gap: 12px;
+}
+
+.safety-button,
+.login-button {
+    border: 1px solid #d6e1d8;
+
+    background: #f4faf5;
+
+    color: #16452f;
+
+    border-radius: 25px;
+
+    cursor: pointer;
+}
+
+.safety-button {
+    width: 42px;
+    height: 42px;
+
+    font-size: 20px;
+}
+
+.login-button {
+    padding: 10px 16px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   SIDE MENU
+========================= */
+
+.side-menu {
+    position: fixed;
+
+    top: 0;
+    left: -300px;
+
+    width: 290px;
+    height: 100vh;
+
+    background: white;
+
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.2);
+
+    padding: 70px 30px;
+
+    z-index: 100;
+
+    transition: 0.3s;
+}
+
+.side-menu.open {
+    left: 0;
+}
+
+.side-menu h2 {
+    color: #075b36;
+
+    margin-bottom: 25px;
+}
+
+.side-menu a {
+    display: block;
+
+    padding: 15px 0;
+
+    text-decoration: none;
+
+    color: #183326;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.close-button {
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    border: none;
+
+    background: none;
+
+    font-size: 32px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    position: relative;
+
+    width: 100%;
+
+    height: 55vw;
+
+    max-height: 570px;
+
+    min-height: 320px;
+
+    overflow: hidden;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: 0.3s;
+}
+
+
+/* Slider arrows */
+
+.arrow {
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(30, 40, 43, 0.55);
+
+    color: white;
+
+    font-size: 38px;
+
+    cursor: pointer;
+}
+
+.arrow.left {
+    left: 3%;
+}
+
+.arrow.right {
+    right: 3%;
+}
+
+
+/* Dots */
+
+.dots {
+    position: absolute;
+
+    bottom: 20px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 9px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+
+    background: rgba(255, 255, 255, 0.6);
+
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+
+.dot.active {
+    background: white;
+
+    transform: scale(1.3);
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+    max-width: 1000px;
+
+    margin: auto;
+
+    padding: 40px 30px;
+}
+
+.welcome-text {
+    font-size: 27px;
+
+    margin-bottom: 5px;
+}
+
+h1 {
+    font-size: clamp(45px, 7vw, 70px);
+
+    color: #075b36;
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================
+   OPTIONS
+========================= */
+
+.options {
+    display: grid;
+
+    gap: 12px;
+}
+
+.option {
+    width: 100%;
+
+    min-height: 52px;
+
+    padding: 12px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    border: 1.5px solid #78917f;
+
+    border-radius: 28px;
+
+    background: #f5faf6;
+
+    color: #21382b;
+
+    font-size: 18px;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.option:hover {
+    background: #e9f4eb;
+}
+
+.option-icon {
+    font-size: 20px;
+}
+
+.option small {
+    font-size: 14px;
+}
+
+.arrow-down {
+    margin-left: auto;
+
+    font-size: 24px;
+}
+
+
+/* =========================
+   DESTINATIONS
+========================= */
+
+.section-title {
+    margin-top: 35px;
+
+    margin-bottom: 13px;
+
+    font-size: 21px;
+
+    color: #06452d;
+}
+
+.destinations {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+.destination {
+    height: 145px;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+}
+
+.destination img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: 0.3s;
+}
+
+.destination:hover img {
+    transform: scale(1.06);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #eff8f1;
+
+    text-align: center;
+
+    padding: 15px;
+}
+
+.footer-links {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 55px;
+
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: #254234;
+
+    text-decoration: none;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    header {
+        height: 70px;
+
+        padding: 0 17px;
+    }
+
+    .menu-button {
+        font-size: 28px;
+
+        margin-right: 15px;
+    }
+
+    .logo h2 {
+        font-size: 19px;
+    }
+
+    .logo p {
+        font-size: 9px;
+    }
+
+    .safety-button {
+        display: none;
+    }
+
+    .login-button {
+        padding: 8px 12px;
+    }
+
+    .hero {
+        height: 55vw;
+
+        min-height: 250px;
+    }
+
+    main {
+        padding: 28px 17px;
+    }
+
+    .welcome-text {
+        font-size: 23px;
+    }
+
+    h1 {
+        font-size: 47px;
+    }
+
+    .option {
+        font-size: 16px;
+    }
+
+    .option small {
+        font-size: 12px;
+    }
+
+    .destination {
+        height: 110px;
+    }
+
+    .footer-links {
+        gap: 20px;
+
+        font-size: 13px;
+    }
+}

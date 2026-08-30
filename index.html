@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ExploreNaga - Tourism Guide</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <!-- Hamburger Menu -->
+        <button class="menu-button" onclick="openMenu()">
+            ☰
+        </button>
+
+        <!-- Logo -->
+        <div class="logo">
+            <div class="logo-icon">▲</div>
+
+            <div>
+                <h2>ExploreNaga 🌿</h2>
+                <p>Stay connected, Travel Safely</p>
+            </div>
+        </div>
+
+        <!-- Header Buttons -->
+        <div class="header-buttons">
+
+            <button class="safety-button">
+                ✧
+            </button>
+
+            <button class="login-button" onclick="login()">
+                ◉ Login
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= SIDE MENU ================= -->
+
+    <div id="sideMenu" class="side-menu">
+
+        <button class="close-button" onclick="closeMenu()">
+            ×
+        </button>
+
+        <h2>ExploreNaga</h2>
+
+        <a href="#">Login</a>
+        <a href="#destinations">Destinations</a>
+        <a href="#">Plan Trip</a>
+        <a href="#transport">Transport Fares</a>
+        <a href="#safety">Safety Hub</a>
+        <a href="#">Profile</a>
+
+    </div>
+
+
+    <!-- ================= HERO IMAGE ================= -->
+
+    <section class="hero">
+
+        <img id="heroImage"
+             src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80"
+             alt="Beautiful mountain">
+
+        <!-- Previous -->
+        <button class="arrow left" onclick="previousSlide()">
+            ‹
+        </button>
+
+        <!-- Next -->
+        <button class="arrow right" onclick="nextSlide()">
+            ›
+        </button>
+
+        <!-- Dots -->
+        <div class="dots">
+
+            <span onclick="showSlide(0)" class="dot active"></span>
+            <span onclick="showSlide(1)" class="dot"></span>
+            <span onclick="showSlide(2)" class="dot"></span>
+            <span onclick="showSlide(3)" class="dot"></span>
+            <span onclick="showSlide(4)" class="dot"></span>
+            <span onclick="showSlide(5)" class="dot"></span>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main>
+
+        <p class="welcome-text">
+            Welcome to Nagaland, India
+        </p>
+
+        <h1>
+            ExploreNaga 🌿
+        </h1>
+
+
+        <!-- ================= QUICK OPTIONS ================= -->
+
+        <div class="options">
+
+            <!-- Login -->
+            <button class="option">
+
+                <span class="option-icon">
+                    🔒
+                </span>
+
+                <span>
+                    Login to check-in/SOS
+                </span>
+
+            </button>
+
+
+            <!-- Transport -->
+            <button class="option" id="transport">
+
+                <span class="option-icon">
+                    🚌
+                </span>
+
+                <span>
+                    Transport Fares
+                    <small>
+                        (Bus, shared taxi, etc.)
+                    </small>
+                </span>
+
+                <span class="arrow-down">
+                   ⌄
+                </span>
+
+            </button>
+
+
+            <!-- Essential Information -->
+            <button class="option" id="safety">
+
+                <span class="option-icon">
+                    ⓘ
+                </span>
+
+                <span>
+                    Essential Info
+                    <small>
+                        (Entry Requirements, Do's & Don'ts)
+                    </small>
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- ================= DESTINATIONS ================= -->
+
+        <h2 class="section-title" id="destinations">
+            Popular Destinations
+        </h2>
+
+
+        <div class="destinations">
+
+            <div class="destination">
+                <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=700&q=80"
+                     alt="Nagaland hills">
+            </div>
+
+            <div class="destination">
+                <img src="https://images.unsplash.com/photo-1473445361085-b9a07f55608b?auto=format&fit=crop&w=700&q=80"
+                     alt="Garden">
+            </div>
+
+            <div class="destination">
+                <img src="https://images.unsplash.com/photo-1470214304380-aadaedcfff1b?auto=format&fit=crop&w=700&q=80"
+                     alt="Mountain village">
+            </div>
+
+            <div class="destination">
+                <img src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=700&q=80"
+                     alt="Mountain valley">
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-links">
+
+            <a href="#safety">
+                Our Safety
+            </a>
+
+            <a href="#">
+                Be Responsible
+            </a>
+
+            <a href="#">
+                Respect Culture
+            </a>
+
+        </div>
+
+        <p>
+            © 2025 ExploreNaga
+        </p>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
