@@ -1,747 +1,1817 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExploreNaga - Profile</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>ExploreNaga - Profile</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+<style>
+
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #f6f8f7;
-      color: #1e293b;
-      display: flex;
-      justify-content: center;
-      padding: 24px 12px;
-      min-height: 100vh;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #f6f8f7;
+        color: #1e293b;
+        display: flex;
+        justify-content: center;
+        padding: 24px 12px;
+        min-height: 100vh;
     }
 
     .app-card {
-      width: 100%;
-      max-width: 440px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 28px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 440px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 28px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
     }
 
-    /* Top App Bar */
+    /* HEADER */
+
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        border-bottom: 1px solid #f1f5f9;
     }
 
     .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      font-size: 18px;
-      color: #0d3826;
-      cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 18px;
+        color: #0d3826;
+        cursor: pointer;
     }
 
     .header-center {
-      text-align: center;
+        text-align: center;
     }
 
     .logo-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
     }
 
     .logo-title {
-      font-weight: 700;
-      font-size: 17px;
-      color: #0d3826;
+        font-weight: 700;
+        font-size: 17px;
+        color: #0d3826;
     }
 
     .logo-tagline {
-      font-size: 9.5px;
-      color: #64748b;
-      font-weight: 500;
+        font-size: 9.5px;
+        color: #64748b;
+        font-weight: 500;
     }
 
     .header-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
     .notification-btn {
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
     }
 
     .badge {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: #ef4444;
-      color: #ffffff;
-      font-size: 9px;
-      font-weight: 700;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid #ffffff;
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        background: #ef4444;
+        color: #ffffff;
+        font-size: 9px;
+        font-weight: 700;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid #ffffff;
     }
 
     .user-pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      color: #1e293b;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        color: #1e293b;
     }
 
     .user-pill img {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      object-fit: cover;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        object-fit: cover;
     }
 
-    /* Content Area */
+    /* CONTENT */
+
     .content {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
     }
 
-    /* Profile Header Section */
+    /* PROFILE */
+
     .profile-overview {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
     }
 
     .profile-info-group {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
     }
 
     .avatar-wrapper {
-      position: relative;
-      flex-shrink: 0;
+        position: relative;
+        flex-shrink: 0;
     }
 
     .avatar-wrapper img {
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      object-fit: cover;
+        width: 82px;
+        height: 82px;
+        border-radius: 50%;
+        object-fit: cover;
     }
 
     .camera-badge {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      background: #0d3826;
-      border: 2.5px solid #ffffff;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: #0d3826;
+        border: 2.5px solid #ffffff;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
     }
 
     .profile-meta h1 {
-      font-size: 19px;
-      font-weight: 700;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+        font-size: 19px;
+        font-weight: 700;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
     .profile-role {
-      font-size: 12px;
-      color: #64748b;
-      margin: 2px 0 6px;
-      font-weight: 500;
+        font-size: 12px;
+        color: #64748b;
+        margin: 2px 0 6px;
+        font-weight: 500;
     }
 
     .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: #475569;
-      margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #475569;
+        margin-bottom: 2px;
     }
 
+    /* EDIT BUTTON */
+
     .btn-edit {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border: 1px solid #144e34;
-      background: transparent;
-      color: #144e34;
-      font-size: 12px;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border: 1px solid #144e34;
+        background: transparent;
+        color: #144e34;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s;
     }
 
     .btn-edit:hover {
-      background: #edf7f2;
+        background: #edf7f2;
     }
 
-    /* Registration Status Card */
+    /* EDIT FORM */
+
+    #editProfileForm {
+        display: none;
+    }
+
+    .edit-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 18px;
+    }
+
+    .edit-card h3 {
+        color: #0d3826;
+        margin-bottom: 16px;
+        font-size: 17px;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 6px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 11px 12px;
+        border: 1px solid #cbd8ce;
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: inherit;
+        outline: none;
+    }
+
+    .form-group input:focus {
+        border-color: #075b36;
+        box-shadow: 0 0 0 2px rgba(7, 91, 54, 0.08);
+    }
+    .form-group select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cbd8ce;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    background: #ffffff;
+    color: #334155;
+    cursor: pointer;
+}
+
+.form-group select:focus {
+    border-color: #075b36;
+    box-shadow: 0 0 0 2px rgba(7, 91, 54, 0.08);
+}
+
+    .edit-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 5px;
+    }
+
+    .save-btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 25px;
+        background: #075b36;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .cancel-btn {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 25px;
+        background: white;
+        color: #475569;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* STATUS CARD */
+
     .status-card {
-      background: #f4fbf7;
-      border: 1px solid #d3eee0;
-      border-radius: 18px;
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+        background: #f4fbf7;
+        border: 1px solid #d3eee0;
+        border-radius: 18px;
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
     .status-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .status-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #0d3826;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #0d3826;
     }
 
     .badge-status {
-      background: #daf3e6;
-      color: #0b683e;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 100px;
-      letter-spacing: 0.5px;
+        background: #daf3e6;
+        color: #0b683e;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 100px;
+        letter-spacing: 0.5px;
     }
 
     .status-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.3fr 1fr;
-      gap: 8px;
-      border-top: 1px solid #e1f3ea;
-      padding-top: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr 1fr;
+        gap: 8px;
+        border-top: 1px solid #e1f3ea;
+        padding-top: 10px;
     }
 
     .status-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
     }
 
     .status-label {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      color: #64748b;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        color: #64748b;
     }
 
     .status-value {
-      font-size: 12px;
-      font-weight: 600;
-      color: #1e293b;
+        font-size: 12px;
+        font-weight: 600;
+        color: #1e293b;
     }
 
-    /* Menu Links List */
+    /* MENU */
+
     .menu-group {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     }
 
     .menu-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 13px 16px;
-      text-decoration: none;
-      color: inherit;
-      border-bottom: 1px solid #f1f5f9;
-      transition: background 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 13px 16px;
+        text-decoration: none;
+        color: inherit;
+        border-bottom: 1px solid #f1f5f9;
+        transition: background 0.15s;
     }
 
     .menu-item:last-child {
-      border-bottom: none;
+        border-bottom: none;
     }
 
     .menu-item:hover {
-      background: #f8fafc;
+        background: #f8fafc;
     }
 
     .menu-item-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
     .icon-box {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
     }
 
-    .icon-green { background: #edf7f2; color: #166534; }
-    .icon-blue { background: #eff6ff; color: #2563eb; }
-    .icon-emerald { background: #f0fdf4; color: #15803d; }
-    .icon-purple { background: #faf5ff; color: #7e22ce; }
-    .icon-gray { background: #f1f5f9; color: #475569; }
-    .icon-red { background: #fef2f2; color: #dc2626; }
+    .icon-green {
+        background: #edf7f2;
+        color: #166534;
+    }
+
+    .icon-blue {
+        background: #eff6ff;
+        color: #2563eb;
+    }
+
+    .icon-emerald {
+        background: #f0fdf4;
+        color: #15803d;
+    }
+
+    .icon-purple {
+        background: #faf5ff;
+        color: #7e22ce;
+    }
+
+    .icon-gray {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+    .icon-red {
+        background: #fef2f2;
+        color: #dc2626;
+    }
 
     .menu-text-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #0f172a;
+        font-size: 13px;
+        font-weight: 700;
+        color: #0f172a;
     }
 
     .menu-item.logout .menu-text-title {
-      color: #dc2626;
+        color: #dc2626;
     }
 
     .menu-text-subtitle {
-      font-size: 11px;
-      color: #94a3b8;
-      margin-top: 1px;
+        font-size: 11px;
+        color: #94a3b8;
+        margin-top: 1px;
     }
 
     .menu-item-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .counter-badge {
-      background: #dc2626;
-      color: #ffffff;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 1px 6px;
-      border-radius: 10px;
+        background: #dc2626;
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 10px;
     }
 
-    /* Safety Card Banner */
+    /* SAFETY */
+
     .safety-banner {
-      position: relative;
-      background: linear-gradient(135deg, #eef7f2 0%, #e1efe7 50%, #cce5d6 100%);
-      border: 1px solid #c7e3d3;
-      border-radius: 18px;
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      overflow: hidden;
+        position: relative;
+        background: linear-gradient(135deg, #eef7f2 0%, #e1efe7 50%, #cce5d6 100%);
+        border: 1px solid #c7e3d3;
+        border-radius: 18px;
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
     }
 
     .safety-content {
-      position: relative;
-      z-index: 2;
-      max-width: 60%;
+        position: relative;
+        z-index: 2;
+        max-width: 60%;
     }
 
     .safety-title-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .safety-icon-wrapper {
-      background: #ffffff;
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #0d3826;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        background: #ffffff;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0d3826;
     }
 
     .safety-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #0d3826;
+        font-size: 13px;
+        font-weight: 700;
+        color: #0d3826;
     }
 
     .safety-desc {
-      font-size: 10.5px;
-      color: #1e3a2f;
-      line-height: 1.4;
-      margin-top: 6px;
+        font-size: 10.5px;
+        color: #1e3a2f;
+        line-height: 1.4;
+        margin-top: 6px;
     }
 
     .safety-art {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 140px;
-      height: 85px;
-      z-index: 1;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 140px;
+        height: 85px;
+        z-index: 1;
     }
 
-    /* Footer */
+    /* FOOTER */
+
     .footer {
-      border-top: 1px solid #f1f5f9;
-      padding: 16px;
-      text-align: center;
-      font-size: 10px;
-      color: #94a3b8;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      margin-top: auto;
+        border-top: 1px solid #f1f5f9;
+        padding: 16px;
+        text-align: center;
+        font-size: 10px;
+        color: #94a3b8;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-top: auto;
     }
 
-    /* SVG Utilities */
     svg {
-      display: block;
+        display: block;
     }
-  </style>
+
+    /* MOBILE */
+
+    @media (max-width: 480px) {
+
+        body {
+            padding: 0;
+        }
+
+        .app-card {
+            min-height: 100vh;
+            border-radius: 0;
+            border: none;
+        }
+
+        .profile-overview {
+            align-items: flex-start;
+        }
+
+        .profile-info-group {
+            gap: 10px;
+        }
+
+        .avatar-wrapper img {
+            width: 70px;
+            height: 70px;
+        }
+
+        .profile-meta h1 {
+            font-size: 17px;
+        }
+
+        .btn-edit {
+            font-size: 11px;
+            padding: 6px 8px;
+        }
+
+    }
+
+</style>
+```
+
 </head>
+
 <body>
 
-  <div class="app-card">
-    
-    <header class="header">
-      <div class="header-left">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
+<div class="app-card">
+
+```
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="header-left" id="backBtn">
+
+        <svg width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+
+            <polyline points="12 19 5 12 12 5"></polyline>
+
         </svg>
+
         <span>Profile</span>
-      </div>
 
-      <div class="header-center">
+    </div>
+
+    <div class="header-center">
+
         <div class="logo-container">
-          <svg width="20" height="20" viewBox="0 0 24 24">
-            <polygon points="12,2 2,22 22,22" fill="#d97706" />
-            <polygon points="12,8 6,22 18,22" fill="#047857" />
-            <path d="M2,20 C8,18 16,22 22,19" stroke="#0284c7" stroke-width="2.5" fill="none" stroke-linecap="round" />
-          </svg>
-          <span class="logo-title">ExploreNaga</span>
-        </div>
-        <div class="logo-tagline">Stay connected, Travel Safely</div>
-      </div>
 
-      <div class="header-right">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+
+                <polygon points="12,2 2,22 22,22" fill="#d97706" />
+
+                <polygon points="12,8 6,22 18,22" fill="#047857" />
+
+                <path d="M2,20 C8,18 16,22 22,19"
+                    stroke="#0284c7"
+                    stroke-width="2.5"
+                    fill="none"
+                    stroke-linecap="round" />
+
+            </svg>
+
+            <span class="logo-title">ExploreNaga</span>
+
+        </div>
+
+        <div class="logo-tagline">
+            Stay connected, Travel Safely
+        </div>
+
+    </div>
+
+    <div class="header-right">
+
         <div class="notification-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-          </svg>
-          <div class="badge">3</div>
+
+            <svg width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="#334155" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+
+            </svg>
+
+            <div class="badge">3</div>
+
         </div>
 
         <div class="user-pill">
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80" alt="John" />
-          <span>John</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </div>
-      </div>
-    </header>
 
-    <main class="content">
+            <img id="topProfileImage"
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80"
+                alt="Profile">
 
-      <section class="profile-overview">
-        <div class="profile-info-group">
-          <div class="avatar-wrapper">
-            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80" alt="John Doe" />
-            <div class="camera-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                <circle cx="12" cy="13" r="4"></circle>
-              </svg>
-            </div>
-          </div>
+            <span id="topUserName">User</span>
 
-          <div class="profile-meta">
-            <h1>
-              John Doe
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#0d3826">
-                <path d="M12 2l2.4 2.1 3.2-.4 1.3 2.9 3.1 1-0.4 3.2 2.1 2.4-2.1 2.4 0.4 3.2-3.1 1-1.3 2.9-3.2-.4-2.4 2.1-2.4-2.1-3.2.4-1.3-2.9-3.1-1 0.4-3.2-2.1-2.4 2.1-2.4-0.4-3.2 3.1-1 1.3-2.9 3.2.4z"/>
-                <polyline points="9 12 11 14 15 10" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </h1>
-            <p class="profile-role">Foreign Tourist</p>
-            
-            <div class="contact-item">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 0.9 2 2v12c0 1.1-0.9 2-2 2H4c-1.1 0-2-0.9-2-2V6c0-1.1 0.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              <span>john.doe@example.com</span>
-            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24"
+                fill="none" stroke="#64748b" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
 
-            <div class="contact-item">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              <span>+91 98765 43210</span>
-            </div>
-          </div>
-        </div>
+                <polyline points="6 9 12 15 18 9"></polyline>
 
-        <button class="btn-edit">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 20h9"></path>
-            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-          </svg>
-          Edit Profile
-        </button>
-      </section>
-
-      <section class="status-card">
-        <div class="status-header">
-          <div class="status-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0d3826" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              <polyline points="9 12 11 14 15 10"></polyline>
             </svg>
-            <span>Registration Status</span>
-          </div>
-          <span class="badge-status">REGISTERED</span>
+
         </div>
+
+    </div>
+
+</header>
+
+
+<!-- CONTENT -->
+
+<main class="content">
+
+
+    <!-- PROFILE OVERVIEW -->
+
+    <section class="profile-overview">
+
+        <div class="profile-info-group">
+
+            <div class="avatar-wrapper">
+
+                <img id="profileImage"
+                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
+                    alt="Profile">
+
+                <div class="camera-badge">
+
+                    <svg width="12" height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#ffffff"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+
+                        <circle cx="12" cy="13" r="4"></circle>
+
+                    </svg>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-meta">
+
+                <h1>
+
+                    <span id="profileName">User</span>
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="#0d3826">
+
+                        <path d="M12 2l2.4 2.1 3.2-.4 1.3 2.9 3.1 1-0.4 3.2 2.1 2.4-2.1 2.4 0.4 3.2-3.1 1-1.3 2.9-3.2-.4-2.4 2.1-2.4-2.1-3.2.4-1.3-2.9-3.1-1 0.4-3.2-2.1-2.4 2.1-2.4-0.4-3.2 3.1-1 1.3-2.9 3.2.4z"/>
+
+                        <polyline
+                            points="9 12 11 14 15 10"
+                            fill="none"
+                            stroke="#ffffff"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"/>
+
+                    </svg>
+
+                </h1>
+
+                <p class="profile-role" id="profileRole">
+                    Foreign Tourist
+                </p>
+
+
+                <div class="contact-item">
+
+                    <svg width="13" height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#64748b"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M4 4h16c1.1 0 2 0.9 2 2v12c0 1.1-0.9 2-2 2H4c-1.1 0-2-0.9-2-2V6c0-1.1.9-2 2-2z"></path>
+
+                        <polyline points="22,6 12,13 2,6"></polyline>
+
+                    </svg>
+
+                    <span id="profileEmail">
+                        user@example.com
+                    </span>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <svg width="13" height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#64748b"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+
+                    </svg>
+
+                    <span id="profilePhone">
+                        +91 98765 43210
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- EDIT PROFILE BUTTON -->
+
+        <button class="btn-edit" id="editProfileBtn">
+
+            <svg width="12" height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M12 20h9"></path>
+
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-12 19"></path>
+
+            </svg>
+
+            Edit Profile
+
+        </button>
+
+    </section>
+
+
+    <!-- EDIT PROFILE FORM -->
+
+    <div id="editProfileForm">
+
+        <div class="edit-card">
+
+            <h3>Edit Profile</h3>
+
+
+            <div class="form-group">
+
+                <label for="editName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="editName"
+                    placeholder="Enter your full name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="editPhone"
+                    placeholder="Enter your phone number">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editRole">
+                    Tourist Type
+                </label>
+
+                <input
+                    type="text"
+                    id="editRole"
+                    placeholder="e.g. Foreign Tourist">
+
+            </div>
+
+
+           <div class="form-group">
+    <label for="editDistrict">
+        District
+    </label>
+
+    <select id="editDistrict">
+        <option value="">Select your district</option>
+        <option value="Chümoukedima">Chümoukedima</option>
+        <option value="Dimapur">Dimapur</option>
+        <option value="Kiphire">Kiphire</option>
+        <option value="Kohima">Kohima</option>
+        <option value="Longleng">Longleng</option>
+        <option value="Meluri">Meluri</option>
+        <option value="Mokokchung">Mokokchung</option>
+        <option value="Mon">Mon</option>
+        <option value="Niuland">Niuland</option>
+        <option value="Noklak">Noklak</option>
+        <option value="Peren">Peren</option>
+        <option value="Phek">Phek</option>
+        <option value="Shamator">Shamator</option>
+        <option value="Tseminyu">Tseminyu</option>
+        <option value="Tuensang">Tuensang</option>
+        <option value="Wokha">Wokha</option>
+        <option value="Zünheboto">Zünheboto</option>
+    </select>
+</div>
+
+
+            <div class="edit-buttons">
+
+                <button
+                    class="save-btn"
+                    id="saveProfileBtn">
+
+                    Save Changes
+
+                </button>
+
+
+                <button
+                    class="cancel-btn"
+                    id="cancelProfileBtn">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- REGISTRATION STATUS -->
+
+    <section class="status-card">
+
+        <div class="status-header">
+
+            <div class="status-title">
+
+                <svg width="18" height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#0d3826"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+
+                    <polyline points="9 12 11 14 15 10"></polyline>
+
+                </svg>
+
+                <span>
+                    Registration Status
+                </span>
+
+            </div>
+
+            <span class="badge-status">
+                REGISTERED
+            </span>
+
+        </div>
+
 
         <div class="status-grid">
-          <div class="status-item">
-            <div class="status-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0d3826" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              District
-            </div>
-            <div class="status-value">Kohima</div>
-          </div>
 
-          <div class="status-item">
-            <div class="status-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0d3826" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              Registered On
-            </div>
-            <div class="status-value">27 Aug 2026, 11:30 AM</div>
-          </div>
+            <div class="status-item">
 
-          <div class="status-item">
-            <div class="status-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0d3826" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              Valid Till
+                <div class="status-label">
+
+                    <svg width="12" height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#0d3826"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"></path>
+
+                        <circle cx="12" cy="10" r="3"></circle>
+
+                    </svg>
+
+                    District
+
+                </div>
+
+                <div class="status-value" id="statusDistrict">
+                    Kohima
+                </div>
+
             </div>
-            <div class="status-value">26 Nov 2026</div>
-          </div>
+
+
+            <div class="status-item">
+
+                <div class="status-label">
+
+                    Registered On
+
+                </div>
+
+                <div class="status-value">
+                    27 Aug 2026, 11:30 AM
+                </div>
+
+            </div>
+
+
+            <div class="status-item">
+
+                <div class="status-label">
+
+                    Valid Till
+
+                </div>
+
+                <div class="status-value">
+                    26 Nov 2026
+                </div>
+
+            </div>
+
         </div>
-      </section>
 
-      <nav class="menu-group">
-        <a href="#profile" class="menu-item">
-          <div class="menu-item-left">
-            <div class="icon-box icon-green">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </div>
-            <div>
-              <div class="menu-text-title">My Profile</div>
-              <div class="menu-text-subtitle">View & edit your personal information</div>
-            </div>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </a>
+    </section>
+
+
+    <!-- MENU -->
+
+    <nav class="menu-group">
+
+
+        
+
 
         <a href="#documents" class="menu-item">
-          <div class="menu-item-left">
-            <div class="icon-box icon-blue">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                <line x1="7" y1="8" x2="7.01" y2="8"></line>
-                <line x1="11" y1="8" x2="17" y2="8"></line>
-                <line x1="7" y1="12" x2="7.01" y2="12"></line>
-                <line x1="11" y1="12" x2="17" y2="12"></line>
-                <line x1="7" y1="16" x2="17" y2="16"></line>
-              </svg>
+
+            <div class="menu-item-left">
+
+                <div class="icon-box icon-blue">
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+
+                        <line x1="7" y1="8" x2="7.01" y2="8"></line>
+
+                        <line x1="11" y1="8" x2="17" y2="8"></line>
+
+                        <line x1="7" y1="12" x2="7.01" y2="12"></line>
+
+                        <line x1="11" y1="12" x2="17" y2="12"></line>
+
+                        <line x1="7" y1="16" x2="17" y2="16"></line>
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <div class="menu-text-title">
+                        My Documents
+                    </div>
+
+                    <div class="menu-text-subtitle">
+                        Passport, Visa, ILP/PAP & other documents
+                    </div>
+
+                </div>
+
             </div>
-            <div>
-              <div class="menu-text-title">My Documents</div>
-              <div class="menu-text-subtitle">Passport, Visa, ILP/PAP & other documents</div>
-            </div>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
+
+            <svg width="16" height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#94a3b8"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <polyline points="9 18 15 12 9 6"></polyline>
+
+            </svg>
+
         </a>
+
 
         <a href="#emergency" class="menu-item">
-          <div class="menu-item-left">
-            <div class="icon-box icon-emerald">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
+
+            <div class="menu-item-left">
+
+                <div class="icon-box icon-emerald">
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"></path>
+
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.19 18.85a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"></path>
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <div class="menu-text-title">
+                        Emergency Contacts
+                    </div>
+
+                    <div class="menu-text-subtitle">
+                        Manage your emergency contacts
+                    </div>
+
+                </div>
+
             </div>
-            <div>
-              <div class="menu-text-title">Emergency Contacts</div>
-              <div class="menu-text-subtitle">Manage your emergency contacts</div>
-            </div>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
+
+            <svg width="16" height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#94a3b8"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <polyline points="9 18 15 12 9 6"></polyline>
+
+            </svg>
+
         </a>
+
 
         <a href="#notifications" class="menu-item">
-          <div class="menu-item-left">
-            <div class="icon-box icon-purple">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-              </svg>
+
+            <div class="menu-item-left">
+
+                <div class="icon-box icon-purple">
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <div class="menu-text-title">
+                        Notifications
+                    </div>
+
+                    <div class="menu-text-subtitle">
+                        Safety alerts, messages & updates
+                    </div>
+
+                </div>
+
             </div>
-            <div>
-              <div class="menu-text-title">Notifications</div>
-              <div class="menu-text-subtitle">Safety alerts, messages & updates</div>
+
+            <div class="menu-item-right">
+
+                <span class="counter-badge">
+                    3
+                </span>
+
+                <svg width="16" height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#94a3b8"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+
+                    <polyline points="9 18 15 12 9 6"></polyline>
+
+                </svg>
+
             </div>
-          </div>
-          <div class="menu-item-right">
-            <span class="counter-badge">3</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
+
         </a>
+
 
         <a href="#settings" class="menu-item">
-          <div class="menu-item-left">
-            <div class="icon-box icon-gray">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-              </svg>
+
+            <div class="menu-item-left">
+
+                <div class="icon-box icon-gray">
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <circle cx="12" cy="12" r="3"></circle>
+
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <div class="menu-text-title">
+                        Settings
+                    </div>
+
+                    <div class="menu-text-subtitle">
+                        App preferences, language & privacy
+                    </div>
+
+                </div>
+
             </div>
-            <div>
-              <div class="menu-text-title">Settings</div>
-              <div class="menu-text-subtitle">App preferences, language & privacy</div>
-            </div>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
+
+            <svg width="16" height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#94a3b8"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <polyline points="9 18 15 12 9 6"></polyline>
+
+            </svg>
+
         </a>
 
-        <a href="#logout" class="menu-item logout">
-          <div class="menu-item-left">
-            <div class="icon-box icon-red">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
-              </svg>
-            </div>
-            <div>
-              <div class="menu-text-title">Logout</div>
-              <div class="menu-text-subtitle">Sign out of your account</div>
-            </div>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </a>
-      </nav>
 
-      <section class="safety-banner">
+        <a href="#logout" class="menu-item logout" id="logoutBtn">
+
+            <div class="menu-item-left">
+
+                <div class="icon-box icon-red">
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+
+                        <polyline points="16 17 21 12 16 7"></polyline>
+
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <div class="menu-text-title">
+                        Logout
+                    </div>
+
+                    <div class="menu-text-subtitle">
+                        Sign out of your account
+                    </div>
+
+                </div>
+
+            </div>
+
+            <svg width="16" height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#94a3b8"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <polyline points="9 18 15 12 9 6"></polyline>
+
+            </svg>
+
+        </a>
+
+    </nav>
+
+
+    <!-- SAFETY -->
+
+    <section class="safety-banner">
+
         <div class="safety-content">
-          <div class="safety-title-row">
-            <div class="safety-icon-wrapper">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0d3826">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
+
+            <div class="safety-title-row">
+
+                <div class="safety-icon-wrapper">
+
+                    <svg width="16" height="16"
+                        viewBox="0 0 24 24"
+                        fill="#0d3826">
+
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+
+                    </svg>
+
+                </div>
+
+                <span class="safety-title">
+                    Your Safety, Our Priority
+                </span>
+
             </div>
-            <span class="safety-title">Your Safety, Our Priority</span>
-          </div>
-          <p class="safety-desc">
-            We're here to support you through your journey in Nagaland.
-          </p>
+
+            <p class="safety-desc">
+                We're here to support you through your journey in Nagaland.
+            </p>
+
         </div>
+
 
         <div class="safety-art">
-          <svg viewBox="0 0 140 85" width="100%" height="100%" fill="none">
-            <polygon points="10,85 55,25 100,85" fill="#a4c6b5" opacity="0.6" />
-            <polygon points="50,85 85,15 130,85" fill="#88b59f" opacity="0.8" />
-            <ellipse cx="70" cy="95" rx="80" ry="25" fill="#588d75" />
-            <polygon points="110,80 115,65 120,80" fill="#1b4d3e" />
-            <polygon points="118,82 123,60 128,82" fill="#143e32" />
-            <rect x="90" y="70" width="12" height="10" fill="#a47148" />
-            <polygon points="88,70 96,62 104,70" fill="#c0392b" />
-          </svg>
+
+            <svg viewBox="0 0 140 85"
+                width="100%"
+                height="100%"
+                fill="none">
+
+                <polygon points="10,85 55,25 100,85"
+                    fill="#a4c6b5"
+                    opacity="0.6" />
+
+                <polygon points="50,85 85,15 130,85"
+                    fill="#88b59f"
+                    opacity="0.8" />
+
+                <ellipse cx="70" cy="95"
+                    rx="80"
+                    ry="25"
+                    fill="#588d75" />
+
+                <polygon points="110,80 115,65 120,80"
+                    fill="#1b4d3e" />
+
+                <polygon points="118,82 123,60 128,82"
+                    fill="#143e32" />
+
+                <rect x="90" y="70"
+                    width="12"
+                    height="10"
+                    fill="#a47148" />
+
+                <polygon points="88,70 96,62 104,70"
+                    fill="#c0392b" />
+
+            </svg>
+
         </div>
-      </section>
 
-    </main>
+    </section>
 
-    <footer class="footer">
-      <div>© 2026 ExploreNaga</div>
-      <div>Stay connected, Travel Safely</div>
-    </footer>
+</main>
 
-  </div>
+
+<footer class="footer">
+
+    <div>
+        © 2026 ExploreNaga
+    </div>
+
+    <div>
+        Stay connected, Travel Safely
+    </div>
+
+</footer>
+```
+
+</div>
+
+<!-- FIREBASE + PROFILE JAVASCRIPT -->
+
+<script type="module">
+
+    import {
+        onAuthStateChanged,
+        updateProfile,
+        signOut
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    import { auth } from "./firebase.js";
+
+
+    /* =========================
+       ELEMENTS
+    ========================= */
+
+    const editProfileBtn =
+        document.getElementById("editProfileBtn");
+
+    const editProfileForm =
+        document.getElementById("editProfileForm");
+
+    const saveProfileBtn =
+        document.getElementById("saveProfileBtn");
+
+    const cancelProfileBtn =
+        document.getElementById("cancelProfileBtn");
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+
+    /* =========================
+       EDIT PROFILE BUTTON
+    ========================= */
+
+    editProfileBtn.addEventListener("click", () => {
+
+        if (editProfileForm.style.display === "none" ||
+            editProfileForm.style.display === "") {
+
+            editProfileForm.style.display = "block";
+
+            editProfileBtn.innerHTML = `
+                <svg width="12" height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+
+                    <line x1="18" y1="6"
+                        x2="6" y2="18"></line>
+
+                    <line x1="6" y1="6"
+                        x2="18" y2="18"></line>
+
+                </svg>
+
+                Close
+            `;
+
+            editProfileForm.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        } else {
+
+            closeEditForm();
+
+        }
+
+    });
+
+
+    /* =========================
+       CLOSE FORM
+    ========================= */
+
+    function closeEditForm() {
+
+        editProfileForm.style.display = "none";
+
+        editProfileBtn.innerHTML = `
+            <svg width="12" height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M12 20h9"></path>
+
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+
+            </svg>
+
+            Edit Profile
+        `;
+
+    }
+
+
+    /* =========================
+       CANCEL BUTTON
+    ========================= */
+
+    cancelProfileBtn.addEventListener("click", () => {
+
+        closeEditForm();
+
+    });
+
+
+    /* =========================
+       FIREBASE USER
+    ========================= */
+
+    onAuthStateChanged(auth, (user) => {
+
+        if (!user) {
+
+            window.location.href = "login.html";
+
+            return;
+
+        }
+
+
+        console.log("Logged in user:", user);
+
+
+        /* NAME */
+
+        const name =
+            user.displayName || "User";
+
+
+        document.getElementById("profileName")
+            .textContent = name;
+
+        document.getElementById("topUserName")
+            .textContent = name;
+
+
+        document.getElementById("editName")
+            .value = user.displayName || "";
+
+
+        /* EMAIL */
+
+        document.getElementById("profileEmail")
+            .textContent = user.email || "";
+
+
+        /* PHOTO */
+
+        if (user.photoURL) {
+
+            document.getElementById("profileImage")
+                .src = user.photoURL;
+
+            document.getElementById("topProfileImage")
+                .src = user.photoURL;
+
+        }
+
+
+        /*
+         * These values are not automatically stored
+         * in Firebase Authentication.
+         *
+         * We temporarily load them from localStorage.
+         */
+
+        const savedPhone =
+            localStorage.getItem("explorenaga_phone");
+
+        const savedRole =
+            localStorage.getItem("explorenaga_role");
+
+        const savedDistrict =
+            localStorage.getItem("explorenaga_district");
+
+        const district = document.getElementById("editDistrict").value;
+        if (savedPhone) {
+
+            document.getElementById("profilePhone")
+                .textContent = savedPhone;
+
+            document.getElementById("editPhone")
+                .value = savedPhone;
+
+        }
+
+
+        if (savedRole) {
+
+            document.getElementById("profileRole")
+                .textContent = savedRole;
+
+            document.getElementById("editRole")
+                .value = savedRole;
+
+        }
+
+
+        if (savedDistrict) {
+
+            document.getElementById("statusDistrict")
+                .textContent = savedDistrict;
+
+            document.getElementById("editDistrict")
+                .value = savedDistrict;
+
+        }
+
+    });
+
+
+    /* =========================
+       SAVE PROFILE
+    ========================= */
+
+    saveProfileBtn.addEventListener("click", async () => {
+
+        const user = auth.currentUser;
+
+        if (!user) {
+
+            alert("You are not logged in.");
+
+            return;
+
+        }
+
+
+        const name =
+            document.getElementById("editName")
+                .value.trim();
+
+        const phone =
+            document.getElementById("editPhone")
+                .value.trim();
+
+        const role =
+            document.getElementById("editRole")
+                .value.trim();
+
+        const district =
+            document.getElementById("editDistrict")
+                .value.trim();
+
+
+        if (!name) {
+
+            alert("Please enter your full name.");
+
+            return;
+
+        }
+
+
+        try {
+
+            /* UPDATE FIREBASE AUTH NAME */
+
+            await updateProfile(user, {
+
+                displayName: name
+
+            });
+
+
+            /*
+             * Phone, role and district are stored locally
+             * for now.
+             */
+
+            localStorage.setItem(
+                "explorenaga_phone",
+                phone
+            );
+
+            localStorage.setItem(
+                "explorenaga_role",
+                role
+            );
+
+            localStorage.setItem(
+                "explorenaga_district",
+                district
+            );
+
+
+            /* UPDATE PAGE */
+
+            document.getElementById("profileName")
+                .textContent = name;
+
+            document.getElementById("topUserName")
+                .textContent = name;
+
+
+            document.getElementById("profilePhone")
+                .textContent = phone || "Not provided";
+
+
+            document.getElementById("profileRole")
+                .textContent = role || "Tourist";
+
+
+            document.getElementById("statusDistrict")
+                .textContent = district || "Not provided";
+
+
+            alert("Profile updated successfully!");
+
+
+            closeEditForm();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Unable to update profile: "
+                + error.message
+            );
+
+        }
+
+    });
+
+
+    /* =========================
+       LOGOUT
+    ========================= */
+
+    logoutBtn.addEventListener("click", async (event) => {
+
+        event.preventDefault();
+
+        try {
+
+            await signOut(auth);
+
+            window.location.href = "login.html";
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            alert("Logout failed.");
+
+        }
+
+    });
+
+
+    /* =========================
+       BACK BUTTON
+    ========================= */
+
+    document.getElementById("backBtn")
+        .addEventListener("click", () => {
+
+            window.history.back();
+
+        });
+
+
+</script>
 
 </body>
+
 </html>
