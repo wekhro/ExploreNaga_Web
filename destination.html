@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destinations - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center py-0 sm:py-6 antialiased text-gray-800">
+
+  <!-- Mobile Screen Container -->
+  <div class="w-full max-w-md bg-white shadow-xl min-h-screen sm:rounded-3xl overflow-hidden flex flex-col pb-6">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-40">
+      <div class="flex items-center gap-3">
+        <a href="dashboard.html" class="p-1 -ml-1 text-gray-700 hover:text-emerald-900">
+          <i data-lucide="arrow-left" class="w-6 h-6"></i>
+        </a>
+        <h1 class="font-bold text-base text-gray-900">All Destinations</h1>
+      </div>
+      <span class="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+        Nagaland
+      </span>
+    </header>
+
+    <main class="p-5 space-y-4 flex-1">
+
+      <!-- Search Field -->
+      <div class="relative">
+        <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-3"></i>
+        <input 
+          id="destSearch" 
+          type="text" 
+          placeholder="Search places (e.g. Dzükou, Longwa, Mon)"
+          class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-emerald-600 transition"
+        >
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 text-xs font-semibold">
+        <button onclick="filterDest('all')" class="dest-btn active px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition">All</button>
+        <button onclick="filterDest('valley')" class="dest-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Valleys & Treks</button>
+        <button onclick="filterDest('heritage')" class="dest-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Heritage Villages</button>
+        <button onclick="filterDest('peaks')" class="dest-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Peaks & Towns</button>
+      </div>
+
+      <!-- Destination Grid -->
+      <div id="destContainer" class="grid grid-cols-2 gap-3">
+
+        <!-- 1. Dzükou Valley -->
+        <div 
+          onclick="openModal('Dzükou Valley', 'Kohima / Manipur border', 'Famous for endemic Dzükou lilies, rolling bamboo green hills, and natural rock caves. Best visited between June–September for flowers or November–January for clear frost views.', 'Entry pass via SAYO (₹100 for domestic, ₹200 for foreign tourists). Guide recommended from Viswema/Jakhama.', 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80')"
+          class="dest-card bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer" 
+          data-category="valley" 
+          data-name="dzukou valley kohima trek nature"
+        >
+          <div class="h-28 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&auto=format&fit=crop&q=80" alt="Dzükou Valley" class="w-full h-full object-cover">
+          </div>
+          <div class="p-2.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">Valley / Trek</span>
+            <h4 class="font-bold text-xs text-gray-900 mt-1">Dzükou Valley</h4>
+            <p class="text-[10px] text-gray-500">Kohima District</p>
+          </div>
+        </div>
+
+        <!-- 2. Kisama Heritage Village -->
+        <div 
+          onclick="openModal('Kisama Heritage Village', '12 km south of Kohima', 'The permanent venue for the renowned annual Hornbill Festival held every December. Features authentic traditional tribal morungs representing all recognized Naga tribes.', 'Open year-round. Nominal gate entry fee. Morung architecture open for photography.', 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&auto=format&fit=crop&q=80')"
+          class="dest-card bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer" 
+          data-category="heritage" 
+          data-name="kisama heritage village hornbill morung kohima"
+        >
+          <div class="h-28 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=400&auto=format&fit=crop&q=80" alt="Kisama Village" class="w-full h-full object-cover">
+          </div>
+          <div class="p-2.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded">Culture</span>
+            <h4 class="font-bold text-xs text-gray-900 mt-1">Kisama Village</h4>
+            <p class="text-[10px] text-gray-500">Kohima District</p>
+          </div>
+        </div>
+
+        <!-- 3. Khonoma Green Village -->
+        <div 
+          onclick="openModal('Khonoma Green Village', '20 km west of Kohima', 'Asia first green village known for self-sustained forest conservation, community hunting bans, and historic resistance against British colonial forces.', 'Eco-entry permit required at village gate. Village guide required for bird-watching and bastion walks.', 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80')"
+          class="dest-card bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer" 
+          data-category="heritage" 
+          data-name="khonoma green village conservation angami"
+        >
+          <div class="h-28 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=80" alt="Khonoma Village" class="w-full h-full object-cover">
+          </div>
+          <div class="p-2.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">Eco Village</span>
+            <h4 class="font-bold text-xs text-gray-900 mt-1">Khonoma Village</h4>
+            <p class="text-[10px] text-gray-500">Angami Heritage</p>
+          </div>
+        </div>
+
+        <!-- 4. Japfü Peak -->
+        <div 
+          onclick="openModal('Japfü Peak', 'Kigwema, Kohima District', 'Standing at 3,048m, Japfü is the second highest peak in Nagaland and home to the world recorded tallest rhododendron tree (over 109 ft tall).', 'Strenuous day trek through thick virgin forests. Local guide mandatory from Kigwema village.', 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&auto=format&fit=crop&q=80')"
+          class="dest-card bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer" 
+          data-category="peaks" 
+          data-name="japfu peak kigwema rhododendron summit mountain"
+        >
+          <div class="h-28 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&auto=format&fit=crop&q=80" alt="Japfü Peak" class="w-full h-full object-cover">
+          </div>
+          <div class="p-2.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-1.5 py-0.5 rounded">3,048 m Summit</span>
+            <h4 class="font-bold text-xs text-gray-900 mt-1">Japfü Peak</h4>
+            <p class="text-[10px] text-gray-500">Kigwema</p>
+          </div>
+        </div>
+
+        <!-- 5. Longwa Village (Mon) -->
+        <div 
+          onclick="openModal('Longwa Village', 'Mon District', 'A cross-border settlement where the international boundary between India and Myanmar cuts right through the chief Angh house. Famous for Konyak tattooed elders and brass artisans.', 'Foreign tourists must inform FRO Mon. Border crossing protocols apply in village areas.', 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=600&auto=format&fit=crop&q=80')"
+          class="dest-card bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer" 
+          data-category="heritage" 
+          data-name="longwa village mon konyak border headhunters"
+        >
+          <div class="h-28 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=400&auto=format&fit=crop&q=80" alt="Longwa Village" class="w-full h-full object-cover">
+          </div>
+          <div class="p-2.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-1.5 py-0.5 rounded">Border Heritage</span>
+            <h4 class="font-bold text-xs text-gray-900 mt-1">Longwa Village</h4>
+            <p class="text-[10px] text-gray-500">Mon (Indo-Myanmar)</p>
+          </div>
+        </div>
+
+        <!-- 6. Pfütsero (Coldest Town) -->
+        <div 
+          onclick="openModal('Pfütsero', 'Phek District (2,133 m)', 'The highest and coldest town in Nagaland, celebrated for apple orchards, cherry blossoms in late autumn, and panoramic vistas of Glory Peak.', 'Direct shared Sumo available from Kohima BOC counter (~2.5 hrs). Homestays available.', 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80')"
+          class="dest-card bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer" 
+          data-category="peaks" 
+          data-name="pfutsero phek glory peak cold cherry blossoms"
+        >
+          <div class="h-28 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&auto=format&fit=crop&q=80" alt="Pfütsero" class="w-full h-full object-cover">
+          </div>
+          <div class="p-2.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-cyan-800 bg-cyan-50 px-1.5 py-0.5 rounded">Coldest Town</span>
+            <h4 class="font-bold text-xs text-gray-900 mt-1">Pfütsero</h4>
+            <p class="text-[10px] text-gray-500">Phek District</p>
+          </div>
+        </div>
+
+        <!-- 7. Mokokchung & Ungma -->
+        <div 
+          onclick="openModal('Mokokchung & Ungma', 'Mokokchung District', 'The cultural center of the Ao Nagas. Ungma is the oldest and largest Ao village, featuring traditional log drums (Tongten) and historic clan grounds.', 'Regular NST buses and sumos connect from Kohima and Dimapur. Rich Moatsü festival celebrations in May.', 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80')"
+          class="dest-card bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer" 
+          data-category="heritage" 
+          data-name="mokokchung ungma ao naga culture drum"
+        >
+          <div class="h-28 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=80" alt="Mokokchung" class="w-full h-full object-cover">
+          </div>
+          <div class="p-2.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded">Ao Heritage</span>
+            <h4 class="font-bold text-xs text-gray-900 mt-1">Mokokchung</h4>
+            <p class="text-[10px] text-gray-500">Ungma Village</p>
+          </div>
+        </div>
+
+        <!-- 8. Benreu Village & Mt. Pauna -->
+        <div 
+          onclick="openModal('Benreu Village', 'Peren District (Zeliang territory)', 'Perched on the ridges of Mt. Pauna (third highest in Nagaland), Benreu preserves animist heritage, morung sanctuaries, and wild medicinal herbs.', 'Scenic route from Dimapur via Jalukie. Stay in community-run traditional wood cottages.', 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&auto=format&fit=crop&q=80')"
+          class="dest-card bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer" 
+          data-category="valley" 
+          data-name="benreu village peren zeliang pauna mountain"
+        >
+          <div class="h-28 w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&auto=format&fit=crop&q=80" alt="Benreu Village" class="w-full h-full object-cover">
+          </div>
+          <div class="p-2.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">Eco Trek</span>
+            <h4 class="font-bold text-xs text-gray-900 mt-1">Benreu</h4>
+            <p class="text-[10px] text-gray-500">Peren District</p>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Destination Detail Modal -->
+    <div id="detailModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[85vh] flex flex-col">
+        <div class="relative h-44 w-full">
+          <img id="modalImg" src="" alt="Destination" class="w-full h-full object-cover">
+          <button onclick="closeModal()" class="absolute top-3 right-3 bg-black/50 text-white rounded-full p-1.5">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="p-5 space-y-3 overflow-y-auto flex-1 text-xs">
+          <div>
+            <h3 id="modalTitle" class="font-bold text-base text-gray-900"></h3>
+            <p id="modalLocation" class="text-gray-500 text-[11px] font-medium flex items-center gap-1 mt-0.5">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-700"></i>
+              <span></span>
+            </p>
+          </div>
+          <p id="modalDesc" class="text-gray-600 leading-relaxed"></p>
+          <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3">
+            <span class="font-bold text-emerald-950 block text-[11px] mb-0.5">Travel & Permit Note:</span>
+            <p id="modalNote" class="text-emerald-800 text-[11px] leading-relaxed"></p>
+          </div>
+          <button onclick="closeModal()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2.5 rounded-xl transition">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Search filter
+    const searchInput = document.getElementById("destSearch");
+    const cards = document.querySelectorAll(".dest-card");
+
+    searchInput.addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const text = card.getAttribute("data-name").toLowerCase();
+        card.classList.toggle("hidden", !text.includes(q));
+      });
+    });
+
+    // Category button filter
+    function filterDest(cat) {
+      document.querySelectorAll(".dest-btn").forEach(b => {
+        b.className = "dest-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition";
+      });
+      event.currentTarget.className = "dest-btn active px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition";
+
+      cards.forEach(card => {
+        const c = card.getAttribute("data-category");
+        if (cat === "all" || c === cat) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+    }
+
+    // Modal view
+    function openModal(title, loc, desc, note, imgUrl) {
+      document.getElementById("modalTitle").textContent = title;
+      document.querySelector("#modalLocation span").textContent = loc;
+      document.getElementById("modalDesc").textContent = desc;
+      document.getElementById("modalNote").textContent = note;
+      document.getElementById("modalImg").src = imgUrl;
+
+      document.getElementById("detailModal").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeModal() {
+      document.getElementById("detailModal").classList.add("hidden");
+    }
+  </script>
+
+</body>
+</html>
