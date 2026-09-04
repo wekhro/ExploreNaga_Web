@@ -172,7 +172,7 @@
 
         <h2>Create Account</h2>
 
-        <form>
+        <form id="signupForm">
 
             <div class="form-group">
 
@@ -264,6 +264,113 @@
         </a>
 
     </div>
+    <script type="module">
+
+    import { createUserWithEmailAndPassword, updateProfile }
+        from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    import { auth }
+        from "./firebase.js";
+
+
+    const signupForm = document.getElementById("signupForm");
+
+
+    signupForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+
+        // Get values from the form
+        const name = document.getElementById("name").value.trim();
+
+        const email = document.getElementById("email").value.trim();
+
+        const password = document.getElementById("password").value;
+
+        const confirmPassword =
+            document.getElementById("confirm-password").value;
+
+
+        // Check passwords
+        if (password !== confirmPassword) {
+
+            alert("Passwords do not match.");
+
+            return;
+        }
+
+
+        // Check password length
+        if (password.length < 6) {
+
+            alert("Password must be at least 6 characters.");
+
+            return;
+        }
+
+
+        try {
+
+            // Create Firebase account
+            const userCredential =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user = userCredential.user;
+
+
+            // Save the user's name in Firebase Authentication
+            await updateProfile(user, {
+                displayName: name
+            });
+
+
+            console.log("Account created:", user);
+
+
+            alert("Account created successfully!");
+
+
+            // Go to dashboard
+            window.location.href = "dashboard.html";
+
+
+        } catch (error) {
+
+            console.error("Signup error:", error);
+
+
+            if (error.code === "auth/email-already-in-use") {
+
+                alert("This email is already registered.");
+
+            }
+            else if (error.code === "auth/invalid-email") {
+
+                alert("Please enter a valid email address.");
+
+            }
+            else if (error.code === "auth/weak-password") {
+
+                alert("Password is too weak. Use at least 6 characters.");
+
+            }
+            else {
+
+                alert("Signup failed: " + error.message);
+
+            }
+
+        }
+
+    });
+
+</script>
 
 </body>
 
