@@ -3,120 +3,64 @@
 ========================= */
 
 function openMenu() {
-
-    document
-        .getElementById("sideMenu")
-        .classList
-        .add("open");
-
+    const sideMenu = document.getElementById("sideMenu");
+    if (sideMenu) {
+        sideMenu.classList.add("open");
+    }
 }
-
 
 function closeMenu() {
-
-    document
-        .getElementById("sideMenu")
-        .classList
-        .remove("open");
-
+    const sideMenu = document.getElementById("sideMenu");
+    if (sideMenu) {
+        sideMenu.classList.remove("open");
+    }
 }
-
 
 /* =========================
    LOGIN
 ========================= */
 
 function login() {
-
     alert("Login page coming soon!");
-
 }
-
 
 /* =========================
    IMAGE SLIDER
 ========================= */
 
+// Exact match with your popular destination image sources
 const images = [
-
-    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80",
-
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=80",
-
-    "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=80",
-
-    "https://images.unsplash.com/photo-1473445361085-b9a07f55608b?auto=format&fit=crop&w=1400&q=80",
-
-    "https://images.unsplash.com/photo-1470214304380-aadaedcfff1b?auto=format&fit=crop&w=1400&q=80",
-
-    "https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=1400&q=80"
-
+    "images/Sheep Farm.jpeg",
+    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Kachari_Ruins,_Dimapur,_Nagaland.jpg",
+    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Khonoma_village,_Nagaland,_India.jpg",
+    "https://www.oddessemania.in/wp-content/uploads/2023/08/Dzukou-valley-trek-photo-02-1-1024x668.jpeg"
 ];
-
 
 let currentSlide = 0;
 
-
 function showSlide(number) {
+    const heroImage = document.getElementById("heroImage");
+    const dots = document.querySelectorAll(".dot");
 
-    currentSlide = number;
+    // Wrap-around index calculation
+    currentSlide = (number + images.length) % images.length;
 
-    document.getElementById("heroImage").src =
-        images[currentSlide];
+    if (heroImage) {
+        heroImage.src = images[currentSlide];
+    }
 
-
-    const dots =
-        document.querySelectorAll(".dot");
-
-
-    dots.forEach(function(dot) {
-
-        dot.classList.remove("active");
-
+    dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentSlide);
     });
-
-
-    dots[currentSlide]
-        .classList
-        .add("active");
-
 }
-
 
 function nextSlide() {
-
-    currentSlide++;
-
-    if (currentSlide >= images.length) {
-
-        currentSlide = 0;
-
-    }
-
-    showSlide(currentSlide);
-
+    showSlide(currentSlide + 1);
 }
-
 
 function previousSlide() {
-
-    currentSlide--;
-
-    if (currentSlide < 0) {
-
-        currentSlide = images.length - 1;
-
-    }
-
-    showSlide(currentSlide);
-
+    showSlide(currentSlide - 1);
 }
 
-
-/* Automatically change image */
-
-setInterval(function() {
-
-    nextSlide();
-
-}, 6000);
+/* Automatically change image every 6 seconds */
+let sliderInterval = setInterval(nextSlide, 6000);
