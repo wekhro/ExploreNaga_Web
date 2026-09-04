@@ -1,1 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ExploreNaga Dashboard</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+
+</head>
+
+<body class="bg-gray-100 flex justify-center py-0 sm:py-6 antialiased text-gray-800">
+
+  <!-- Mobile Screen Container -->
+  <div class="relative w-full max-w-md bg-white shadow-xl min-h-screen sm:rounded-3xl overflow-hidden flex flex-col pb-6">
+
+    <!-- ================= TOP NAVIGATION ================= -->
+
+    <header class="flex items-center justify-between px-5 py-4 bg-white sticky top-0 z-40">
+
+      <!-- Menu -->
+      <button
+        class="p-1 text-emerald-900 focus:outline-none"
+        aria-label="Open Menu"
+      >
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <div class="text-emerald-700">
+          <i
+            data-lucide="mountain-snow"
+            class="w-7 h-7 stroke-[2.5]"
+          ></i>
+        </div>
+
+        <div class="leading-tight">
+          <h1 class="font-bold text-lg text-emerald-950 tracking-tight">
+            ExploreNaga
+          </h1>
+          <p class="text-[10px] text-gray-500 font-medium">
+            Stay connected, Travel Safely
+          </p>
+        </div>
+      </div>
+
+      <!-- Notification & Profile -->
+      <div class="flex items-center gap-3">
+
+        <!-- Notification -->
+        <div class="relative cursor-pointer">
+          <i
+            data-lucide="bell"
+            class="w-6 h-6 text-emerald-900"
+          ></i>
+          <span
+            class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white"
+          >
+            3
+          </span>
+        </div>
+
+        <!-- User -->
+        <div
+          class="flex items-center gap-1 cursor-pointer"
+          id="profileArea"
+          onclick="window.location.href='profile.html'"
+        >
+          <img
+            id="profileImage"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80"
+            alt="Profile"
+            class="w-8 h-8 rounded-full object-cover border border-gray-200"
+          >
+          <span
+            id="username"
+            class="text-xs font-semibold text-gray-800"
+          >
+            User
+          </span>
+          <i
+            data-lucide="chevron-down"
+            class="w-3.5 h-3.5 text-gray-500"
+          ></i>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- ================= HERO IMAGE ================= -->
+
+    <div class="relative w-full h-56 overflow-hidden">
+      <img
+        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80"
+        alt="Nagaland Mountain Landscape"
+        class="w-full h-full object-cover"
+      >
+    </div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="px-5 pt-4 space-y-5">
+
+      <!-- ================= GREETING ================= -->
+
+      <div>
+        <h2 class="text-xl font-bold text-gray-900">
+          Welcome back,
+          <span id="welcomeUsername">User</span>!
+        </h2>
+        <p class="text-xs text-gray-500 font-medium mt-0.5">
+          Plan smart, travel safe.
+        </p>
+      </div>
+
+      <!-- ================= ACTIVE TRIP CARD ================= -->
+
+      <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm space-y-3">
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5 text-emerald-900 font-bold text-sm">
+            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-800 fill-emerald-800"></i>
+            <span>My Active Trip</span>
+          </div>
+
+          <!-- Live Indicator -->
+          <span id="tripLiveDot" class="hidden flex items-center gap-1 text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            In Progress
+          </span>
+        </div>
+
+        <!-- State 1: Active Trip Exists -->
+        <div id="hasTripState" class="hidden space-y-3">
+          <div id="activeTripPath" class="flex items-center text-xs font-semibold text-gray-700 gap-1.5 flex-wrap">
+            <!-- Populated dynamically via JS -->
+          </div>
+
+          <div class="flex items-center justify-between pt-1 text-xs">
+            <div class="flex items-center gap-1.5">
+              <span class="text-gray-500">Status:</span>
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span id="tripStatusText" class="font-bold text-emerald-900">Active</span>
+            </div>
+
+            <div class="h-6 w-px bg-gray-200"></div>
+
+            <div>
+              <span class="text-[11px] text-gray-500 block">Next Check-in:</span>
+              <div class="flex items-center gap-1 font-bold text-emerald-950">
+                <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                <span id="tripNextCheckIn">--:--</span>
+              </div>
+            </div>
+
+            <button
+              onclick="openTripModal()"
+              class="bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-3 py-2 rounded-lg font-semibold flex items-center gap-1 transition-colors text-xs active:scale-95"
+            >
+              <span>View Trip</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- State 2: No Active Trip Found -->
+        <div id="noTripState" class="py-2 text-center space-y-2">
+          <p class="text-xs text-gray-500">No journey in progress right now.</p>
+          <button
+            onclick="openNewTripModal()"
+            class="bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold px-4 py-2 rounded-xl transition active:scale-95 shadow-sm inline-flex items-center gap-1.5"
+          >
+            <i data-lucide="compass" class="w-4 h-4"></i>
+            <span>Start a New Trip</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ================= ACTION GRID ================= -->
+
+      <div class="grid grid-cols-2 gap-3">
+
+        <!-- Foreigner Registration -->
+        <a
+          id="foreignerRegCard"
+          href="foreigner-registration.html"
+          class="bg-white border border-gray-100 rounded-2xl p-3.5 flex flex-col justify-between shadow-sm hover:shadow-md transition active:scale-[0.98]"
+        >
+          <div class="flex justify-between items-start">
+            <div class="p-2 border border-emerald-800/30 rounded-lg text-emerald-800">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <span 
+              id="regStatusBadge" 
+              class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full"
+            ></span>
+          </div>
+
+          <div class="mt-3">
+            <h3 class="font-bold text-xs text-gray-900 leading-snug">
+              Foreigner<br>Registration
+            </h3>
+            <p id="regStatusText" class="text-[10px] text-gray-500 mt-1">
+              Register as a foreign tourist in Nagaland
+            </p>
+          </div>
+        </a>
+
+        <!-- Transport Fares -->
+        <a
+          href="transport-fares.html"
+          class="bg-white border border-gray-100 rounded-2xl p-3.5 flex flex-col justify-between shadow-sm hover:shadow-md transition active:scale-[0.98]"
+        >
+          <div class="flex justify-between items-start">
+            <div class="p-2 text-amber-500">
+              <i data-lucide="car" class="w-6 h-6"></i>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+
+          <div class="mt-3">
+            <h3 class="font-bold text-xs text-gray-900 leading-snug">
+              Transport<br>Fares
+            </h3>
+            <p class="text-[10px] text-gray-500 mt-1">
+              Check bus, taxi & shared ride fares
+            </p>
+          </div>
+        </a>
+
+        <!-- Safety Advisories -->
+        <a
+          href="safety-advisories.html"
+          class="bg-white border border-gray-100 rounded-2xl p-3.5 flex flex-col justify-between shadow-sm hover:shadow-md transition active:scale-[0.98]"
+        >
+          <div class="flex justify-between items-start">
+            <div class="p-2 text-orange-500">
+              <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+
+          <div class="mt-3">
+            <h3 class="font-bold text-xs text-gray-900 leading-snug">
+              Safety<br>Advisories
+            </h3>
+            <p class="text-[10px] text-gray-500 mt-1">
+              Stay updated with safety alerts
+            </p>
+          </div>
+        </a>
+
+        <!-- Emergency & Help -->
+        <a
+          href="emergency.html"
+          class="bg-white border border-gray-100 rounded-2xl p-3.5 flex flex-col justify-between shadow-sm hover:shadow-md transition active:scale-[0.98]"
+        >
+          <div class="flex justify-between items-start">
+            <div class="p-2 text-red-500">
+              <i data-lucide="cross" class="w-6 h-6"></i>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+
+          <div class="mt-3">
+            <h3 class="font-bold text-xs text-gray-900 leading-snug">
+              Emergency<br>& Help
+            </h3>
+            <p class="text-[10px] text-gray-500 mt-1">
+              Find emergency contacts and assistance
+            </p>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- ================= POPULAR DESTINATIONS ================= -->
+
+      <div class="space-y-2.5">
+
+        <div class="flex items-center justify-between">
+          <h3 class="font-bold text-sm text-emerald-950">
+            Popular Destinations
+          </h3>
+          <a
+            href="destinations.html"
+            class="text-xs font-semibold text-emerald-800 flex items-center gap-0.5 hover:underline"
+          >
+            View All
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1">
+
+          <!-- 1. Dzükou Valley -->
+          <div 
+            onclick="openDestModal(
+              'Dzükou Valley', 
+              'Kohima / Manipur Border (Viswema Trailhead)', 
+              'Celebrated for its rolling dwarf-bamboo ridges, natural cavern shelters, and the rare seasonal Dzükou lily. A quintessential high-altitude trekking destination with sweeping panoramic horizons.', 
+              'SAYO entry permit (₹100 domestic, ₹200 foreign) obtained at the Viswema/Jakhama counters. Registered guide strongly recommended.', 
+              'images/Dzukou.jpeg'
+            )"
+            class="flex-shrink-0 w-28 flex flex-col items-center cursor-pointer active:scale-95 transition"
+          >
+            <div class="w-28 h-20 rounded-xl overflow-hidden shadow-sm bg-gray-100">
+              <img
+                src="images/Dzukou.jpeg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&auto=format&fit=crop&q=80';"
+                alt="Dzükou Valley"
+                class="w-full h-full object-cover"
+              >
+            </div>
+            <span class="text-[11px] font-semibold text-gray-800 mt-1.5 text-center">
+              Dzükou Valley
+            </span>
+          </div>
+
+          <!-- 2. Kachari Ruins -->
+          <div 
+            onclick="openDestModal(
+              'Kachari Ruins (Rajbari Park)', 
+              'Dimapur Town (Near Railway Station)', 
+              'An archaeological landmark preserving 10th-century medieval mushroom-domed sandstone monoliths from the Dimasa Kachari Kingdom, surrounded by peaceful landscaped gardens.', 
+              'Maintained by the Archaeological Survey of India (ASI). Open daily from 9:00 AM to 5:00 PM. Modest gate entry fee applies.', 
+              'images/Kacharu.jpeg'
+            )"
+            class="flex-shrink-0 w-28 flex flex-col items-center cursor-pointer active:scale-95 transition"
+          >
+            <div class="w-28 h-20 rounded-xl overflow-hidden shadow-sm bg-gray-100">
+              <img
+                src="images/Kacharu.jpeg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=300&auto=format&fit=crop&q=80';"
+                alt="Kachari Ruins"
+                class="w-full h-full object-cover"
+              >
+            </div>
+            <span class="text-[11px] font-semibold text-gray-800 mt-1.5 text-center leading-tight">
+              Kachari Ruins
+            </span>
+          </div>
+
+          <!-- 3. Sheep Farm (Poilwa) -->
+          <div 
+            onclick="openDestModal(
+              'Government Sheep Farm', 
+              'Poilwa, Peren District (via Jalukie / Khonoma)', 
+              'Perched on gentle misty hills, this historic pastoral station features rolling open grazing meadows, traditional stone fences, and sweeping valley overlooks of southwestern Nagaland.', 
+              'Scenic day drive from Kohima or Jalukie. Obtain local visitor courtesy clearance at Poilwa village entry gate before exploring the pastures.', 
+              'images/Sheep Farm.jpeg'
+            )"
+            class="flex-shrink-0 w-28 flex flex-col items-center cursor-pointer active:scale-95 transition"
+          >
+            <div class="w-28 h-20 rounded-xl overflow-hidden shadow-sm bg-gray-100">
+              <img
+                src="images/Sheep Farm.jpeg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80';"
+                alt="Sheep Farm Poilwa"
+                class="w-full h-full object-cover"
+              >
+            </div>
+            <span class="text-[11px] font-semibold text-gray-800 mt-1.5 text-center leading-tight">
+              Sheep Farm
+            </span>
+          </div>
+
+          <!-- 4. Dzuleke Eco-Village -->
+          <div 
+            onclick="openDestModal(
+              'Dzuleke Eco-Village', 
+              'Kohima District (10 km beyond Khonoma)', 
+              'Renowned for its community-managed eco-tourism model with no hotel commercialization. Features crystal-clear cold mountain streams, rare Blyth’s tragopan habitat, and authentic village homestays.', 
+              'All accommodations and guided walks are arranged directly through the Dzuleke Development Board. Hunting and plastic littering are strictly prohibited.', 
+              'images/Dzulieke.jpeg'
+            )"
+            class="flex-shrink-0 w-28 flex flex-col items-center cursor-pointer active:scale-95 transition"
+          >
+            <div class="w-28 h-20 rounded-xl overflow-hidden shadow-sm bg-gray-100">
+              <img
+                src="images/Dzulieke.jpeg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&auto=format&fit=crop&q=80';"
+                alt="Dzuleke"
+                class="w-full h-full object-cover"
+              >
+            </div>
+            <span class="text-[11px] font-semibold text-gray-800 mt-1.5 text-center leading-tight">
+              Dzuleke
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= SAFETY ALERTS ================= -->
+
+      <div class="space-y-2.5">
+
+        <div class="flex items-center justify-between">
+          <h3 class="font-bold text-sm text-emerald-950">
+            Recent Safety Alerts
+          </h3>
+          <a
+            href="safety-advisories.html"
+            class="text-xs font-semibold text-emerald-800 flex items-center gap-0.5"
+          >
+            View All
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <div class="bg-white border border-gray-100 rounded-2xl p-3.5 shadow-sm space-y-3">
+
+          <!-- Alert 1 -->
+          <div class="flex items-start gap-3">
+            <div class="text-amber-500 flex-shrink-0 mt-0.5">
+              <i
+                data-lucide="alert-triangle"
+                class="w-5 h-5 fill-amber-500 stroke-amber-500 text-white"
+              ></i>
+            </div>
+
+            <div class="flex-1">
+              <div class="flex justify-between items-baseline">
+                <h4 class="font-bold text-xs text-gray-900">
+                  Dzükou Valley Advisory
+                </h4>
+                <span class="text-[10px] text-gray-400">
+                  2h ago
+                </span>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-0.5">
+                Moderate risk due to rain. Check weather before you go.
+              </p>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-100"></div>
+
+          <!-- Alert 2 -->
+          <div class="flex items-start gap-3">
+            <div class="text-blue-500 flex-shrink-0 mt-0.5">
+              <i
+                data-lucide="info"
+                class="w-5 h-5 fill-blue-500 text-white stroke-white"
+              ></i>
+            </div>
+
+            <div class="flex-1">
+              <div class="flex justify-between items-baseline">
+                <h4 class="font-bold text-xs text-gray-900">
+                  FRO Office Timings (Kohima)
+                </h4>
+                <span class="text-[10px] text-gray-400">
+                  1d ago
+                </span>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-0.5">
+                Mon – Fri: 9:30 AM – 4:00 PM
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= FOOTER ================= -->
+
+      <div class="pt-2 pb-1 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-600">
+
+        <div class="flex items-center gap-2">
+          <i
+            data-lucide="shield-check"
+            class="w-5 h-5 text-emerald-800"
+          ></i>
+          <div class="leading-tight">
+            <p class="font-semibold text-gray-800">
+              Your Safety,
+            </p>
+            <p class="text-gray-500 text-[10px]">
+              Our Priority
+            </p>
+          </div>
+        </div>
+
+        <div class="h-6 w-px bg-gray-200"></div>
+
+        <div class="text-right text-[10px] leading-tight text-gray-500">
+          <p class="font-semibold text-gray-700">
+            © 2026 ExploreNaga
+          </p>
+          <p>
+            Stay connected, Travel Safely
+          </p>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- ================= DESTINATION DETAIL MODAL ================= -->
+    <div id="destModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[85vh] flex flex-col">
+        <div class="relative h-44 w-full">
+          <img id="destModalImg" src="" alt="Destination" class="w-full h-full object-cover">
+          <button onclick="closeDestModal()" class="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 transition">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="p-5 space-y-3 overflow-y-auto flex-1 text-xs">
+          <div>
+            <h3 id="destModalTitle" class="font-bold text-base text-gray-900"></h3>
+            <p id="destModalLocation" class="text-gray-500 text-[11px] font-medium flex items-center gap-1 mt-0.5">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-700"></i>
+              <span></span>
+            </p>
+          </div>
+          <p id="destModalDesc" class="text-gray-600 leading-relaxed"></p>
+          <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3">
+            <span class="font-bold text-emerald-950 block text-[11px] mb-0.5">Travel & Permit Info:</span>
+            <p id="destModalNote" class="text-emerald-800 text-[11px] leading-relaxed"></p>
+          </div>
+          <button onclick="closeDestModal()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2.5 rounded-xl transition">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ACTIVE TRIP ITINERARY MODAL ================= -->
+    <div id="tripModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[90vh] flex flex-col">
+        
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white">
+          <div>
+            <span class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Active Route</span>
+            <h3 id="modalTripTitle" class="font-bold text-base text-gray-900 leading-tight">Itinerary</h3>
+          </div>
+          <button onclick="closeTripModal()" class="p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Modal Content & Timeline -->
+        <div class="p-5 space-y-4 overflow-y-auto flex-1 text-xs">
+          
+          <!-- Summary Bar -->
+          <div class="grid grid-cols-3 gap-2 bg-emerald-50/70 border border-emerald-100 rounded-xl p-3 text-center">
+            <div>
+              <span class="text-[10px] text-emerald-700 block">Total Est. Time</span>
+              <span id="modalTripEstTime" class="font-bold text-xs text-emerald-950">--</span>
+            </div>
+            <div class="border-x border-emerald-200">
+              <span class="text-[10px] text-emerald-700 block">Status</span>
+              <span id="modalTripStatus" class="font-bold text-xs text-emerald-900">--</span>
+            </div>
+            <div>
+              <span class="text-[10px] text-emerald-700 block">Next Stop</span>
+              <span id="modalTripNextStop" class="font-bold text-xs text-emerald-950">--</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Stops List -->
+          <div id="modalTripStopsList" class="space-y-4 pl-1">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Safety Advisory Box -->
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-[11px] text-gray-600 space-y-1">
+            <span class="font-bold text-gray-900 flex items-center gap-1">
+              <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-600"></i>
+              Check-in Requirement
+            </span>
+            <p id="modalTripAdvisory">Follow scheduled check-ins with local counters.</p>
+          </div>
+
+          <button onclick="closeTripModal()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2.5 rounded-xl transition">
+            Done
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= START NEW TRIP MODAL ================= -->
+    <div id="newTripModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[85vh] flex flex-col">
+        
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white">
+          <h3 class="font-bold text-base text-gray-900">Choose Your Destination</h3>
+          <button onclick="closeNewTripModal()" class="p-1 rounded-full text-gray-400 hover:text-gray-700">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div class="p-5 space-y-3 overflow-y-auto flex-1 text-xs">
+          <p class="text-gray-500">Select a route to activate check-ins and live safety tracking:</p>
+
+          <!-- Option 1: Dzükou Valley -->
+          <div 
+            onclick="createTripForUser('dzukou')"
+            class="border border-gray-200 hover:border-emerald-600 rounded-xl p-3 cursor-pointer transition active:scale-[0.98] flex items-center justify-between"
+          >
+            <div>
+              <h4 class="font-bold text-gray-900">Kohima → Viswema → Dzükou Valley</h4>
+              <p class="text-[11px] text-gray-500 mt-0.5">Trek route • ~6.5 hrs total • 4 check-in points</p>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-800"></i>
+          </div>
+
+          <!-- Option 2: Khonoma Village -->
+          <div 
+            onclick="createTripForUser('khonoma')"
+            class="border border-gray-200 hover:border-emerald-600 rounded-xl p-3 cursor-pointer transition active:scale-[0.98] flex items-center justify-between"
+          >
+            <div>
+              <h4 class="font-bold text-gray-900">Kohima → Khonoma Green Village</h4>
+              <p class="text-[11px] text-gray-500 mt-0.5">Eco tour • ~1.5 hrs • 2 check-in points</p>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-800"></i>
+          </div>
+
+          <!-- Option 3: Mokokchung -->
+          <div 
+            onclick="createTripForUser('mokokchung')"
+            class="border border-gray-200 hover:border-emerald-600 rounded-xl p-3 cursor-pointer transition active:scale-[0.98] flex items-center justify-between"
+          >
+            <div>
+              <h4 class="font-bold text-gray-900">Kohima → Wokha → Mokokchung</h4>
+              <p class="text-[11px] text-gray-500 mt-0.5">Highway route • ~5.5 hrs • 3 transit checkpoints</p>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-800"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= MODAL JAVASCRIPT ================= -->
+  <script>
+    // Destination modal functions
+    function openDestModal(title, loc, desc, note, imgUrl) {
+      document.getElementById("destModalTitle").textContent = title;
+      document.querySelector("#destModalLocation span").textContent = loc;
+      document.getElementById("destModalDesc").textContent = desc;
+      document.getElementById("destModalNote").textContent = note;
+      document.getElementById("destModalImg").src = imgUrl;
+
+      document.getElementById("destModal").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeDestModal() {
+      document.getElementById("destModal").classList.add("hidden");
+    }
+
+    // Active Trip itinerary modal functions
+    function openTripModal() {
+      document.getElementById("tripModal").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeTripModal() {
+      document.getElementById("tripModal").classList.add("hidden");
+    }
+
+    // New Trip Modal functions
+    function openNewTripModal() {
+      document.getElementById("newTripModal").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeNewTripModal() {
+      document.getElementById("newTripModal").classList.add("hidden");
+    }
+  </script>
+
+  <!-- ================= FIREBASE ================= -->
+
+  <script type="module">
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { 
+      collection, 
+      query, 
+      where, 
+      orderBy, 
+      limit, 
+      getDocs,
+      onSnapshot,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { auth, db } from "./firebase.js";
+
+    let activeTripUnsubscribe = null;
+    let currentActiveTripData = null;
+
+    onAuthStateChanged(auth, async (user) => {
+      const usernameElement = document.getElementById("username");
+      const welcomeUsernameElement = document.getElementById("welcomeUsername");
+      const profileImage = document.getElementById("profileImage");
+
+      if (user) {
+        const username = user.displayName || user.email?.split("@")[0] || "User";
+
+        if (usernameElement) usernameElement.textContent = username;
+        if (welcomeUsernameElement) welcomeUsernameElement.textContent = username;
+        if (user.photoURL && profileImage) profileImage.src = user.photoURL;
+
+        // Fetch Foreigner Registration status
+        await loadRegistrationStatus(user.uid);
+
+        // Real-time listener for Active Trips
+        listenToUserActiveTrip(user.uid);
+      } else {
+        if (activeTripUnsubscribe) activeTripUnsubscribe();
+        window.location.href = "login.html";
+      }
+    });
+
+    // 1. Fetch Foreigner Registration status
+    async function loadRegistrationStatus(uid) {
+      const badge = document.getElementById("regStatusBadge");
+      const statusText = document.getElementById("regStatusText");
+
+      if (!badge || !statusText) return;
+
+      try {
+        const q = query(
+          collection(db, "foreigner_registrations"),
+          where("userId", "==", uid),
+          orderBy("createdAt", "desc"),
+          limit(1)
+        );
+
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const latestDoc = querySnapshot.docs[0].data();
+          const status = latestDoc.status || "Pending";
+
+          badge.classList.remove("hidden");
+          badge.textContent = status;
+
+          if (status === "Approved") {
+            badge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800";
+            statusText.textContent = `Valid Pass • ${latestDoc.passportNumber || "Verified"}`;
+          } else if (status === "Rejected") {
+            badge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700";
+            statusText.textContent = "Action required: resubmit documents";
+          } else {
+            badge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800";
+            statusText.textContent = "Application under FRO review";
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching registration status:", err);
+      }
+    }
+
+    // 2. Real-time Active Trip Listener
+    function listenToUserActiveTrip(uid) {
+      const q = query(
+        collection(db, "active_trips"),
+        where("userId", "==", uid),
+        where("status", "==", "Active")
+      );
+
+      activeTripUnsubscribe = onSnapshot(q, (snapshot) => {
+        const hasTripDiv = document.getElementById("hasTripState");
+        const noTripDiv = document.getElementById("noTripState");
+        const liveDot = document.getElementById("tripLiveDot");
+
+        if (snapshot.empty) {
+          currentActiveTripData = null;
+          hasTripDiv.classList.add("hidden");
+          liveDot.classList.add("hidden");
+          noTripDiv.classList.remove("hidden");
+          return;
+        }
+
+        currentActiveTripData = snapshot.docs[0].data();
+
+        noTripDiv.classList.add("hidden");
+        hasTripDiv.classList.remove("hidden");
+        liveDot.classList.remove("hidden");
+
+        // Populate Dashboard Card
+        const pathContainer = document.getElementById("activeTripPath");
+        const parts = (currentActiveTripData.routeSummary || "").split("→").map(s => s.trim());
+        pathContainer.innerHTML = parts
+          .map((p, i) => `<span>${p}</span>${i < parts.length - 1 ? '<i data-lucide="arrow-right" class="w-3.5 h-3.5 text-gray-400"></i>' : ''}`)
+          .join("");
+
+        document.getElementById("tripStatusText").textContent = currentActiveTripData.status || "Active";
+        document.getElementById("tripNextCheckIn").textContent = currentActiveTripData.nextCheckIn || "--:--";
+
+        // Populate Modal Details
+        document.getElementById("modalTripTitle").textContent = currentActiveTripData.routeTitle || "Itinerary";
+        document.getElementById("modalTripEstTime").textContent = currentActiveTripData.totalEstTime || "--";
+        document.getElementById("modalTripStatus").textContent = currentActiveTripData.status || "Active";
+        document.getElementById("modalTripNextStop").textContent = currentActiveTripData.nextStop || "--";
+        if (currentActiveTripData.advisoryNotice) {
+          document.getElementById("modalTripAdvisory").textContent = currentActiveTripData.advisoryNotice;
+        }
+
+        // Render Timeline Stops
+        const stopsContainer = document.getElementById("modalTripStopsList");
+        stopsContainer.innerHTML = "";
+
+        (currentActiveTripData.stops || []).forEach((stop, idx, arr) => {
+          const isLast = idx === arr.length - 1;
+          let iconMarkup = "";
+          let badgeStyle = "bg-gray-100 text-gray-600";
+
+          if (stop.status === "completed") {
+            iconMarkup = `<div class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 z-10"><i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i></div>`;
+            badgeStyle = "bg-emerald-100/70 text-emerald-700";
+          } else if (stop.status === "current") {
+            iconMarkup = `<div class="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center flex-shrink-0 z-10 shadow-sm shadow-amber-200"><i data-lucide="clock" class="w-3.5 h-3.5"></i></div>`;
+            badgeStyle = "bg-amber-100 text-amber-800";
+          } else {
+            iconMarkup = `<div class="w-6 h-6 rounded-full bg-gray-100 border border-gray-300 text-gray-400 flex items-center justify-center flex-shrink-0 z-10"><span class="text-[10px] font-bold">${idx + 1}</span></div>`;
+          }
+
+          const stopHtml = `
+            <div class="flex gap-3 relative">
+              <div class="flex flex-col items-center">
+                ${iconMarkup}
+                ${!isLast ? '<div class="w-0.5 bg-gray-200 h-full -mb-3"></div>' : ''}
+              </div>
+              <div class="pb-4">
+                <div class="flex items-center gap-2">
+                  <h4 class="font-bold text-xs ${stop.status === 'upcoming' ? 'text-gray-500' : 'text-gray-900'}">${stop.name}</h4>
+                  ${stop.badge ? `<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded ${badgeStyle}">${stop.badge}</span>` : ''}
+                </div>
+                <p class="text-[11px] text-gray-500 mt-0.5">${stop.description || ''}</p>
+                <span class="text-[10px] text-gray-400 mt-1 block">${stop.time || ''}</span>
+              </div>
+            </div>
+          `;
+          stopsContainer.insertAdjacentHTML("beforeend", stopHtml);
+        });
+
+        lucide.createIcons();
+      });
+    }
+
+    // 3. Preset Itineraries
+    const ROUTE_PRESETS = {
+      dzukou: {
+        routeTitle: "Kohima to Dzükou Valley",
+        routeSummary: "Kohima → Viswema → Dzükou Valley",
+        totalEstTime: "~6.5 hrs",
+        nextCheckIn: "05:00 PM",
+        nextStop: "Viswema",
+        advisoryNotice: "Log your check-in at the Viswema SAYO counter before starting the trail.",
+        stops: [
+          { name: "Kohima (BOC Counter)", badge: "Departed", status: "completed", time: "08:30 AM", description: "Transit boarding." },
+          { name: "Viswema Entry Point", badge: "Next Check-in", status: "current", time: "05:00 PM", description: "Permit verification & water refill." },
+          { name: "Viswema Trekkers' Point", badge: "Upcoming", status: "upcoming", time: "06:15 PM", description: "Stone stair climb begins." },
+          { name: "Dzükou Rest House", badge: "Final", status: "upcoming", time: "08:30 PM", description: "Base campsite arrival." }
+        ]
+      },
+      khonoma: {
+        routeTitle: "Kohima to Khonoma Village",
+        routeSummary: "Kohima → Khonoma",
+        totalEstTime: "~1.5 hrs",
+        nextCheckIn: "02:00 PM",
+        nextStop: "Khonoma Gate",
+        advisoryNotice: "Register with the local community council upon arrival.",
+        stops: [
+          { name: "Kohima Stand", badge: "Departed", status: "completed", time: "11:00 AM", description: "Depart Kohima." },
+          { name: "Khonoma Entry Gate", badge: "Next Check-in", status: "current", time: "02:00 PM", description: "Eco-tourism registration." }
+        ]
+      },
+      mokokchung: {
+        routeTitle: "Kohima to Mokokchung",
+        routeSummary: "Kohima → Wokha → Mokokchung",
+        totalEstTime: "~5.5 hrs",
+        nextCheckIn: "01:30 PM",
+        nextStop: "Wokha Transit Point",
+        advisoryNotice: "Mountain road speeds restricted to 40 km/h due to curves.",
+        stops: [
+          { name: "Kohima NST Bus Terminal", badge: "Departed", status: "completed", time: "07:00 AM", description: "Morning departure." },
+          { name: "Wokha Rest Stop", badge: "Next Check-in", status: "current", time: "01:30 PM", description: "Midway checkpoint." },
+          { name: "Mokokchung Town", badge: "Final", status: "upcoming", time: "04:30 PM", description: "Destination arrival." }
+        ]
+      }
+    };
+
+    // 4. Create Trip handler attached to window
+    window.createTripForUser = async function(routeKey) {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const preset = ROUTE_PRESETS[routeKey];
+      if (!preset) return;
+
+      try {
+        await addDoc(collection(db, "active_trips"), {
+          userId: user.uid,
+          status: "Active",
+          ...preset,
+          createdAt: serverTimestamp()
+        });
+
+        closeNewTripModal();
+      } catch (err) {
+        console.error("Failed to create active trip:", err);
+      }
+    };
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>
