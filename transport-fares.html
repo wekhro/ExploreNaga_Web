@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transport & Fares Directory - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center py-0 sm:py-6 antialiased text-gray-800">
+
+  <!-- Mobile Screen Container -->
+  <div class="w-full max-w-md bg-white shadow-xl min-h-screen sm:rounded-3xl overflow-hidden flex flex-col pb-6">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-50">
+      <div class="flex items-center gap-3">
+        <a href="dashboard.html" class="p-1 -ml-1 text-gray-700 hover:text-emerald-900 transition">
+          <i data-lucide="arrow-left" class="w-6 h-6"></i>
+        </a>
+        <div>
+          <h1 class="font-bold text-base text-gray-900 leading-tight">Transport & Fares</h1>
+          <p class="text-[10px] text-gray-400">All Nagaland Districts & Hotspots</p>
+        </div>
+      </div>
+      <span id="feedBadge" class="flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 font-semibold px-2.5 py-1 rounded-full border border-emerald-200">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        Live Feed
+      </span>
+    </header>
+
+    <main class="p-5 space-y-4 flex-1">
+
+      <!-- Search Box -->
+      <div class="relative">
+        <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-3"></i>
+        <input 
+          id="routeSearch" 
+          type="text" 
+          placeholder="Search district, heritage, or peak (e.g., Longwa, Doyang)"
+          class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-emerald-600 transition"
+        >
+      </div>
+
+      <!-- Mode & Region Filter Pills -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 text-xs font-semibold">
+        <button onclick="setFilter('all', this)" class="filter-btn active px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition">All Routes</button>
+        <button onclick="setFilter('heritage', this)" class="filter-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Heritage & Trails</button>
+        <button onclick="setFilter('central-south', this)" class="filter-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Central & South</button>
+        <button onclick="setFilter('north-east', this)" class="filter-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition">North & East</button>
+      </div>
+
+      <!-- General Advisory Notice -->
+      <div class="bg-amber-50 border border-amber-100 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2.5">
+        <i data-lucide="info" class="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0"></i>
+        <div class="text-[11px] leading-relaxed space-y-1">
+          <p><strong class="font-semibold">Booking Window:</strong> Inter-district Tata Sumos depart between <strong>06:00 AM – 07:00 AM</strong>. Counters close seat bookings the previous afternoon.</p>
+          <p><strong class="font-semibold">Luggage:</strong> Heavy backpacks on summit treks incur a standard nominal rooftop fee (₹50–₹100).</p>
+        </div>
+      </div>
+
+      <!-- Routes Counter Header -->
+      <div class="flex justify-between items-center text-xs px-1 text-gray-500 font-medium">
+        <span id="routeCount">Syncing destinations...</span>
+        <span class="text-[10px]">Standard Sumo / Bus Rates</span>
+      </div>
+
+      <!-- Dynamic Live Routes Container -->
+      <div id="routesList" class="space-y-3">
+        <!-- Skeleton Loader -->
+        <div class="animate-pulse bg-gray-50 border border-gray-100 rounded-2xl p-4 space-y-3">
+          <div class="h-3 bg-gray-200 rounded w-1/3"></div>
+          <div class="h-8 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+
+      <!-- Footer Booking Guidelines -->
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3.5 space-y-2 text-xs text-gray-600 mt-4">
+        <h4 class="font-bold text-gray-900 flex items-center gap-1.5 text-[11px]">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-700"></i>
+          Key Counter Hubs
+        </h4>
+        <ul class="text-[10px] space-y-1 text-gray-500 list-disc pl-4 leading-relaxed">
+          <li><strong>Kohima:</strong> BOC Taxi Stand (South to Dzükou, Manipur, Pfütsero), TCP Gate & High School Junction (North/East to Mokokchung, Wokha).</li>
+          <li><strong>Dimapur:</strong> Purana Bazar & Railway Station frontage (all intra-state hill routes).</li>
+          <li><strong>Night Driving:</strong> Hill commercial vehicles rarely operate after 6:00 PM due to fog and mountain safety protocols.</li>
+        </ul>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Real-time Firestore Sync & Dynamic Render Script -->
+  <script type="module">
+    import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { db } from "./firebase.js";
+
+    // Complete Nagaland Hotspots Dataset (Used immediately & as backup if Firestore collection is empty)
+    const DEFAULT_NAGALAND_ROUTES = [
+      {
+        name: "Kohima to Dimapur (Gateway)",
+        district: "Dimapur / Kohima",
+        category: "gateway",
+        region: "central-south",
+        routeFrom: "Dimapur Railway / Airport",
+        destination: "Kohima",
+        estimatedTime: "~2.5 - 3.5 hrs (74 km)",
+        tag: "Primary Lifeline",
+        fares: { sharedSumo: "₹350 - ₹450", bus: "₹120 - ₹160", privateTaxi: "₹2,200 - ₹2,800" },
+        counter: "Golaghat Road / Purana Bazar (Dimapur) & NST Stand (Kohima).",
+        permitNote: "Smooth 4-lane highway; fog caution near New Chumoukedima in evenings.",
+        keywords: "dimapur kohima chumoukedima gateway highway nh29 sumo bus taxi"
+      },
+      {
+        name: "Viswema & Jakhama (Dzükou Trailheads)",
+        district: "Kohima",
+        category: "heritage",
+        region: "central-south",
+        routeFrom: "Kohima (BOC Stand)",
+        destination: "Viswema / Jakhama",
+        estimatedTime: "~45 - 60 mins (25 km)",
+        tag: "Trek Access",
+        fares: { sharedSumo: "₹80 - ₹120", bus: "N/A", privateTaxi: "₹1,500 - ₹2,000 (4x4 drop)" },
+        counter: "Network / BOC Sumo Point, Kohima. Shared vehicles drop at highway gate only.",
+        permitNote: "SAYO entry fee ₹100 domestic, ₹200 foreign at Viswema counter.",
+        keywords: "kohima viswema jakhama dzukou valley trek trailhead boc sumo taxi"
+      },
+      {
+        name: "Kisama Heritage Village",
+        district: "Kohima",
+        category: "heritage",
+        region: "central-south",
+        routeFrom: "Kohima Town",
+        destination: "Kisama Village",
+        estimatedTime: "~25 mins (12 km)",
+        tag: "Festival Grounds",
+        fares: { sharedSumo: "₹40 - ₹60", bus: "₹20 (festival)", privateTaxi: "₹400 - ₹600" },
+        counter: "Local Ground / BOC stand, Kohima.",
+        permitNote: "Permanent Hornbill Festival venue. Morungs open year-round for photography.",
+        keywords: "kohima kisama heritage village hornbill festival morung taxi"
+      },
+      {
+        name: "Khonoma Green Village",
+        district: "Kohima",
+        category: "heritage",
+        region: "central-south",
+        routeFrom: "Kohima Town",
+        destination: "Khonoma Village",
+        estimatedTime: "~1 hr (20 km)",
+        tag: "Eco Heritage",
+        fares: { sharedSumo: "₹100 - ₹150", bus: "N/A", privateTaxi: "₹1,400 - ₹1,800" },
+        counter: "Below TCP Gate / Phoolbari stand. Last return shared taxi at ~2:30 PM.",
+        permitNote: "Eco-tourism permit required at village gate. Certified guide mandatory for bastion trails.",
+        keywords: "kohima khonoma green village angami eco conservation taxi"
+      },
+      {
+        name: "Japfü Peak Base (Kigwema)",
+        district: "Kohima",
+        category: "heritage",
+        region: "central-south",
+        routeFrom: "Kohima Town",
+        destination: "Kigwema Village",
+        estimatedTime: "~35 mins (15 km)",
+        tag: "Peak Trailhead",
+        fares: { sharedSumo: "₹60 - ₹80", bus: "N/A", privateTaxi: "₹700 - ₹1,000" },
+        counter: "BOC stand heading toward Pfütsero/Mao.",
+        permitNote: "Second highest peak (3,048 m) & world's tallest rhododendron. Guide mandatory.",
+        keywords: "kohima kigwema japfu peak summit rhododendron mountain trek"
+      },
+      {
+        name: "Pfütsero & Glory Peak",
+        district: "Phek",
+        category: "central-south",
+        region: "central-south",
+        routeFrom: "Kohima (BOC)",
+        destination: "Pfütsero (2,133 m)",
+        estimatedTime: "~2.5 hrs (68 km)",
+        tag: "Coldest Town",
+        fares: { sharedSumo: "₹250 - ₹300", bus: "N/A", privateTaxi: "₹2,800 - ₹3,500" },
+        counter: "BOC Sumo Counter, Kohima.",
+        permitNote: "Local taxi from Pfütsero town to Glory Peak summit costs ~₹400 return.",
+        keywords: "kohima pfutsero phek glory peak cold town cherry blossom sumo"
+      },
+      {
+        name: "Mokokchung & Ungma Village",
+        district: "Mokokchung",
+        category: "heritage",
+        region: "central-south",
+        routeFrom: "Kohima / Dimapur",
+        destination: "Mokokchung",
+        estimatedTime: "~5 - 6 hrs (150 km)",
+        tag: "Ao Cultural Hub",
+        fares: { sharedSumo: "₹600 - ₹750", bus: "₹300 - ₹400", privateTaxi: "₹150 - ₹250 (local Ungma drop)" },
+        counter: "NST Colony Dimapur & High School Junction Kohima.",
+        permitNote: "Ungma preserves the traditional log drums (Tongten).",
+        keywords: "kohima dimapur mokokchung ungma village ao naga drum sumo bus"
+      },
+      {
+        name: "Wokha & Doyang Reservoir",
+        district: "Wokha",
+        category: "central-south",
+        region: "central-south",
+        routeFrom: "Kohima",
+        destination: "Wokha / Doyang",
+        estimatedTime: "~2.5 - 3.5 hrs (80 km)",
+        tag: "Amur Falcon Roost",
+        fares: { sharedSumo: "₹350 - ₹450", bus: "₹200 (to Wokha)", privateTaxi: "₹900 - ₹1,400 (Wokha to Lake)" },
+        counter: "Phoolbari counter Kohima; local taxi at Wokha Bazaar for Doyang.",
+        permitNote: "Peak falcon roosting season runs October through late November.",
+        keywords: "kohima wokha doyang reservoir amur falcon lotha sumo taxi"
+      },
+      {
+        name: "Mon Town (Land of Konyaks)",
+        district: "Mon",
+        category: "north-east",
+        region: "north-east",
+        routeFrom: "Dimapur / Sonari (Assam)",
+        destination: "Mon Town",
+        estimatedTime: "~8 - 10 hrs (via Assam)",
+        tag: "Land of Konyaks",
+        fares: { sharedSumo: "₹900 - ₹1,200", bus: "₹650 - ₹800", privateTaxi: "₹250 - ₹350 (Sonari to Mon)" },
+        counter: "Sumo counter at Golaghat Road Dimapur or Sonari bus stand.",
+        permitNote: "Fastest route: Train to Simaluguri or Bhojo (Assam), then shared Sumo to Mon.",
+        keywords: "dimapur sonari simaluguri mon konyak border headhunter sumo bus"
+      },
+      {
+        name: "Longwa Border Heritage Village",
+        district: "Mon",
+        category: "heritage",
+        region: "north-east",
+        routeFrom: "Mon Town",
+        destination: "Longwa Village",
+        estimatedTime: "~2 - 2.5 hrs (42 km)",
+        tag: "International Border",
+        fares: { sharedSumo: "₹200 - ₹250", bus: "N/A", privateTaxi: "₹2,500 - ₹3,000" },
+        counter: "Mon town main sumo stand (departs ~12:00 PM). Return at 06:00 AM.",
+        permitNote: "Indo-Myanmar border passes through the Angh's Morung. Foreigners report to FRO Mon.",
+        keywords: "mon longwa village konyak angh border myanmar sumo taxi"
+      },
+      {
+        name: "Benreu Village & Mt. Pauna",
+        district: "Peren",
+        category: "heritage",
+        region: "central-south",
+        routeFrom: "Dimapur / Jalukie",
+        destination: "Jalukie / Benreu",
+        estimatedTime: "~4 - 5 hrs (110 km)",
+        tag: "Zeliang Terraces",
+        fares: { sharedSumo: "₹250 - ₹350 (to Jalukie)", bus: "N/A", privateTaxi: "₹2,000 (Jalukie to Benreu)" },
+        counter: "Burma Camp Sumo Counter, Dimapur.",
+        permitNote: "Community cottages available at Benreu village; guide available for Mt. Pauna trail.",
+        keywords: "dimapur jalukie peren benreu village pauna mountain zeliang sumo"
+      },
+      {
+        name: "Tuensang & Noklak",
+        district: "Tuensang / Noklak",
+        category: "north-east",
+        region: "north-east",
+        routeFrom: "Kohima / Dimapur",
+        destination: "Tuensang & Noklak",
+        estimatedTime: "~9 - 11 hrs (230 km)",
+        tag: "Eastern Frontier",
+        fares: { sharedSumo: "₹900 - ₹1,100", bus: "₹550 - ₹650", privateTaxi: "₹250 - ₹350 (Tuensang to Noklak)" },
+        counter: "NST Terminal Dimapur (5:00 PM bus) & Tuensang Main Bazaar for Noklak.",
+        permitNote: "Famous for Khiamniungan cane craft, slate architecture, and ethnic textiles.",
+        keywords: "kohima tuensang noklak chang khiamniungan frontier eastern sumo bus"
+      },
+      {
+        name: "Mt. Saramati & Thanamir (Apple Village)",
+        district: "Kiphire",
+        category: "heritage",
+        region: "north-east",
+        routeFrom: "Kohima via Meluri",
+        destination: "Kiphire / Thanamir",
+        estimatedTime: "~9 - 10 hrs (240 km)",
+        tag: "Highest Peak (3,841 m)",
+        fares: { sharedSumo: "₹950 - ₹1,200", bus: "N/A", privateTaxi: "₹3,500 - ₹5,000 (Kiphire to Thanamir 4x4)" },
+        counter: "BOC Kohima to Kiphire town.",
+        permitNote: "Highest point in Nagaland along Myanmar border. Requires 4WD and village porters.",
+        keywords: "kohima kiphire saramati peak thanamir apple village summit trek sumo"
+      },
+      {
+        name: "Zunheboto (Sumi Heartland)",
+        district: "Zunheboto",
+        category: "central-south",
+        region: "central-south",
+        routeFrom: "Kohima / Mokokchung",
+        destination: "Zunheboto",
+        estimatedTime: "~4.5 - 5.5 hrs (140 km)",
+        tag: "Sumi Heartland",
+        fares: { sharedSumo: "₹550 - ₹700 (Kohima)", bus: "N/A", privateTaxi: "₹350 - ₹450 (Mokokchung)" },
+        counter: "High School junction Kohima / Mokokchung sumo counter (leaves 06:30 AM).",
+        permitNote: "Home to one of Asia's largest Baptist Church structures.",
+        keywords: "kohima mokokchung zunheboto sumi church sumo"
+      }
+    ];
+
+    let liveRoutes = [...DEFAULT_NAGALAND_ROUTES];
+    let activeFilter = "all";
+    let activeSearch = "";
+
+    const routesContainer = document.getElementById("routesList");
+    const countDisplay = document.getElementById("routeCount");
+    const searchInput = document.getElementById("routeSearch");
+
+    // Real-Time Firestore Synchronization
+    try {
+      onSnapshot(collection(db, "destinations"), (snapshot) => {
+        if (!snapshot.empty) {
+          const fetched = [];
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            fetched.push({
+              name: data.name || "Destination",
+              district: data.district || "",
+              category: data.category || "heritage",
+              region: data.region || "central-south",
+              routeFrom: data.routeFrom || "Main Hub",
+              destination: data.name || "",
+              estimatedTime: data.estimatedTime || "",
+              tag: data.tag || data.district || "Hotspot",
+              fares: data.fares || { sharedSumo: "₹---", bus: "₹---", privateTaxi: "₹---" },
+              counter: data.counter || "",
+              permitNote: data.permitNote || "",
+              keywords: (data.keywords || "") + " " + (data.name || "") + " " + (data.district || "")
+            });
+          });
+          liveRoutes = fetched;
+        }
+        renderCards();
+      }, (error) => {
+        console.warn("Firestore live stream fallback to verified route cache:", error);
+        renderCards();
+      });
+    } catch (err) {
+      console.warn("Direct Firestore initialization bypass, using verified cache:", err);
+      renderCards();
+    }
+
+    // Render Routes to DOM
+    function renderCards() {
+      const filtered = liveRoutes.filter(route => {
+        const matchesCategory = 
+          activeFilter === "all" || 
+          route.category === activeFilter || 
+          route.region === activeFilter;
+
+        const searchableText = `${route.name} ${route.district} ${route.routeFrom} ${route.keywords || ""}`.toLowerCase();
+        const matchesQuery = searchableText.includes(activeSearch);
+
+        return matchesCategory && matchesQuery;
+      });
+
+      countDisplay.textContent = `Showing ${filtered.length} of ${liveRoutes.length} live routes`;
+
+      if (filtered.length === 0) {
+        routesContainer.innerHTML = `
+          <div class="text-center py-8 text-xs text-gray-400">
+            No routes matching "${activeSearch}". Try searching "Kohima", "Longwa", or "Trek".
+          </div>
+        `;
+        return;
+      }
+
+      routesContainer.innerHTML = filtered.map(item => `
+        <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm space-y-2.5 transition hover:shadow-md">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">
+                ${item.district} • ${item.tag}
+              </span>
+              <div class="flex items-center gap-1.5 font-bold text-xs text-gray-900 mt-1">
+                <span>${item.routeFrom}</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-gray-400"></i>
+                <span class="text-emerald-950">${item.destination || item.name}</span>
+              </div>
+            </div>
+            <span class="text-[10px] text-gray-400 font-mono">${item.estimatedTime}</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1 border-t border-gray-100 text-center">
+            <div class="bg-gray-50 rounded-lg p-2">
+              <span class="text-[10px] text-gray-500 block">Shared Sumo</span>
+              <span class="font-bold text-xs text-emerald-900">${item.fares?.sharedSumo || "N/A"}</span>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-2">
+              <span class="text-[10px] text-gray-500 block">NST Bus</span>
+              <span class="font-bold text-xs text-emerald-900">${item.fares?.bus || "N/A"}</span>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-2">
+              <span class="text-[10px] text-gray-500 block">Reserved Taxi</span>
+              <span class="font-bold text-xs text-emerald-900">${item.fares?.privateTaxi || "N/A"}</span>
+            </div>
+          </div>
+
+          ${item.counter ? `<p class="text-[10px] text-gray-500 leading-snug"><strong class="font-semibold text-gray-700">Counter:</strong> ${item.counter}</p>` : ''}
+          ${item.permitNote ? `<p class="text-[10px] text-amber-800/80 leading-snug"><strong class="font-semibold">Notice:</strong> ${item.permitNote}</p>` : ''}
+        </div>
+      `).join("");
+
+      lucide.createIcons();
+    }
+
+    // Filter Buttons
+    window.setFilter = function(filterKey, element) {
+      activeFilter = filterKey;
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.className = "filter-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition";
+      });
+      element.className = "filter-btn active px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition";
+      renderCards();
+    };
+
+    // Search Query Listener
+    searchInput.addEventListener("input", (e) => {
+      activeSearch = e.target.value.toLowerCase().trim();
+      renderCards();
+    });
+
+    // Initial render
+    renderCards();
+  </script>
+
+</body>
+</html>
