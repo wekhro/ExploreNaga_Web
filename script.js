@@ -1,51 +1,55 @@
-/* ========================================================
-   DYNAMIC MENU LOADER
-======================================================== */
+/* =========================
+   LOAD EXTERNAL MENU
+========================= */
+
 document.addEventListener("DOMContentLoaded", () => {
-    const container = document.getElementById("menu-container");
-    if (container) {
-        fetch("menu.html")
-            .then(response => {
-                if (!response.ok) throw new Error("Could not load menu.html");
+    const menuContainer = document.getElementById("menu-container");
+    if (menuContainer) {
+        // Cache-busting parameter (?v=...) ensures the browser always loads the updated menu.html
+        fetch("menu.html?v=" + new Date().getTime())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to load menu.html");
+                }
                 return response.text();
             })
-            .then(html => {
-                container.innerHTML = html;
+            .then((html) => {
+                menuContainer.innerHTML = html;
             })
-            .catch(err => console.error("Error loading navigation menu:", err));
+            .catch((err) => console.error("Error loading side menu:", err));
     }
 });
 
-/* ========================================================
-   MENU TOGGLE FUNCTIONS
-======================================================== */
+/* =========================
+   SIDE MENU
+========================= */
+
 function openMenu() {
     const sideMenu = document.getElementById("sideMenu");
     const overlay = document.getElementById("menuOverlay");
-
-    if (sideMenu) sideMenu.classList.add("active");
-    if (overlay) overlay.classList.add("active");
-
-    document.body.style.overflow = "hidden";
+    if (sideMenu) sideMenu.classList.add("open");
+    if (overlay) overlay.classList.add("open");
 }
 
 function closeMenu() {
     const sideMenu = document.getElementById("sideMenu");
     const overlay = document.getElementById("menuOverlay");
-
-    if (sideMenu) sideMenu.classList.remove("active");
-    if (overlay) overlay.classList.remove("active");
-
-    document.body.style.overflow = "";
+    if (sideMenu) sideMenu.classList.remove("open");
+    if (overlay) overlay.classList.remove("open");
 }
 
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeMenu();
-});
+/* =========================
+   LOGIN
+========================= */
 
-/* ========================================================
-   SLIDER LOGIC (For index.html)
-======================================================== */
+function login() {
+    alert("Login page coming soon!");
+}
+
+/* =========================
+   IMAGE SLIDER
+========================= */
+
 const images = [
     "images/Sheep Farm.jpeg",
     "https://commons.wikimedia.org/wiki/Special:Redirect/file/Kachari_Ruins,_Dimapur,_Nagaland.jpg",
@@ -54,32 +58,28 @@ const images = [
 ];
 
 let currentSlide = 0;
-let sliderInterval = null;
 
 function showSlide(number) {
     const heroImage = document.getElementById("heroImage");
     const dots = document.querySelectorAll(".dot");
 
-    if (!heroImage) return;
-
     currentSlide = (number + images.length) % images.length;
-    heroImage.src = images[currentSlide];
+
+    if (heroImage) {
+        heroImage.src = images[currentSlide];
+    }
 
     dots.forEach((dot, index) => {
         dot.classList.toggle("active", index === currentSlide);
     });
-
-    resetAutoplay();
 }
 
-function nextSlide() { showSlide(currentSlide + 1); }
-function previousSlide() { showSlide(currentSlide - 1); }
-
-function resetAutoplay() {
-    if (sliderInterval) clearInterval(sliderInterval);
-    sliderInterval = setInterval(nextSlide, 6000);
+function nextSlide() {
+    showSlide(currentSlide + 1);
 }
 
-if (document.getElementById("heroImage")) {
-    resetAutoplay();
+function previousSlide() {
+    showSlide(currentSlide - 1);
 }
+
+let sliderInterval = setInterval(nextSlide, 6000);
