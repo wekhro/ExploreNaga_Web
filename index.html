@@ -4,240 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>ExploreNaga - Tourism Guide</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- Placeholder for menu.html -->
+    <div id="menu-container"></div>
+
     <!-- ================= HEADER ================= -->
-
     <header>
-
-        <!-- Hamburger Menu -->
-        <button class="menu-button" onclick="openMenu()">
+        <button class="menu-button" onclick="openMenu()" aria-label="Open menu">
             ☰
         </button>
 
-        <!-- Logo -->
         <div class="logo">
             <div class="logo-icon">▲</div>
-
             <div>
                 <h2>ExploreNaga 🌿</h2>
                 <p>Stay connected, Travel Safely</p>
             </div>
         </div>
 
-        <!-- Header Buttons -->
         <div class="header-buttons">
-
-            <button class="safety-button">
+            <button class="safety-button" onclick="openMenu()">
                 ✧
             </button>
             <button class="login-button" onclick="window.location.href='login.html'">
                 Login
             </button>
-
         </div>
-
     </header>
 
-
-    <!-- ================= SIDE MENU ================= -->
-
-    <div id="sideMenu" class="side-menu">
-
-        <button class="close-button" onclick="closeMenu()">
-            ×
-        </button>
-
-        <h2>ExploreNaga</h2>
-
-        <a href="login.html">Login</a>
-        <a href="#destinations">Destinations</a>
-        <a href="#">Plan Trip</a>
-        <a href="#transport">Transport Fares</a>
-        <a href="#safety">Safety Hub</a>
-        <a href="#">Profile</a>
-
-    </div>
-
-
     <!-- ================= HERO IMAGE ================= -->
-
     <section class="hero">
+        <img id="heroImage" src="images/Sheep Farm.jpeg" alt="Sheep Farm, Kohima, Nagaland">
 
-        <img id="heroImage"
-             src="images/Sheep Farm.jpeg"
-             alt="Sheep Farm, Kohima, Nagaland">
+        <button class="arrow left" onclick="previousSlide()">‹</button>
+        <button class="arrow right" onclick="nextSlide()">›</button>
 
-        <!-- Previous -->
-        <button class="arrow left" onclick="previousSlide()">
-            ‹
-        </button>
-
-        <!-- Next -->
-        <button class="arrow right" onclick="nextSlide()">
-            ›
-        </button>
-
-        <!-- Dots -->
         <div class="dots">
             <span onclick="showSlide(0)" class="dot active"></span>
             <span onclick="showSlide(1)" class="dot"></span>
             <span onclick="showSlide(2)" class="dot"></span>
             <span onclick="showSlide(3)" class="dot"></span>
         </div>
-
     </section>
 
-
     <!-- ================= MAIN CONTENT ================= -->
-
     <main>
+        <p class="welcome-text">Welcome to Nagaland, India</p>
+        <h1>ExploreNaga 🌿</h1>
 
-        <p class="welcome-text">
-            Welcome to Nagaland, India
-        </p>
-
-        <h1>
-            ExploreNaga 🌿
-        </h1>
-
-
-        <!-- ================= QUICK OPTIONS ================= -->
-
+        <!-- Quick Options with Direct Links -->
         <div class="options">
-
-            <!-- Login -->
             <button class="option" onclick="window.location.href='login.html'">
-
-                <span class="option-icon">
-                    🔒
-                </span>
-
-                <span>
-                    Login to check-in/SOS
-                </span>
-
+                <span class="option-icon">🔒</span>
+                <span>Login to check-in/SOS</span>
             </button>
 
-
-            <!-- Transport -->
-            <button class="option" id="transport">
-
-                <span class="option-icon">
-                    🚌
-                </span>
-
-                <span>
-                    Transport Fares
-                    <small>
-                        (Bus, shared taxi, etc.)
-                    </small>
-                </span>
-
-                <span class="arrow-down">
-                    ⌄
-                </span>
-
+            <button class="option" id="transport" onclick="window.location.href='essentials.html#transport'">
+                <span class="option-icon">🚌</span>
+                <span>Transport Fares<small>(Bus, shared taxi, etc.)</small></span>
+                <span class="arrow-down">⌄</span>
             </button>
 
-
-            <!-- Essential Information -->
-            <button class="option" id="safety">
-
-                <span class="option-icon">
-                    ⓘ
-                </span>
-
-                <span>
-                    Essential Info
-                    <small>
-                        (Entry Requirements, Do's & Don'ts)
-                    </small>
-                </span>
-
+            <button class="option" id="safety" onclick="window.location.href='essentials.html#ilp'">
+                <span class="option-icon">ⓘ</span>
+                <span>Essential Info<small>(Entry Requirements, Do's & Don'ts)</small></span>
             </button>
-
         </div>
 
-
-        <!-- ================= DESTINATIONS ================= -->
-
-        <h2 class="section-title" id="destinations">
-            Popular Destinations
-        </h2>
-
+        <!-- Destinations Grid -->
+        <h2 class="section-title" id="destinations">Popular Destinations</h2>
 
         <div class="destinations">
-
-            <!-- Sheep Farm -->
-            <div class="destination">
-                <img 
-                    src="images/Sheep Farm.jpeg"
-                    alt="Sheep Farm, Kohima, Nagaland">
+            <div class="destination" onclick="window.location.href='destination.html'" style="cursor: pointer;">
+                <img src="images/Sheep Farm.jpeg" alt="Sheep Farm, Kohima, Nagaland">
             </div>
-
-            <!-- Kachari Ruins -->
-            <div class="destination">
-                <img 
-                    src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Kachari_Ruins,_Dimapur,_Nagaland.jpg"
-                    alt="Kachari Ruins, Dimapur, Nagaland">
+            <div class="destination" onclick="window.location.href='destination.html'" style="cursor: pointer;">
+                <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Kachari_Ruins,_Dimapur,_Nagaland.jpg" alt="Kachari Ruins, Dimapur, Nagaland">
             </div>
-
-            <!-- Khonoma -->
-            <div class="destination">
-                <img 
-                    src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Khonoma_village,_Nagaland,_India.jpg"
-                    alt="Khonoma Village, Nagaland">
+            <div class="destination" onclick="window.location.href='destination.html'" style="cursor: pointer;">
+                <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Khonoma_village,_Nagaland,_India.jpg" alt="Khonoma Village, Nagaland">
             </div>
-
-            <!-- Dzükou Valley -->
-            <div class="destination">
-                <img 
-                    src="https://www.oddessemania.in/wp-content/uploads/2023/08/Dzukou-valley-trek-photo-02-1-1024x668.jpeg"
-                    alt="Dzükou Valley, Nagaland">
+            <div class="destination" onclick="window.location.href='destination.html'" style="cursor: pointer;">
+                <img src="https://www.oddessemania.in/wp-content/uploads/2023/08/Dzukou-valley-trek-photo-02-1-1024x668.jpeg" alt="Dzükou Valley, Nagaland">
             </div>
-
         </div>
-
     </main>
 
-
     <!-- ================= FOOTER ================= -->
-
     <footer>
-
         <div class="footer-links">
-
-            <a href="#safety">
-                Our Safety
-            </a>
-
-            <a href="#">
-                Be Responsible
-            </a>
-
-            <a href="#">
-                Respect Culture
-            </a>
-
+            <a href="safety.html">Our Safety</a>
+            <a href="#">Be Responsible</a>
+            <a href="essentials.html#etiquette">Respect Culture</a>
         </div>
-
-        <p>
-            © 2026 ExploreNaga
-        </p>
-
+        <p>© 2026 ExploreNaga</p>
     </footer>
 
-
-    <!-- JavaScript -->
     <script src="script.js"></script>
-
 </body>
 
 </html>
