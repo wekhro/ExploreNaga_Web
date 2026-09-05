@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Essentials - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center py-0 sm:py-6 antialiased text-gray-800">
+
+  <!-- Reusable Side Menu Container -->
+  <div id="menu-container"></div>
+
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-white shadow-xl min-h-screen sm:rounded-3xl overflow-hidden flex flex-col pb-6">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-40">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-1 -ml-1 text-gray-700 hover:text-emerald-900">
+          <i data-lucide="arrow-left" class="w-6 h-6"></i>
+        </a>
+        <h1 class="font-bold text-base text-gray-900">Travel Essentials</h1>
+      </div>
+      <button onclick="openMenu()" class="p-1 text-gray-700 hover:text-emerald-900">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </header>
+
+    <main class="p-5 space-y-4 flex-1">
+
+      <!-- Navigation Tabs -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 text-xs font-semibold">
+        <button onclick="switchTab('ilp')" id="tab-ilp" class="tab-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="file-check" class="w-3.5 h-3.5"></i> Permits (ILP & FRO)
+        </button>
+        <button onclick="switchTab('transport')" id="tab-transport" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="bus" class="w-3.5 h-3.5"></i> Transport & Fares
+        </button>
+        <button onclick="switchTab('etiquette')" id="tab-etiquette" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="heart-handshake" class="w-3.5 h-3.5"></i> Village Etiquette
+        </button>
+      </div>
+
+      <!-- ================= 1. PERMITS (ILP & FRO) ================= -->
+      <div id="section-ilp" class="space-y-3.5">
+        <p class="text-[11px] text-gray-500 font-medium">Mandatory travel documents & registration protocols:</p>
+
+        <!-- Domestic Traveler Card -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">Indian Citizens</span>
+            <span class="text-xs font-bold text-emerald-700">₹50 – ₹500</span>
+          </div>
+          <h3 class="font-bold text-sm text-gray-900">Inner Line Permit (ILP)</h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Required under the Bengal Eastern Frontier Regulation 1873 for all domestic tourists entering Nagaland (including Dimapur).
+          </p>
+
+          <div class="bg-gray-50 rounded-xl p-3 space-y-1.5 text-[11px] text-gray-700">
+            <div class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0"></i>
+              <span><strong>Documents:</strong> Aadhaar / Voter ID + Passport photo</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0"></i>
+              <span><strong>Turnaround:</strong> 24–48 hours for e-ILP approval</span>
+            </div>
+          </div>
+
+          <a href="https://ilp.nagaland.gov.in" target="_blank" class="flex items-center justify-center gap-1.5 w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2.5 rounded-xl text-xs transition shadow-sm">
+            <span>Apply on Official Portal</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <!-- Foreign Nationals Card -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2 py-0.5 rounded">International Tourists</span>
+            <span class="text-xs font-bold text-blue-700">Free Registration</span>
+          </div>
+          <h3 class="font-bold text-sm text-gray-900">Foreigner Registration (FRO)</h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Foreign passport holders do not require a PAP (Protected Area Permit) for standard circuits, but <strong>must register</strong> with the local district FRO within 24 hours of arrival.
+          </p>
+
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3 space-y-1 text-[11px] text-blue-950">
+            <p><strong>Exclusions:</strong> Passport holders from Pakistan, China, and Afghanistan require prior approval from the Ministry of Home Affairs (MHA).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 2. TRANSPORT & FARES ================= -->
+      <div id="section-transport" class="space-y-3.5 hidden">
+        
+        <!-- Live Route Search Input -->
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-3"></i>
+          <input 
+            id="fareSearch" 
+            type="text" 
+            placeholder="Search route (e.g. Kohima, Dimapur, Mon, Phek)" 
+            class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-emerald-600 transition"
+          >
+        </div>
+
+        <!-- Route Fare Cards -->
+        <div id="fareList" class="space-y-2.5">
+          
+          <div class="fare-card border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between" data-route="dimapur kohima taxi sumo highway">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-xs text-gray-900">Dimapur ➔ Kohima</span>
+                <span class="text-[9px] bg-emerald-50 text-emerald-800 font-semibold px-1.5 py-0.5 rounded">Shared Sumo</span>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-0.5">Purana Bazaar stand • ~2.5 to 3 hrs</p>
+            </div>
+            <div class="text-right">
+              <span class="font-bold text-sm text-gray-900">₹350 – ₹450</span>
+              <span class="block text-[10px] text-gray-400">per seat</span>
+            </div>
+          </div>
+
+          <div class="fare-card border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between" data-route="kohima khonoma local taxi village">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-xs text-gray-900">Kohima ➔ Khonoma</span>
+                <span class="text-[9px] bg-amber-50 text-amber-800 font-semibold px-1.5 py-0.5 rounded">Local Taxi</span>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-0.5">BOC Counter • ~45 mins</p>
+            </div>
+            <div class="text-right">
+              <span class="font-bold text-sm text-gray-900">₹100 – ₹150</span>
+              <span class="block text-[10px] text-gray-400">shared / ₹800 hire</span>
+            </div>
+          </div>
+
+          <div class="fare-card border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between" data-route="kohima pfutsero phek sumo glory peak">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-xs text-gray-900">Kohima ➔ Pfütsero</span>
+                <span class="text-[9px] bg-emerald-50 text-emerald-800 font-semibold px-1.5 py-0.5 rounded">Shared Sumo</span>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-0.5">Morning departures • ~2.5 hrs</p>
+            </div>
+            <div class="text-right">
+              <span class="font-bold text-sm text-gray-900">₹250 – ₹300</span>
+              <span class="block text-[10px] text-gray-400">per seat</span>
+            </div>
+          </div>
+
+          <div class="fare-card border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between" data-route="dimapur mokokchung nst bus government">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-xs text-gray-900">Dimapur ➔ Mokokchung</span>
+                <span class="text-[9px] bg-blue-50 text-blue-800 font-semibold px-1.5 py-0.5 rounded">NST Bus</span>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-0.5">ISBT Terminal • ~6 to 7 hrs</p>
+            </div>
+            <div class="text-right">
+              <span class="font-bold text-sm text-gray-900">₹400 – ₹550</span>
+              <span class="block text-[10px] text-gray-400">bus / sumo</span>
+            </div>
+          </div>
+
+          <div class="fare-card border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between" data-route="kohima viswema dzukou trek taxi">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-xs text-gray-900">Kohima ➔ Viswema (Dzükou Base)</span>
+                <span class="text-[9px] bg-emerald-50 text-emerald-800 font-semibold px-1.5 py-0.5 rounded">Private Taxi</span>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-0.5">Drop-off to trek starting ridge</p>
+            </div>
+            <div class="text-right">
+              <span class="font-bold text-sm text-gray-900">₹1,500 – ₹2,000</span>
+              <span class="block text-[10px] text-gray-400">vehicle hire</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-3 text-[11px] text-gray-600 space-y-1">
+          <p class="font-semibold text-gray-900">💡 Transit Rule of Thumb:</p>
+          <p>Shared Sumo stands shut down departures by 1:00 PM. Book your counter tickets early in the morning (by 6:30 AM – 7:00 AM).</p>
+        </div>
+
+      </div>
+
+      <!-- ================= 3. VILLAGE ETIQUETTE ================= -->
+      <div id="section-etiquette" class="space-y-3.5 hidden">
+        
+        <div class="border border-emerald-100 bg-emerald-50/50 rounded-2xl p-4 space-y-1.5">
+          <h3 class="font-bold text-xs text-emerald-950 flex items-center gap-1.5">
+            <i data-lucide="shield-alert" class="w-4 h-4 text-emerald-700"></i>
+            Village Councils & Traditions
+          </h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Every village in Nagaland is governed by its customary council. Respecting local norms ensures safety and genuine hospitality.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          
+          <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex gap-3">
+            <span class="text-base">📸</span>
+            <div class="text-xs">
+              <h4 class="font-bold text-gray-900">Consent for Photography</h4>
+              <p class="text-gray-500 mt-0.5 leading-relaxed">Always request permission before taking photos of village elders, traditional morung structures, and private courtyards.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex gap-3">
+            <span class="text-base">⛪</span>
+            <div class="text-xs">
+              <h4 class="font-bold text-gray-900">Sunday Observance</h4>
+              <p class="text-gray-500 mt-0.5 leading-relaxed">Most shops, vehicle counters, and eateries remain closed on Sundays for prayer. Stock up on fuel and essentials on Saturday.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex gap-3">
+            <span class="text-base">🚯</span>
+            <div class="text-xs">
+              <h4 class="font-bold text-gray-900">Zero-Tolerance for Littering</h4>
+              <p class="text-gray-500 mt-0.5 leading-relaxed">Villages like Khonoma enforce strict penalties (up to ₹5,000 fines) for discarding single-use plastics.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex gap-3">
+            <span class="text-base">🤝</span>
+            <div class="text-xs">
+              <h4 class="font-bold text-gray-900">Receiving Food & Gifts</h4>
+              <p class="text-gray-500 mt-0.5 leading-relaxed">When offered traditional black tea or snacks in a village home, receive the cup using both hands as a gesture of respect.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    lucide.createIcons();
+
+    // Tab Switcher
+    function switchTab(tabKey) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap';
+      });
+
+      const activeBtn = document.getElementById(`tab-${tabKey}`);
+      if (activeBtn) {
+        activeBtn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap';
+      }
+
+      ['ilp', 'transport', 'etiquette'].forEach(k => {
+        const section = document.getElementById(`section-${k}`);
+        if (section) section.classList.toggle('hidden', k !== tabKey);
+      });
+    }
+
+    // Read URL Parameters or Anchor Hashes (e.g., essentials.html?tab=transport or essentials.html#etiquette)
+    function applyTabFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetTab = urlParams.get('tab') || window.location.hash.replace('#', '');
+      
+      if (['ilp', 'transport', 'etiquette'].includes(targetTab)) {
+        switchTab(targetTab);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', applyTabFromURL);
+    window.addEventListener('popstate', applyTabFromURL);
+    window.addEventListener('hashchange', applyTabFromURL);
+
+    // Live Fare Search Filter
+    const fareSearch = document.getElementById("fareSearch");
+    if (fareSearch) {
+      fareSearch.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        document.querySelectorAll(".fare-card").forEach(card => {
+          const match = card.getAttribute("data-route").toLowerCase();
+          card.classList.toggle("hidden", !match.includes(query));
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
