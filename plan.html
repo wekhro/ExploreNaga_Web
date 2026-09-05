@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan My Trip - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center py-0 sm:py-6 antialiased text-gray-800">
+
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-white shadow-xl min-h-screen sm:rounded-3xl overflow-hidden flex flex-col pb-6">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-40">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-1 -ml-1 text-gray-700 hover:text-emerald-900">
+          <i data-lucide="arrow-left" class="w-6 h-6"></i>
+        </a>
+        <h1 class="font-bold text-base text-gray-900">Plan My Trip</h1>
+      </div>
+      <span class="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+        Itinerary
+      </span>
+    </header>
+
+    <main class="p-5 space-y-4 flex-1">
+
+      <!-- Navigation Tabs -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 text-xs font-semibold">
+        <button onclick="switchTab('circuits')" id="tab-circuits" class="tab-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="map" class="w-3.5 h-3.5"></i> Suggested Circuits
+        </button>
+        <button onclick="switchTab('festivals')" id="tab-festivals" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Festivals & Hornbill
+        </button>
+        <button onclick="switchTab('stays')" id="tab-stays" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="home" class="w-3.5 h-3.5"></i> Homestays & Guides
+        </button>
+      </div>
+
+      <!-- Route Card: Popular Destinations -->
+      <a href="destination.html" class="flex items-center justify-between p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-950 hover:bg-emerald-100/70 transition">
+        <div class="flex items-center gap-2.5">
+          <div class="p-2 bg-emerald-800 text-white rounded-xl">
+            <i data-lucide="compass" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs">Browse Popular Destinations</h4>
+            <p class="text-[11px] text-emerald-800">Explore valleys, heritage villages & peaks</p>
+          </div>
+        </div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-800"></i>
+      </a>
+
+      <!-- ================= 1. CIRCUITS TAB ================= -->
+      <div id="section-circuits" class="space-y-3">
+        <p class="text-[11px] text-gray-500 font-medium">Curated multi-day itineraries across Nagaland:</p>
+
+        <!-- Circuit 1 -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">4 Days / 3 Nights</span>
+            <span class="text-[11px] font-semibold text-gray-500">Moderate Trek</span>
+          </div>
+          <h3 class="font-bold text-sm text-gray-900">Kohima & Dzükou Valley Circuit</h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Dimapur ➔ Kohima Heritage ➔ Khonoma Green Village ➔ Dzükou Trek Base
+          </p>
+          <div class="bg-gray-50 rounded-xl p-3 space-y-1 text-[11px] text-gray-700">
+            <p>• <strong>Day 1:</strong> Dimapur to Kohima WWII Cemetery & night bazaar.</p>
+            <p>• <strong>Day 2:</strong> Angami culture & bastion walk in Khonoma village.</p>
+            <p>• <strong>Day 3-4:</strong> Trek up via Viswema, camp at Dzükou, exit via Jakhama.</p>
+          </div>
+          <button onclick="saveCircuit('Kohima & Dzükou Circuit')" class="w-full border border-emerald-800 text-emerald-800 hover:bg-emerald-50 font-semibold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+            <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> Save Circuit
+          </button>
+        </div>
+
+        <!-- Circuit 2 -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2 py-0.5 rounded">5 Days / 4 Nights</span>
+            <span class="text-[11px] font-semibold text-gray-500">Cultural Immersion</span>
+          </div>
+          <h3 class="font-bold text-sm text-gray-900">Mon & Konyak Borderland Circuit</h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Dimapur ➔ Sonari / Mon Town ➔ Longwa Village ➔ Hongphoi
+          </p>
+          <div class="bg-gray-50 rounded-xl p-3 space-y-1 text-[11px] text-gray-700">
+            <p>• <strong>Day 1-2:</strong> Journey to Mon; visit local brass and wood artisans.</p>
+            <p>• <strong>Day 3:</strong> Stay in Longwa; cross-border chief's morung house.</p>
+            <p>• <strong>Day 4-5:</strong> Traditional Morungs in Hongphoi & return transit.</p>
+          </div>
+          <button onclick="saveCircuit('Mon & Konyak Circuit')" class="w-full border border-emerald-800 text-emerald-800 hover:bg-emerald-50 font-semibold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+            <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> Save Circuit
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= 2. FESTIVALS TAB ================= -->
+      <div id="section-festivals" class="space-y-3 hidden">
+        <p class="text-[11px] text-gray-500 font-medium">Major cultural festivals and tribal harvest celebrations:</p>
+
+        <!-- Hornbill Feature -->
+        <div class="border border-amber-200 bg-amber-50/60 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 rounded">State Festival</span>
+            <span class="text-xs font-bold text-amber-800">Dec 1 – Dec 10</span>
+          </div>
+          <h3 class="font-bold text-sm text-gray-900">Hornbill Festival</h3>
+          <p class="text-xs text-gray-700 leading-relaxed">
+            <strong>Location:</strong> Kisama Heritage Village (12 km south of Kohima).<br>
+            Brings together all recognized Naga tribes for cultural dance, folk music, traditional sports, and indigenous crafts.
+          </p>
+          <div class="text-[11px] text-amber-900 bg-white/80 rounded-xl p-2.5 border border-amber-200">
+            💡 <strong>Planning Tip:</strong> Homestays and shared sumos fill up months in advance. Secure bookings early.
+          </div>
+        </div>
+
+        <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm space-y-1">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-xs text-gray-900">Sekrenyi (Angami Tribe)</h4>
+            <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">February</span>
+          </div>
+          <p class="text-[11px] text-gray-500">Purification festival marked by bridge renovations, community feasts, and singing in Kohima district.</p>
+        </div>
+
+        <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm space-y-1">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-xs text-gray-900">Aoleang (Konyak Tribe)</h4>
+            <span class="text-[10px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">April 1 – 6</span>
+          </div>
+          <p class="text-[11px] text-gray-500">Welcomes spring and prays for a bountiful harvest in Mon district with celebratory dance and feasts.</p>
+        </div>
+
+        <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm space-y-1">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-xs text-gray-900">Moatsü (Ao Tribe)</h4>
+            <span class="text-[10px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">May 1 – 3</span>
+          </div>
+          <p class="text-[11px] text-gray-500">Celebrated across Mokokchung after seed-sowing with tug-of-war competitions and log-drum rhythms.</p>
+        </div>
+      </div>
+
+      <!-- ================= 3. HOMESTAYS & GUIDES TAB ================= -->
+      <div id="section-stays" class="space-y-3 hidden">
+        <p class="text-[11px] text-gray-500 font-medium">Verified local village stays and certified trekking guides:</p>
+
+        <!-- Homestay 1 -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2.5">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">Eco Homestay</span>
+              <h3 class="font-bold text-sm text-gray-900 mt-1">Khonoma Nature Homestay</h3>
+              <p class="text-[11px] text-gray-500">Khonoma Village, Kohima</p>
+            </div>
+            <span class="text-xs font-bold text-emerald-800">₹1,500/night</span>
+          </div>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Authentic Angami wooden home with organic garden meals, fireplace, and guided bastion walks.
+          </p>
+          <div class="flex gap-2 pt-1">
+            <a href="tel:+919876543210" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i> Call Host
+            </a>
+            <a href="https://wa.me/919876543210" target="_blank" class="flex-1 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Guide 1 -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2.5">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2 py-0.5 rounded">Certified Guide</span>
+              <h3 class="font-bold text-sm text-gray-900 mt-1">Dzükou Trail Guides (SAYO)</h3>
+              <p class="text-[11px] text-gray-500">Viswema / Jakhama Route</p>
+            </div>
+            <span class="text-xs font-bold text-blue-800">₹2,000/day</span>
+          </div>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Certified Southern Angami Youth Organization guides. Includes route navigation, cave shelter setup, and porter liaison.
+          </p>
+          <div class="flex gap-2 pt-1">
+            <a href="tel:+919876543211" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i> Call Guide
+            </a>
+            <a href="https://wa.me/919876543211" target="_blank" class="flex-1 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Homestay 2 -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2.5">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2 py-0.5 rounded">Border Homestay</span>
+              <h3 class="font-bold text-sm text-gray-900 mt-1">Longwa Angh Guest Retreat</h3>
+              <p class="text-[11px] text-gray-500">Longwa Village, Mon District</p>
+            </div>
+            <span class="text-xs font-bold text-purple-800">₹1,200/night</span>
+          </div>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Stay adjacent to the chief's morung atop the ridge. Experience local hospitality, hearth cooking, and brass smithing.
+          </p>
+          <div class="flex gap-2 pt-1">
+            <a href="tel:+919876543212" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i> Call Host
+            </a>
+            <a href="https://wa.me/919876543212" target="_blank" class="flex-1 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Tab Switcher
+    function switchTab(tabKey) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap';
+      });
+
+      const activeBtn = document.getElementById(`tab-${tabKey}`);
+      if (activeBtn) {
+        activeBtn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap';
+      }
+
+      ['circuits', 'festivals', 'stays'].forEach(k => {
+        const el = document.getElementById(`section-${k}`);
+        if (el) {
+          el.classList.toggle('hidden', k !== tabKey);
+        }
+      });
+    }
+
+    // Handles URL parameters and anchor hashes from menu.html clicks
+    function applyActiveTabFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      const hashParam = window.location.hash.replace('#', '');
+      const targetTab = tabParam || hashParam;
+
+      if (['circuits', 'festivals', 'stays'].includes(targetTab)) {
+        switchTab(targetTab);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', applyActiveTabFromURL);
+    window.addEventListener('popstate', applyActiveTabFromURL);
+    window.addEventListener('hashchange', applyActiveTabFromURL);
+
+    // Save circuit handler
+    function saveCircuit(name) {
+      let saved = JSON.parse(localStorage.getItem('savedCircuits') || '[]');
+      if (!saved.includes(name)) {
+        saved.push(name);
+        localStorage.setItem('savedCircuits', JSON.stringify(saved));
+        alert(`"${name}" has been saved to your trip list!`);
+      } else {
+        alert(`"${name}" is already saved in your circuits list.`);
+      }
+    }
+  </script>
+
+</body>
+</html>
