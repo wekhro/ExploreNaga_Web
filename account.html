@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Trip & Account - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center py-0 sm:py-6 antialiased text-gray-800">
+
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-white shadow-xl min-h-screen sm:rounded-3xl overflow-hidden flex flex-col pb-6">
+
+    <!-- Header (Cleaned: Back Arrow Only) -->
+    <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-40">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-1 -ml-1 text-gray-700 hover:text-emerald-900">
+          <i data-lucide="arrow-left" class="w-6 h-6"></i>
+        </a>
+        <h1 class="font-bold text-base text-gray-900">My Trip & Account</h1>
+      </div>
+      <span class="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+        Profile
+      </span>
+    </header>
+
+    <main class="p-5 space-y-4 flex-1">
+
+      <!-- Profile Summary Card -->
+      <div class="border border-emerald-100 bg-emerald-50/50 rounded-2xl p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-emerald-800 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+            EN
+          </div>
+          <div>
+            <h3 class="font-bold text-xs text-gray-900">Guest Explorer</h3>
+            <p class="text-[11px] text-emerald-800 font-medium">Nagaland Tourist ID: #NAG-2026</p>
+          </div>
+        </div>
+        <a href="login.html" class="text-[11px] font-bold text-emerald-800 bg-white border border-emerald-200 px-3 py-1.5 rounded-lg hover:bg-emerald-50 transition">
+          Switch User
+        </a>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 text-xs font-semibold">
+        <button onclick="switchTab('checkins')" id="tab-checkins" class="tab-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Safety Check-in
+        </button>
+        <button onclick="switchTab('saved')" id="tab-saved" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> Saved Circuits
+        </button>
+        <button onclick="switchTab('offline')" id="tab-offline" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i> Offline Kit
+        </button>
+      </div>
+
+      <!-- ================= 1. SAFETY CHECK-INS TAB ================= -->
+      <div id="section-checkins" class="space-y-3.5">
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-3">
+          <div>
+            <h3 class="font-bold text-sm text-gray-900">Log Location & Status</h3>
+            <p class="text-[11px] text-gray-500 mt-0.5">Keep an offline trail of your current stop across hill districts.</p>
+          </div>
+
+          <div class="space-y-2">
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-600 mb-1">Current Village / Town</label>
+              <input 
+                id="checkinLocation" 
+                type="text" 
+                placeholder="e.g. Khonoma Village, Kisama, Viswema" 
+                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-emerald-600 transition"
+              >
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-600 mb-1">Status Note</label>
+              <input 
+                id="checkinNote" 
+                type="text" 
+                placeholder="e.g. Arrived at homestay; heading up Dzükou trail" 
+                class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-emerald-600 transition"
+              >
+            </div>
+          </div>
+
+          <button onclick="recordCheckin()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2.5 rounded-xl text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i> Save Safety Check-in
+          </button>
+        </div>
+
+        <!-- Recent Check-in Logs -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-xs text-gray-900">Recent Check-in Logs</h4>
+            <button onclick="clearCheckins()" class="text-[10px] font-semibold text-rose-700 hover:underline">Clear</button>
+          </div>
+          <div id="checkinHistory" class="space-y-2 text-xs">
+            <!-- Dynamically injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 2. SAVED CIRCUITS TAB ================= -->
+      <div id="section-saved" class="space-y-3.5 hidden">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] text-gray-500 font-medium">Circuits saved from the trip planner:</p>
+          <a href="plan.html" class="text-[11px] font-bold text-emerald-800 hover:underline flex items-center gap-1">
+            Browse More <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <div id="savedCircuitsContainer" class="space-y-2.5">
+          <!-- Dynamically injected from localStorage -->
+        </div>
+      </div>
+
+      <!-- ================= 3. OFFLINE KIT TAB ================= -->
+      <div id="section-offline" class="space-y-3 hidden">
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2.5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">Offline Card</span>
+          <h3 class="font-bold text-sm text-gray-900">Emergency Trail Quick Reference</h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Take a screenshot of this card before heading into remote valleys without network coverage.
+          </p>
+
+          <div class="bg-gray-50 border border-gray-100 rounded-xl p-3 space-y-1.5 text-[11px] text-gray-700">
+            <div class="flex justify-between border-b border-gray-200 pb-1">
+              <span>National SOS:</span>
+              <strong class="text-gray-900">112</strong>
+            </div>
+            <div class="flex justify-between border-b border-gray-200 pb-1">
+              <span>Dzükou Rescue (SAYO):</span>
+              <strong class="text-gray-900">+91 98625 87932</strong>
+            </div>
+            <div class="flex justify-between border-b border-gray-200 pb-1">
+              <span>Naga Hospital Kohima:</span>
+              <strong class="text-gray-900">0370-2222916</strong>
+            </div>
+            <div class="flex justify-between">
+              <span>Permit Verification:</span>
+              <strong class="text-gray-900">ilp.nagaland.gov.in</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Tab Switcher
+    function switchTab(tabKey) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap';
+      });
+
+      const activeBtn = document.getElementById(`tab-${tabKey}`);
+      if (activeBtn) {
+        activeBtn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap';
+      }
+
+      ['checkins', 'saved', 'offline'].forEach(k => {
+        const el = document.getElementById(`section-${k}`);
+        if (el) el.classList.toggle('hidden', k !== tabKey);
+      });
+    }
+
+    // Auto-select tab based on URL parameter or hash (?tab=saved)
+    function applyTabFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const target = urlParams.get('tab') || window.location.hash.replace('#', '');
+      if (['checkins', 'saved', 'offline'].includes(target)) {
+        switchTab(target);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      applyTabFromURL();
+      loadCheckinHistory();
+      renderSavedCircuits();
+    });
+
+    window.addEventListener('popstate', applyTabFromURL);
+
+    // ================= Check-in LocalStorage Handlers =================
+    function recordCheckin() {
+      const loc = document.getElementById('checkinLocation').value.trim();
+      const note = document.getElementById('checkinNote').value.trim();
+
+      if (!loc) {
+        alert('Please enter your current location.');
+        return;
+      }
+
+      const checkinItem = {
+        location: loc,
+        note: note || 'All good / routine check-in',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        date: new Date().toLocaleDateString()
+      };
+
+      const history = JSON.parse(localStorage.getItem('checkinLogs') || '[]');
+      history.unshift(checkinItem);
+      localStorage.setItem('checkinLogs', JSON.stringify(history));
+
+      document.getElementById('checkinLocation').value = '';
+      document.getElementById('checkinNote').value = '';
+
+      loadCheckinHistory();
+      alert('Safety check-in logged successfully!');
+    }
+
+    function loadCheckinHistory() {
+      const container = document.getElementById('checkinHistory');
+      const history = JSON.parse(localStorage.getItem('checkinLogs') || '[]');
+
+      if (history.length === 0) {
+        container.innerHTML = `
+          <div class="p-3 bg-gray-50 border border-gray-100 rounded-xl text-gray-400 text-center">
+            No check-in entries yet. Log your first stop above!
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = history.slice(0, 5).map(item => `
+        <div class="border border-gray-100 bg-white p-3 rounded-xl shadow-sm flex items-start justify-between">
+          <div>
+            <strong class="text-gray-900 block text-xs">${item.location}</strong>
+            <span class="text-gray-500 text-[11px]">${item.note}</span>
+          </div>
+          <span class="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded font-semibold whitespace-nowrap">
+            ${item.date} • ${item.time}
+          </span>
+        </div>
+      `).join('');
+    }
+
+    function clearCheckins() {
+      localStorage.removeItem('checkinLogs');
+      loadCheckinHistory();
+    }
+
+    // ================= Saved Circuits Handlers =================
+    function renderSavedCircuits() {
+      const container = document.getElementById('savedCircuitsContainer');
+      const saved = JSON.parse(localStorage.getItem('savedCircuits') || '[]');
+
+      if (saved.length === 0) {
+        container.innerHTML = `
+          <div class="p-4 bg-gray-50 border border-gray-100 rounded-xl text-gray-400 text-center text-xs">
+            No saved circuits yet. Explore itineraries in <a href="plan.html" class="text-emerald-800 underline font-semibold">Plan My Trip</a> and bookmark them!
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = saved.map(name => `
+        <div class="border border-gray-100 bg-white p-3.5 rounded-xl shadow-sm flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="p-1.5 bg-emerald-50 text-emerald-800 rounded-lg">
+              <i data-lucide="map" class="w-4 h-4"></i>
+            </div>
+            <strong class="text-xs text-gray-900">${name}</strong>
+          </div>
+          <button onclick="removeCircuit('${name}')" class="text-gray-400 hover:text-rose-600 transition p-1">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function removeCircuit(name) {
+      let saved = JSON.parse(localStorage.getItem('savedCircuits') || '[]');
+      saved = saved.filter(c => c !== name);
+      localStorage.setItem('savedCircuits', JSON.stringify(saved));
+      renderSavedCircuits();
+    }
+  </script>
+
+</body>
+</html>
