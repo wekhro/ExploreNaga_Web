@@ -1,0 +1,114 @@
+<!-- Backdrop Dimmer Overlay -->
+<div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+<!-- ================= SIDE MENU (REUSABLE COMPONENT) ================= -->
+<aside id="sideMenu" class="side-menu">
+    
+    <!-- Header: Logo, Tagline, & Close Button -->
+    <div class="side-menu-header">
+        <div class="menu-brand">
+            <div class="logo-mountain">▲</div>
+            <div>
+                <h2>EXPLORENAGA</h2>
+                <p>Stay connected, Travel Safely</p>
+            </div>
+        </div>
+        <button class="close-button" onclick="closeMenu()" aria-label="Close menu">&times;</button>
+    </div>
+
+    <!-- Navigation List with Dropdown Accordions -->
+    <nav class="side-menu-content">
+
+        <!-- Home Link -->
+        <a href="index.html" class="nav-card active-card">
+            <span class="card-icon">🏠</span>
+            <span class="card-title">Home</span>
+            <span class="card-arrow">›</span>
+        </a>
+            <!-- 1. Explore & Plan Dropdown -->
+<details class="nav-dropdown">
+    <summary class="nav-card">
+        <span class="card-icon">📖</span>
+        <span class="card-title">Plan My Trip</span>
+        <span class="card-arrow">›</span>
+    </summary>
+    <div class="dropdown-items">
+        <a href="destination.html">Popular Destinations</a>
+        <a href="plan.html?tab=circuits">Suggested Circuits</a>
+        <a href="plan.html?tab=festivals">Festivals & Hornbill</a>
+        <a href="plan.html?tab=stays">Homestays & Guides</a>
+    </div>
+</details>
+        <!-- 2. Travel Essentials Dropdown -->
+<details class="nav-dropdown">
+    <summary class="nav-card">
+        <span class="card-icon">🚌</span>
+        <span class="card-title">Travel Essentials</span>
+        <span class="card-arrow">›</span>
+    </summary>
+    <div class="dropdown-items">
+        <a href="essentials.html?tab=transport">Transport & Fares</a>
+        <a href="essentials.html?tab=ilp">Foreigner Registration (FRO)</a>
+        <a href="essentials.html?tab=ilp">Inner Line Permit (ILP)</a>
+        <a href="essentials.html?tab=etiquette">Do's & Don'ts</a>
+    </div>
+</details>
+
+        
+
+        <!-- 3. Safety & Support Dropdown -->
+        <details class="nav-dropdown">
+            <summary class="nav-card">
+                <span class="card-icon">⚠️</span>
+                <span class="card-title">Safety & Support</span>
+                <span class="card-arrow">›</span>
+            </summary>
+            <div class="dropdown-items">
+                <a href="safety.html#sos">Emergency SOS</a>
+                <a href="safety.html#advisories">Safety Advisories</a>
+                <a href="safety.html#helplines">Police & Medical Help</a>
+            </div>
+        </details>
+
+        <!-- 4. Account Dropdown -->
+        <details class="nav-dropdown">
+            <summary class="nav-card">
+                <span class="card-icon">📍</span>
+                <span class="card-title">My Trip / Account</span>
+                <span class="card-arrow">›</span>
+            </summary>
+            <div class="dropdown-items">
+                <a href="login.html">Login / Register</a>
+                <a href="account.html#checkins">Safety Check-ins</a>
+                <a href="account.html#saved">Saved Circuits</a>
+            </div>
+        </details>
+
+        <!-- Dashed Divider -->
+        <div class="menu-divider-dashed"></div>
+
+        <!-- Static Bottom Options -->
+        <a href="about.html" class="nav-card">
+            <span class="card-icon">ℹ️</span>
+            <span class="card-title">About ExploreNaga</span>
+            <span class="card-arrow">›</span>
+        </a>
+
+        <a href="#language" class="nav-card">
+            <span class="card-icon">🌐</span>
+            <span class="card-title">Language</span>
+            <span class="card-arrow">›</span>
+        </a>
+
+    </nav>
+
+    <!-- Bottom Safety Banner Card -->
+    <div class="menu-safety-banner">
+        <div class="safety-shield">🛡️</div>
+        <div class="safety-copy">
+            <h4>Your Safety, Our Priority</h4>
+            <p>We're here to support you through your journey in Nagaland.</p>
+        </div>
+    </div>
+
+</aside>
