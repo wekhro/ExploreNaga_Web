@@ -1,34 +1,51 @@
-/* =========================
-   SIDE MENU
-========================= */
+/* ========================================================
+   DYNAMIC MENU LOADER
+======================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("menu-container");
+    if (container) {
+        fetch("menu.html")
+            .then(response => {
+                if (!response.ok) throw new Error("Could not load menu.html");
+                return response.text();
+            })
+            .then(html => {
+                container.innerHTML = html;
+            })
+            .catch(err => console.error("Error loading navigation menu:", err));
+    }
+});
 
+/* ========================================================
+   MENU TOGGLE FUNCTIONS
+======================================================== */
 function openMenu() {
     const sideMenu = document.getElementById("sideMenu");
-    if (sideMenu) {
-        sideMenu.classList.add("open");
-    }
+    const overlay = document.getElementById("menuOverlay");
+
+    if (sideMenu) sideMenu.classList.add("active");
+    if (overlay) overlay.classList.add("active");
+
+    document.body.style.overflow = "hidden";
 }
 
 function closeMenu() {
     const sideMenu = document.getElementById("sideMenu");
-    if (sideMenu) {
-        sideMenu.classList.remove("open");
-    }
+    const overlay = document.getElementById("menuOverlay");
+
+    if (sideMenu) sideMenu.classList.remove("active");
+    if (overlay) overlay.classList.remove("active");
+
+    document.body.style.overflow = "";
 }
 
-/* =========================
-   LOGIN
-========================= */
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+});
 
-function login() {
-    alert("Login page coming soon!");
-}
-
-/* =========================
-   IMAGE SLIDER
-========================= */
-
-// Exact match with your popular destination image sources
+/* ========================================================
+   SLIDER LOGIC (For index.html)
+======================================================== */
 const images = [
     "images/Sheep Farm.jpeg",
     "https://commons.wikimedia.org/wiki/Special:Redirect/file/Kachari_Ruins,_Dimapur,_Nagaland.jpg",
@@ -37,30 +54,32 @@ const images = [
 ];
 
 let currentSlide = 0;
+let sliderInterval = null;
 
 function showSlide(number) {
     const heroImage = document.getElementById("heroImage");
     const dots = document.querySelectorAll(".dot");
 
-    // Wrap-around index calculation
-    currentSlide = (number + images.length) % images.length;
+    if (!heroImage) return;
 
-    if (heroImage) {
-        heroImage.src = images[currentSlide];
-    }
+    currentSlide = (number + images.length) % images.length;
+    heroImage.src = images[currentSlide];
 
     dots.forEach((dot, index) => {
         dot.classList.toggle("active", index === currentSlide);
     });
+
+    resetAutoplay();
 }
 
-function nextSlide() {
-    showSlide(currentSlide + 1);
+function nextSlide() { showSlide(currentSlide + 1); }
+function previousSlide() { showSlide(currentSlide - 1); }
+
+function resetAutoplay() {
+    if (sliderInterval) clearInterval(sliderInterval);
+    sliderInterval = setInterval(nextSlide, 6000);
 }
 
-function previousSlide() {
-    showSlide(currentSlide - 1);
+if (document.getElementById("heroImage")) {
+    resetAutoplay();
 }
-
-/* Automatically change image every 6 seconds */
-let sliderInterval = setInterval(nextSlide, 6000);
