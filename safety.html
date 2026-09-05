@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safety & Support - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center py-0 sm:py-6 antialiased text-gray-800">
+
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-white shadow-xl min-h-screen sm:rounded-3xl overflow-hidden flex flex-col pb-6">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-40">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-1 -ml-1 text-gray-700 hover:text-emerald-900">
+          <i data-lucide="arrow-left" class="w-6 h-6"></i>
+        </a>
+        <h1 class="font-bold text-base text-gray-900">Safety & Support</h1>
+      </div>
+      <span class="text-[11px] font-semibold text-rose-800 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-100">
+        Emergency
+      </span>
+    </header>
+
+    <main class="p-5 space-y-4 flex-1">
+
+      <!-- Navigation Tabs -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 text-xs font-semibold">
+        <button onclick="switchTab('sos')" id="tab-sos" class="tab-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5"></i> Emergency SOS
+        </button>
+        <button onclick="switchTab('medical')" id="tab-medical" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="hospital" class="w-3.5 h-3.5"></i> Medical & Police
+        </button>
+        <button onclick="switchTab('advisories')" id="tab-advisories" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> Travel Advisories
+        </button>
+      </div>
+
+      <!-- ================= 1. EMERGENCY SOS TAB ================= -->
+      <div id="section-sos" class="space-y-3">
+        
+        <!-- Quick Dial Card: All India Emergency -->
+        <div class="border border-rose-200 bg-rose-50/50 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-900 bg-rose-100 px-2 py-0.5 rounded">Toll-Free 24/7</span>
+            <span class="text-xs font-bold text-rose-700">Unified SOS</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-gray-900">National Emergency Support</h3>
+            <p class="text-xs text-gray-600 mt-0.5">Police, Fire, and Ambulance response across all 16 districts.</p>
+          </div>
+          <a href="tel:112" class="flex items-center justify-center gap-2 w-full bg-rose-700 hover:bg-rose-800 text-white font-bold py-3 rounded-xl text-sm transition shadow-sm">
+            <i data-lucide="phone" class="w-4 h-4"></i> Dial 112 (Instant SOS)
+          </a>
+        </div>
+
+        <!-- Rapid Contact Grid -->
+        <div class="space-y-2">
+          
+          <div class="border border-gray-200 rounded-xl p-3.5 bg-white shadow-sm flex items-center justify-between">
+            <div>
+              <h4 class="font-bold text-xs text-gray-900">Nagaland Police Control Room</h4>
+              <p class="text-[11px] text-gray-500">Kohima Headquarters</p>
+            </div>
+            <a href="tel:03702244279" class="p-2.5 bg-emerald-50 text-emerald-800 rounded-xl hover:bg-emerald-100 transition">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+          <div class="border border-gray-200 rounded-xl p-3.5 bg-white shadow-sm flex items-center justify-between">
+            <div>
+              <h4 class="font-bold text-xs text-gray-900">Women Helpline</h4>
+              <p class="text-[11px] text-gray-500">24/7 Safety & Assistance</p>
+            </div>
+            <a href="tel:181" class="p-2.5 bg-emerald-50 text-emerald-800 rounded-xl hover:bg-emerald-100 transition">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+          <div class="border border-gray-200 rounded-xl p-3.5 bg-white shadow-sm flex items-center justify-between">
+            <div>
+              <h4 class="font-bold text-xs text-gray-900">Dzükou Mountain Rescue (SAYO)</h4>
+              <p class="text-[11px] text-gray-500">Emergency search & trail evacuation</p>
+            </div>
+            <a href="tel:+919862587932" class="p-2.5 bg-emerald-50 text-emerald-800 rounded-xl hover:bg-emerald-100 transition">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= 2. MEDICAL & POLICE TAB ================= -->
+      <div id="section-medical" class="space-y-3 hidden">
+        
+        <!-- Search Field -->
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-3"></i>
+          <input 
+            id="facilitySearch" 
+            type="text" 
+            placeholder="Search district (e.g. Kohima, Dimapur, Mon)" 
+            class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-emerald-600 transition"
+          >
+        </div>
+
+        <div id="facilityList" class="space-y-2.5">
+          
+          <div class="facility-card border border-gray-100 rounded-xl p-3.5 bg-white shadow-sm space-y-1.5" data-search="kohima naga hospital district">
+            <div class="flex justify-between items-start">
+              <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">Kohima</span>
+              <span class="text-[11px] font-semibold text-emerald-700">Govt Hospital</span>
+            </div>
+            <h4 class="font-bold text-xs text-gray-900">Naga Hospital Authority (NHAK)</h4>
+            <p class="text-[11px] text-gray-500">Multi-specialty emergency, trauma care & ICU.</p>
+            <a href="tel:03702222916" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800 pt-1">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i> 0370-2222916
+            </a>
+          </div>
+
+          <div class="facility-card border border-gray-100 rounded-xl p-3.5 bg-white shadow-sm space-y-1.5" data-search="dimapur district hospital trauma">
+            <div class="flex justify-between items-start">
+              <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">Dimapur</span>
+              <span class="text-[11px] font-semibold text-emerald-700">Govt Hospital</span>
+            </div>
+            <h4 class="font-bold text-xs text-gray-900">District Hospital Dimapur</h4>
+            <p class="text-[11px] text-gray-500">24/7 Casualty & Blood Bank facility.</p>
+            <a href="tel:03862224041" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800 pt-1">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i> 03862-224041
+            </a>
+          </div>
+
+          <div class="facility-card border border-gray-100 rounded-xl p-3.5 bg-white shadow-sm space-y-1.5" data-search="mon district civil hospital police">
+            <div class="flex justify-between items-start">
+              <span class="text-[9px] font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2 py-0.5 rounded">Mon</span>
+              <span class="text-[11px] font-semibold text-purple-700">District Outpost</span>
+            </div>
+            <h4 class="font-bold text-xs text-gray-900">District Civil Hospital & SP Office Mon</h4>
+            <p class="text-[11px] text-gray-500">Primary medical triage & border district police post.</p>
+            <a href="tel:03869221224" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800 pt-1">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i> 03869-221224
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= 3. ADVISORIES TAB ================= -->
+      <div id="section-advisories" class="space-y-3 hidden">
+        
+        <div class="border border-amber-200 bg-amber-50/60 rounded-2xl p-4 space-y-2">
+          <h3 class="font-bold text-xs text-amber-950 flex items-center gap-1.5">
+            <i data-lucide="mountain" class="w-4 h-4 text-amber-800"></i>
+            Monsoon & Landslide Precautions
+          </h3>
+          <p class="text-xs text-gray-700 leading-relaxed">
+            During heavy monsoon periods (June to September), sections along NH-29 (Dimapur–Kohima) can experience rockfalls. Check local taxi stands for route clearance before departing.
+          </p>
+        </div>
+
+        <div class="border border-gray-100 rounded-xl p-3.5 bg-white shadow-sm space-y-1">
+          <h4 class="font-bold text-xs text-gray-900">Offline Preparation</h4>
+          <p class="text-[11px] text-gray-500 leading-relaxed">
+            Cellular data (Jio/Airtel) may drop along remote stretches such as Doyang reservoir, upper Mon, and Pfütsero valleys. Download offline maps and keep cash on hand, as rural ATMs frequently run dry.
+          </p>
+        </div>
+
+        <div class="border border-gray-100 rounded-xl p-3.5 bg-white shadow-sm space-y-1">
+          <h4 class="font-bold text-xs text-gray-900">Night Driving</h4>
+          <p class="text-[11px] text-gray-500 leading-relaxed">
+            Avoid highway transit between districts after 7:00 PM due to heavy hill fog, lack of streetlights, and narrow single-lane mountain passes.
+          </p>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Tab Switcher
+    function switchTab(tabKey) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap';
+      });
+
+      const activeBtn = document.getElementById(`tab-${tabKey}`);
+      if (activeBtn) {
+        activeBtn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap';
+      }
+
+      ['sos', 'medical', 'advisories'].forEach(k => {
+        const el = document.getElementById(`section-${k}`);
+        if (el) el.classList.toggle('hidden', k !== tabKey);
+      });
+    }
+
+    // Auto-open requested tab from URL (?tab= or #)
+    function applyTabFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const target = urlParams.get('tab') || window.location.hash.replace('#', '');
+      if (['sos', 'medical', 'advisories'].includes(target)) {
+        switchTab(target);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', applyTabFromURL);
+    window.addEventListener('popstate', applyTabFromURL);
+
+    // Search facility filter
+    const searchInput = document.getElementById("facilitySearch");
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        document.querySelectorAll(".facility-card").forEach(card => {
+          const text = card.getAttribute("data-search").toLowerCase();
+          card.classList.toggle("hidden", !text.includes(query));
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
