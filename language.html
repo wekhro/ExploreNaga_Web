@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nagaland Travel Phrasebook</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      padding: 20px 16px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 580px;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .nav-btn {
+      color: #0284c7;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-btn:hover {
+      text-decoration: underline;
+    }
+
+    .view-toggle {
+      display: flex;
+      background: #e2e8f0;
+      padding: 3px;
+      border-radius: 20px;
+      gap: 2px;
+    }
+
+    .toggle-btn {
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #64748b;
+      border-radius: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .toggle-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    header {
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      outline: none;
+      background: #ffffff;
+    }
+
+    .search-box:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .filter-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab {
+      background: #e2e8f0;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      background: #0284c7;
+      color: #ffffff;
+    }
+
+    .card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .phrase-target {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .phrase-meaning {
+      font-size: 0.95rem;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    .phrase-pronounce {
+      font-size: 0.82rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px dashed #f1f5f9;
+    }
+
+    .action-btn {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .action-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .tip-box {
+      margin-top: 24px;
+      padding: 14px;
+      background: #e0f2fe;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: #0369a1;
+      line-height: 1.4;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 32px 16px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px dashed #cbd5e1;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="top-nav">
+      <a href="index.html" class="nav-btn">&larr; Travel Essentials</a>
+      <div class="view-toggle">
+        <a href="index.html" class="toggle-btn">Languages</a>
+        <a href="language.html" class="toggle-btn active">Phrasebook</a>
+      </div>
+    </div>
+
+    <header>
+      <h1>Nagaland Phrasebook</h1>
+      <p class="subtitle">Search in Nagamese or English</p>
+    </header>
+
+    <input type="text" id="searchInput" class="search-box" placeholder="Type a Nagamese or English phrase (e.g. daam, water, stop)...">
+
+    <div class="filter-tabs">
+      <button class="tab active" onclick="filterCategory('all', this)">All</button>
+      <button class="tab" onclick="filterCategory('basics', this)">Basics</button>
+      <button class="tab" onclick="filterCategory('transport', this)">Transport</button>
+      <button class="tab" onclick="filterCategory('market', this)">Market & Food</button>
+      <button class="tab" onclick="filterCategory('emergency', this)">Emergency</button>
+    </div>
+
+    <div class="card-list" id="phraseList"></div>
+
+    <div class="tip-box">
+      <strong>Travel Tip:</strong> English is Nagaland's official state language. For remote villages, tribal craft markets, and shared Sumos, speaking Nagamese will make getting around faster and friendlier.
+    </div>
+  </div>
+
+  <script>
+    const dictionary = [
+      // Basics
+      { nagamese: "Kinika ase?", english: "How are you?", pronounce: "Ki-nee-ka ah-seh", cat: "basics" },
+      { nagamese: "Moi bhal ase", english: "I am fine / good", pronounce: "Moy bhaal ah-seh", cat: "basics" },
+      { nagamese: "Apni laga naam ki ase?", english: "What is your name?", pronounce: "Aap-nee la-ga naam kee ah-seh", cat: "basics" },
+      { nagamese: "Moi laga naam ... ase", english: "My name is ...", pronounce: "Moy la-ga naam ... ah-seh", cat: "basics" },
+      { nagamese: "Moi Nagamese kobo najane", english: "I do not speak Nagamese", pronounce: "Moy Na-ga-meez koh-boh na-jaa-nay", cat: "basics" },
+      { nagamese: "Dhanyawad / Bhal lagise", english: "Thank you / That was nice", pronounce: "Dhan-ya-vaad / Bhaal laa-gee-seh", cat: "basics" },
+      { nagamese: "Hoy / Na-hoy", english: "Yes / No", pronounce: "Hoy / Naa-hoy", cat: "basics" },
+
+      // Transport
+      { nagamese: "... kote ase?", english: "Where is ...?", pronounce: "Koh-teh ah-seh", cat: "transport" },
+      { nagamese: "Moi Kohima te jabo", english: "I want to go to Kohima", pronounce: "Moy Koh-hee-ma teh jaa-boh", cat: "transport" },
+      { nagamese: "Sumo counter kote ase?", english: "Where is the Sumo counter?", pronounce: "Su-mo kown-ter koh-teh ah-seh", cat: "transport" },
+      { nagamese: "Yete rukhibi", english: "Please stop here", pronounce: "Yeh-teh roo-khee-bee", cat: "transport" },
+      { nagamese: "Bishi dur ase ni?", english: "Is it far?", pronounce: "Bee-shee door ah-seh nee", cat: "transport" },
+      { nagamese: "Kimaan bajiise?", english: "What time is it?", pronounce: "Kee-maan baa-jee-seh", cat: "transport" },
+
+      // Market & Food
+      { nagamese: "Etu kimaan daam ase?", english: "How much does this cost?", pronounce: "Eh-too kee-maan daam ah-seh", cat: "market" },
+      { nagamese: "Olop daam komabi na", english: "Please reduce the price a bit / Discount", pronounce: "Oh-lop daam koh-maa-bee naa", cat: "market" },
+      { nagamese: "Paani dibi na", english: "Please give me water", pronounce: "Paa-nee dee-bee naa", cat: "market" },
+      { nagamese: "Chai dibi", english: "Please give me tea", pronounce: "Chaay dee-bee", cat: "market" },
+      { nagamese: "Bhat khabole mon ase", english: "I want to eat food / rice", pronounce: "Bhaat khaa-boh-leh mohn ah-seh", cat: "market" },
+      { nagamese: "Itu bishi bhal lagise", english: "This is very delicious / good", pronounce: "Ee-too bee-shee bhaal laa-gee-seh", cat: "market" },
+      { nagamese: "Jhal bishi nadibi", english: "Don't make it too spicy (chili)", pronounce: "Jhaal bee-shee naa-dee-bee", cat: "market" },
+
+      // Emergency
+      { nagamese: "Moike help lage", english: "I need help", pronounce: "Moy-keh help laa-geh", cat: "emergency" },
+      { nagamese: "Hospital kote ase?", english: "Where is the hospital?", pronounce: "Hos-pi-tal koh-teh ah-seh", cat: "emergency" },
+      { nagamese: "Police station kote ase?", english: "Where is the police station?", pronounce: "Po-lees stay-shon koh-teh ah-seh", cat: "emergency" },
+      { nagamese: "Moi laga body bhal nai / Bimar ase", english: "I am feeling sick / unwell", pronounce: "Moy la-ga bo-dee bhaal naay", cat: "emergency" },
+      { nagamese: "Dawai dokaan kote ase?", english: "Where is the pharmacy / medicine shop?", pronounce: "Dah-waa-ee doh-kaan koh-teh ah-seh", cat: "emergency" }
+    ];
+
+    let currentCategory = 'all';
+
+    function toNagaPhonetics(text) {
+      return text
+        .replace(/\bthe\b/gi, 'de')
+        .replace(/\bthis\b/gi, 'dis')
+        .replace(/\bthat\b/gi, 'dat')
+        .replace(/\bwhere\b/gi, 'ware')
+        .replace(/\bwhat\b/gi, 'wat')
+        .replace(/\bplease\b/gi, 'plis')
+        .replace(/\bwater\b/gi, 'wa-ter')
+        .replace(/\bstop\b/gi, 'stopp');
+    }
+
+    function getBestRegionalVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      return (
+        voices.find(v => v.lang === 'en-IN') ||
+        voices.find(v => v.lang.startsWith('en'))
+      );
+    }
+
+    function renderList(items) {
+      const container = document.getElementById('phraseList');
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="no-results">
+            No matching phrases found.<br>Try searching common words like <em>water</em>, <em>stop</em>, <em>daam</em>, or <em>hospital</em>.
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = items.map(item => {
+        const safeNagamese = item.nagamese.replace(/'/g, "\\'");
+        const safeEnglish = item.english.replace(/'/g, "\\'");
+
+        return `
+        <div class="card" data-category="${item.cat}">
+          <div class="card-top">
+            <span class="phrase-target">${item.nagamese}</span>
+            <span class="tag">${item.cat}</span>
+          </div>
+          <span class="phrase-meaning">${item.english}</span>
+          <span class="phrase-pronounce">🗣️ ${item.pronounce}</span>
+          <div class="card-actions">
+            <button class="action-btn" onclick="copyText('${safeNagamese}', this)">📋 Copy</button>
+            <button class="action-btn" onclick="speakEnglish('${safeEnglish}')">🔊 Speak English</button>
+          </div>
+        </div>
+      `;
+      }).join('');
+    }
+
+    function applyFilter() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+
+      const results = dictionary.filter(item => {
+        const matchesCategory = (currentCategory === 'all' || item.cat === currentCategory);
+        const matchesQuery = item.nagamese.toLowerCase().includes(query) ||
+                             item.english.toLowerCase().includes(query) ||
+                             item.pronounce.toLowerCase().includes(query);
+        return matchesCategory && matchesQuery;
+      });
+
+      renderList(results);
+    }
+
+    function filterCategory(category, btnElement) {
+      currentCategory = category;
+      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+      applyFilter();
+    }
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✓ Copied!";
+        setTimeout(() => { btn.innerHTML = originalText; }, 1400);
+      });
+    }
+
+    function speakEnglish(englishText) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+
+      const voice = getBestRegionalVoice();
+      const nagaCadence = toNagaPhonetics(englishText.replace(/[/]/g, ' or '));
+
+      const utterance = new SpeechSynthesisUtterance(nagaCadence);
+      if (voice) {
+        utterance.voice = voice;
+        utterance.lang = voice.lang;
+      }
+
+      utterance.pitch = 0.93;
+      utterance.rate = 0.88;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+
+    document.getElementById('searchInput').addEventListener('input', applyFilter);
+    window.addEventListener('DOMContentLoaded', () => renderList(dictionary));
+  </script>
+</body>
+</html>

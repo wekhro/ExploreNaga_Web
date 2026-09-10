@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan My Trip - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* ================= SIDE MENU & OVERLAY DRAWER ================= */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 45;
+      display: none;
+    }
+    .menu-overlay.active {
+      display: block;
+    }
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background-color: #ffffff;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    }
+    .side-menu.active {
+      transform: translateX(0);
+    }
+    .side-menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .menu-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .menu-brand h2 {
+      font-size: 0.875rem;
+      font-weight: 800;
+      color: #064e3b;
+      letter-spacing: -0.025em;
+    }
+    .menu-brand p {
+      font-size: 10px;
+      color: #6b7280;
+    }
+    .close-button {
+      font-size: 1.5rem;
+      line-height: 1;
+      color: #9ca3af;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .side-menu-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.75rem 1rem;
+    }
+    .nav-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.75rem;
+      border-radius: 0.75rem;
+      color: #1f2937;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+    }
+    .nav-card:hover {
+      background-color: #f3f4f6;
+    }
+    .card-icon {
+      margin-right: 0.5rem;
+    }
+    .card-title {
+      flex: 1;
+    }
+    .card-arrow {
+      color: #9ca3af;
+    }
+    .dropdown-items {
+      display: flex;
+      flex-direction: column;
+      padding-left: 2rem;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .dropdown-items a {
+      font-size: 0.7rem;
+      color: #4b5563;
+      text-decoration: none;
+    }
+    .dropdown-items a:hover {
+      color: #065f46;
+    }
+    .menu-divider-dashed {
+      border-top: 1px dashed #e5e7eb;
+      margin: 0.5rem 0;
+    }
+    .menu-safety-banner {
+      padding: 0.75rem 1rem;
+      background-color: #ecfdf5;
+      border-top: 1px solid #d1fae5;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .safety-copy h4 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #065f46;
+    }
+    .safety-copy p {
+      font-size: 0.6rem;
+      color: #047857;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center py-0 sm:py-6 antialiased text-gray-800">
+
+  <!-- Reusable Side Menu Container -->
+  <div id="menu-container"></div>
+
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-white shadow-xl min-h-screen sm:rounded-3xl overflow-hidden flex flex-col pb-6">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-40">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-1 -ml-1 text-gray-700 hover:text-emerald-900 transition">
+          <i data-lucide="arrow-left" class="w-6 h-6"></i>
+        </a>
+        <h1 class="font-bold text-base text-gray-900">Plan My Trip</h1>
+      </div>
+      <button onclick="openMenu()" class="p-1 text-gray-700 hover:text-emerald-900 transition" aria-label="Open menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </header>
+
+    <main class="p-5 space-y-4 flex-1">
+
+      <!-- Navigation Tabs -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 text-xs font-semibold">
+        <button onclick="switchPlanTab('circuits', this)" id="tab-circuits" class="tab-btn active px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="map" class="w-3.5 h-3.5"></i> Circuits
+        </button>
+        <button onclick="switchPlanTab('festivals', this)" id="tab-festivals" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Festivals
+        </button>
+        <button onclick="switchPlanTab('stays', this)" id="tab-stays" class="tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="bed" class="w-3.5 h-3.5"></i> Stays & Guides
+        </button>
+      </div>
+
+      <!-- ================= 1. SUGGESTED CIRCUITS ================= -->
+      <div id="section-circuits" class="space-y-3.5">
+        <p class="text-[11px] text-gray-500 font-medium">Curated multi-day itineraries across key regions:</p>
+
+        <!-- Circuit 1: Southern Angami & Treks -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">4 Days / 3 Nights</span>
+            <span class="text-xs font-bold text-gray-500">Popular</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-gray-900">Kohima, Dzükou & Khonoma</h3>
+            <p class="text-[11px] text-emerald-800 font-medium mt-0.5">Heritage, Valley Trek & Eco Village</p>
+          </div>
+          <div class="space-y-1.5 text-xs text-gray-600 border-l-2 border-emerald-200 pl-3">
+            <div><strong>Day 1:</strong> Dimapur to Kohima • WWII Cemetery & Night Market</div>
+            <div><strong>Day 2:</strong> Base climb via Viswema • Camp/dorm in Dzükou Valley</div>
+            <div><strong>Day 3:</strong> Descend via Jakhama • Transfer to Khonoma Green Village</div>
+            <div><strong>Day 4:</strong> Khonoma village walk, bastion tour & return to Dimapur</div>
+          </div>
+        </div>
+
+        <!-- Circuit 2: Central Cultural Belt -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2 py-0.5 rounded">5 Days / 4 Nights</span>
+            <span class="text-xs font-bold text-gray-500">Culture</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-gray-900">Mokokchung & Ao Heartland</h3>
+            <p class="text-[11px] text-blue-800 font-medium mt-0.5">Living Traditions & Traditional Crafts</p>
+          </div>
+          <div class="space-y-1.5 text-xs text-gray-600 border-l-2 border-blue-200 pl-3">
+            <div><strong>Day 1:</strong> Dimapur to Mokokchung via NST Bus or Shared Sumo</div>
+            <div><strong>Day 2:</strong> Ungma & Impur historic Baptist mission compounds</div>
+            <div><strong>Day 3:</strong> Mopungchuket cultural village & deer park trails</div>
+            <div><strong>Day 4:</strong> Longkhum ridge views & handloom weaving workshops</div>
+            <div><strong>Day 5:</strong> Return to Dimapur rail/air terminal</div>
+          </div>
+        </div>
+
+        <!-- Circuit 3: Deep North Mon -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2 py-0.5 rounded">6 Days / 5 Nights</span>
+            <span class="text-xs font-bold text-gray-500">Expedition</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-gray-900">Mon & Longwa Border Circuit</h3>
+            <p class="text-[11px] text-purple-800 font-medium mt-0.5">Konyak Heritage & Cross-Border Villages</p>
+          </div>
+          <div class="space-y-1.5 text-xs text-gray-600 border-l-2 border-purple-200 pl-3">
+            <div><strong>Day 1:</strong> Dimapur/Jorhat to Mon town via Sonari/Simimaluguri</div>
+            <div><strong>Day 2:</strong> Longwa border settlement & Angh Palace residence</div>
+            <div><strong>Day 3:</strong> Hongphoi village morung & brass artisans interaction</div>
+            <div><strong>Day 4:</strong> Shangnyu village wooden relics & traditional council house</div>
+            <div><strong>Day 5–6:</strong> Return transit via Assam plains railhead</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= 2. FESTIVALS & HORNBILL ================= -->
+      <div id="section-festivals" class="space-y-3.5 hidden">
+        
+        <!-- Hornbill Feature Card -->
+        <div class="border border-amber-200 rounded-2xl p-4 bg-amber-50/60 shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 rounded">Major Event</span>
+            <span class="text-xs font-bold text-amber-900">Dec 1 – Dec 10</span>
+          </div>
+          <h3 class="font-bold text-sm text-gray-900">Hornbill Festival (Festival of Festivals)</h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Staged annually at the Naga Heritage Village in Kisama (12 km south of Kohima). Unites all recognized tribes featuring folk dances, war cries, craft markets, wrestling, and indigenous music.
+          </p>
+          <div class="bg-white/80 border border-amber-200/70 rounded-xl p-3 text-[11px] text-amber-950 space-y-1">
+            <p><strong>Lodging Advisory:</strong> Homestays and hotels in Kohima book out 4–6 months in advance. Secure permits and reservations early.</p>
+          </div>
+        </div>
+
+        <h4 class="font-bold text-xs text-gray-900 mt-2">Key Tribal Festivals by Season:</h4>
+
+        <!-- Calendar List -->
+        <div class="space-y-2">
+          <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between">
+            <div>
+              <h5 class="font-bold text-xs text-gray-900">Sekrenyi (Angami Tribe)</h5>
+              <p class="text-[11px] text-gray-500">Purification celebration • Kohima / Dimapur</p>
+            </div>
+            <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-1 rounded-lg">Late Feb</span>
+          </div>
+
+          <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between">
+            <div>
+              <h5 class="font-bold text-xs text-gray-900">Aoleang (Konyak Tribe)</h5>
+              <p class="text-[11px] text-gray-500">Welcoming spring and seed sowing • Mon</p>
+            </div>
+            <span class="text-xs font-bold text-purple-800 bg-purple-50 px-2 py-1 rounded-lg">Apr 1–6</span>
+          </div>
+
+          <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between">
+            <div>
+              <h5 class="font-bold text-xs text-gray-900">Moatsü (Ao Tribe)</h5>
+              <p class="text-[11px] text-gray-500">Post-planting festivities • Mokokchung</p>
+            </div>
+            <span class="text-xs font-bold text-blue-800 bg-blue-50 px-2 py-1 rounded-lg">May 1–3</span>
+          </div>
+
+          <div class="border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex items-center justify-between">
+            <div>
+              <h5 class="font-bold text-xs text-gray-900">Tokhu Emong (Lotha Tribe)</h5>
+              <p class="text-[11px] text-gray-500">Post-harvest thanksgiving & amity • Wokha</p>
+            </div>
+            <span class="text-xs font-bold text-amber-800 bg-amber-50 px-2 py-1 rounded-lg">Nov 7</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= 3. HOMESTAYS & GUIDES ================= -->
+      <div id="section-stays" class="space-y-3.5 hidden">
+        <p class="text-[11px] text-gray-500 font-medium">Community accommodation and verified trek assistance:</p>
+
+        <!-- Homestays Card -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2.5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="home" class="w-4 h-4 text-emerald-700"></i>
+            <h3 class="font-bold text-sm text-gray-900">Village Homestays</h3>
+          </div>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            The most authentic way to experience Nagaland. Village elders and youth tourism committees manage regulated homestays serving farm-fresh Naga organic food.
+          </p>
+          <div class="bg-gray-50 rounded-xl p-3 space-y-1 text-[11px] text-gray-700">
+            <div>• <strong>Khonoma:</strong> Co-ordinated by KNCTS Eco-Tourism Board</div>
+            <div>• <strong>Kigwema & Jakhama:</strong> Ideal trail bases for Dzükou hikes</div>
+            <div>• <strong>Average Rates:</strong> ₹1,200 – ₹2,500 per night (includes dinner & tea)</div>
+          </div>
+        </div>
+
+        <!-- Trek Guides Card -->
+        <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-2.5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="user-check" class="w-4 h-4 text-emerald-700"></i>
+            <h3 class="font-bold text-sm text-gray-900">Certified Local Guides</h3>
+          </div>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Hiring a guide is mandatory or strongly recommended for wilderness routes to ensure trail safety and support local livelihoods.
+          </p>
+          <div class="bg-gray-50 rounded-xl p-3 space-y-1.5 text-[11px] text-gray-700">
+            <div class="flex items-center justify-between border-b border-gray-200/60 pb-1">
+              <span>Dzükou Valley Guide (SAYO registered)</span>
+              <span class="font-bold text-emerald-800">₹1,500 – ₹2,000 / day</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-gray-200/60 pb-1">
+              <span>Khonoma Historical Bastion Guide</span>
+              <span class="font-bold text-emerald-800">₹800 – ₹1,200 / tour</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Japfü Peak Mountaineering Guide</span>
+              <span class="font-bold text-emerald-800">₹2,000 – ₹2,500 / day</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    lucide.createIcons();
+
+    // Plan Tab Switcher
+    function switchPlanTab(tabKey, clickedBtn) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = 'tab-btn px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition flex items-center gap-1.5 whitespace-nowrap';
+      });
+
+      const activeBtn = clickedBtn || document.getElementById(`tab-${tabKey}`);
+      if (activeBtn) {
+        activeBtn.className = 'tab-btn active px-3 py-1.5 rounded-lg bg-emerald-800 text-white transition flex items-center gap-1.5 whitespace-nowrap';
+      }
+
+      ['circuits', 'festivals', 'stays'].forEach(key => {
+        const sec = document.getElementById(`section-${key}`);
+        if (sec) sec.classList.toggle('hidden', key !== tabKey);
+      });
+
+      lucide.createIcons();
+    }
+
+    // Handles query strings and anchor links from menu (e.g. plan.html?tab=festivals)
+    function applyTabFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const target = urlParams.get('tab') || window.location.hash.replace('#', '');
+      if (['circuits', 'festivals', 'stays'].includes(target)) {
+        switchPlanTab(target);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', applyTabFromURL);
+    window.addEventListener('popstate', applyTabFromURL);
+    window.addEventListener('hashchange', applyTabFromURL);
+  </script>
+  <!-- ================= LANGUAGE SELECTION MODAL ================= -->
+<div id="languageModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[85vh] flex flex-col">
+    
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white">
+      <div class="flex items-center gap-2">
+        <div class="p-1.5 bg-emerald-50 text-emerald-800 rounded-lg">
+          <i data-lucide="globe" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-sm text-gray-900">Select Language</h3>
+          <p class="text-[10px] text-gray-500">Choose your preferred reading language</p>
+        </div>
+      </div>
+      <button onclick="closeLanguageModal()" class="p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Scrollable Language List -->
+    <div class="p-5 space-y-4 overflow-y-auto flex-1 text-xs">
+      
+      <!-- Section: Local & Regional -->
+      <div class="space-y-2">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 block px-1">Local & Regional</span>
+        
+        <!-- English (Default) -->
+        <button onclick="changeLanguage('en')" class="lang-opt-btn w-full flex items-center justify-between p-3 rounded-xl border border-emerald-600 bg-emerald-50/60 text-emerald-950 font-semibold text-left transition" data-lang="en">
+          <div>
+            <div class="font-bold text-xs">English (Official)</div>
+            <div class="text-[10px] text-gray-500 font-normal">State administration & signage</div>
+          </div>
+          <i data-lucide="check" class="w-4 h-4 text-emerald-700"></i>
+        </button>
+
+        <!-- Nagamese Creole -->
+        <button onclick="openNagameseHelper()" class="lang-opt-btn w-full flex items-center justify-between p-3 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-gray-50 text-gray-800 text-left transition">
+          <div>
+            <div class="font-bold text-xs">Nagamese (Lingua Franca)</div>
+            <div class="text-[10px] text-gray-500 font-normal">Common market & street dialect</div>
+          </div>
+          <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">Phrasebook</span>
+        </button>
+
+        <!-- Hindi -->
+        <button onclick="changeLanguage('hi')" class="lang-opt-btn w-full flex items-center justify-between p-3 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-gray-50 text-gray-800 text-left transition" data-lang="hi">
+          <div>
+            <div class="font-bold text-xs">हिन्दी (Hindi)</div>
+            <div class="text-[10px] text-gray-500 font-normal">Widely understood in Dimapur transit</div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Section: International Languages -->
+      <div class="space-y-2 pt-1">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 block px-1">International Visitors</span>
+
+        <div class="grid grid-cols-2 gap-2">
+          <!-- Japanese -->
+          <button onclick="changeLanguage('ja')" class="lang-opt-btn p-2.5 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-gray-50 text-left transition" data-lang="ja">
+            <div class="font-bold text-xs text-gray-900">日本語</div>
+            <div class="text-[10px] text-gray-500">Japanese</div>
+          </button>
+
+          <!-- German -->
+          <button onclick="changeLanguage('de')" class="lang-opt-btn p-2.5 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-gray-50 text-left transition" data-lang="de">
+            <div class="font-bold text-xs text-gray-900">Deutsch</div>
+            <div class="text-[10px] text-gray-500">German</div>
+          </button>
+
+          <!-- French -->
+          <button onclick="changeLanguage('fr')" class="lang-opt-btn p-2.5 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-gray-50 text-left transition" data-lang="fr">
+            <div class="font-bold text-xs text-gray-900">Français</div>
+            <div class="text-[10px] text-gray-500">French</div>
+          </button>
+
+          <!-- Spanish -->
+          <button onclick="changeLanguage('es')" class="lang-opt-btn p-2.5 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-gray-50 text-left transition" data-lang="es">
+            <div class="font-bold text-xs text-gray-900">Español</div>
+            <div class="text-[10px] text-gray-500">Spanish</div>
+          </button>
+
+          <!-- Korean -->
+          <button onclick="changeLanguage('ko')" class="lang-opt-btn p-2.5 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-gray-50 text-left transition" data-lang="ko">
+            <div class="font-bold text-xs text-gray-900">한국어</div>
+            <div class="text-[10px] text-gray-500">Korean</div>
+          </button>
+
+          <!-- Thai -->
+          <button onclick="changeLanguage('th')" class="lang-opt-btn p-2.5 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-gray-50 text-left transition" data-lang="th">
+            <div class="font-bold text-xs text-gray-900">ไทย</div>
+            <div class="text-[10px] text-gray-500">Thai</div>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Hidden Google Translate Element Anchor -->
+<div id="google_translate_element" class="hidden"></div>
+
+</body>
+</html>

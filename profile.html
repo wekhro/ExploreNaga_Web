@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExploreNaga - Profile</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f6f8f7;
+            color: #1e293b;
+            display: flex;
+            justify-content: center;
+            padding: 32px 20px;
+            min-height: 100vh;
+        }
+
+        /* CARD */
+        .app-card {
+            width: 100%;
+            max-width: 860px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 25px -4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid #f1f5f9;
+            gap: 16px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #0d3826;
+            cursor: pointer;
+        }
+
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .logo-title {
+            font-weight: 700;
+            font-size: 17px;
+            color: #0d3826;
+        }
+
+        .logo-tagline {
+            font-size: 10px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .notification-btn {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: 700;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid #ffffff;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .top-avatar-container {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .top-avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        /* PROFILE */
+        .profile-overview {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            background: #fafcfb;
+            border: 1px solid #edf3f0;
+            padding: 20px 24px;
+            border-radius: 20px;
+        }
+
+        .profile-info-group {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            flex-shrink: 0;
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: 2.5px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .camera-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: #0d3826;
+            border: 2.5px solid #ffffff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+            z-index: 5;
+        }
+
+        .camera-badge:hover {
+            transform: scale(1.08);
+        }
+
+        .profile-meta h1 {
+            font-size: 21px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-role {
+            font-size: 13px;
+            color: #64748b;
+            margin: 2px 0 8px;
+            font-weight: 500;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        /* EDIT BUTTON */
+        .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border: 1px solid #144e34;
+            background: #ffffff;
+            color: #144e34;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn-edit:hover {
+            background: #edf7f2;
+        }
+
+        /* EDIT FORM */
+        #editProfileForm {
+            display: none;
+        }
+
+        .edit-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 22px;
+        }
+
+        .edit-card h3 {
+            color: #0d3826;
+            margin-bottom: 18px;
+            font-size: 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #cbd8ce;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            background: #ffffff;
+            color: #334155;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #075b36;
+            box-shadow: 0 0 0 2px rgba(7, 91, 54, 0.08);
+        }
+
+        .edit-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .save-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: #075b36;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            background: white;
+            color: #475569;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* STATUS CARD */
+        .status-card {
+            background: #f4fbf7;
+            border: 1px solid #d3eee0;
+            border-radius: 20px;
+            padding: 18px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .status-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #0d3826;
+        }
+
+        .badge-status {
+            background: #daf3e6;
+            color: #0b683e;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 100px;
+            letter-spacing: 0.5px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            border-top: 1px solid #e1f3ea;
+            padding-top: 12px;
+        }
+
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .status-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .status-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* MENU */
+        .menu-group {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: inherit;
+            border-bottom: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            outline: none;
+            transition: background 0.15s ease;
+        }
+
+        .menu-item:focus-visible {
+            outline: 2px solid #0d3826;
+            outline-offset: -2px;
+        }
+
+        .menu-item:nth-child(2n) {
+            border-right: none;
+        }
+
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+
+        .menu-item.logout {
+            grid-column: 1 / -1;
+            border-top: 1px solid #f1f5f9;
+            border-bottom: none;
+            border-right: none;
+        }
+
+        .menu-item-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .icon-blue { background: #eff6ff; color: #2563eb; }
+        .icon-emerald { background: #f0fdf4; color: #15803d; }
+        .icon-purple { background: #faf5ff; color: #7e22ce; }
+        .icon-gray { background: #f1f5f9; color: #475569; }
+        .icon-red { background: #fef2f2; color: #dc2626; }
+
+        .menu-text-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .menu-item.logout .menu-text-title {
+            color: #dc2626;
+        }
+
+        .menu-text-subtitle {
+            font-size: 11.5px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .menu-item-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .counter-badge {
+            background: #dc2626;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        /* SAFETY */
+        .safety-banner {
+            position: relative;
+            background: linear-gradient(135deg, #eef7f2 0%, #e1efe7 50%, #cce5d6 100%);
+            border: 1px solid #c7e3d3;
+            border-radius: 20px;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .safety-content {
+            position: relative;
+            z-index: 2;
+            max-width: 65%;
+        }
+
+        .safety-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .safety-icon-wrapper {
+            background: #ffffff;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0d3826;
+        }
+
+        .safety-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0d3826;
+        }
+
+        .safety-desc {
+            font-size: 11.5px;
+            color: #1e3a2f;
+            line-height: 1.4;
+            margin-top: 6px;
+        }
+
+        .safety-art {
+            position: absolute;
+            right: 10px;
+            bottom: 0;
+            width: 150px;
+            height: 90px;
+            z-index: 1;
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 100;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .doc-form {
+            padding: 20px 24px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .doc-list-section {
+            padding: 20px 24px;
+            overflow-y: auto;
+        }
+
+        .doc-list {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .doc-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .doc-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .doc-title {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .doc-meta {
+            font-size: 11.5px;
+            color: #64748b;
+        }
+
+        .doc-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .doc-btn-view {
+            font-size: 12px;
+            font-weight: 600;
+            color: #075b36;
+            text-decoration: none;
+            padding: 6px 10px;
+            background: #edf7f2;
+            border-radius: 6px;
+        }
+
+        .doc-btn-del {
+            font-size: 12px;
+            color: #dc2626;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        .empty-text {
+            font-size: 13px;
+            color: #94a3b8;
+            text-align: center;
+            padding: 16px 0;
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid #f1f5f9;
+            padding: 18px;
+            text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: auto;
+        }
+
+        svg {
+            display: block;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 680px) {
+            body { padding: 0; }
+            .app-card {
+                border-radius: 0;
+                border: none;
+                min-height: 100vh;
+            }
+            .content { padding: 18px; }
+            .profile-overview {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .btn-edit { align-self: flex-start; }
+            .menu-group { grid-template-columns: 1fr; }
+            .menu-item { border-right: none; }
+            .form-grid { grid-template-columns: 1fr; }
+            .status-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="app-card">
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-left" id="backBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Profile</span>
+        </div>
+
+        <div class="header-center">
+            <div class="logo-container">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                    <polygon points="12,2 2,22 22,22" fill="#d97706" />
+                    <polygon points="12,8 6,22 18,22" fill="#047857" />
+                    <path d="M2,20 C8,18 16,22 22,19" stroke="#0284c7" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                </svg>
+                <span class="logo-title">ExploreNaga</span>
+            </div>
+            <div class="logo-tagline">Stay connected, Travel Safely</div>
+        </div>
+
+        <div class="header-right">
+            <div class="notification-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <div class="badge">3</div>
+            </div>
+
+            <div class="user-pill">
+                <div class="top-avatar-container">
+                    <svg id="topDefaultIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <img id="topProfileImage" src="" alt="Profile">
+                </div>
+                <span id="topUserName">User</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <!-- PROFILE OVERVIEW -->
+        <section class="profile-overview">
+            <div class="profile-info-group">
+                <div style="position: relative;">
+                    <div class="avatar-wrapper">
+                        <svg id="mainDefaultIcon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <img id="profileImage" src="" alt="Profile">
+                    </div>
+
+                    <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+
+                    <label for="avatarFileInput" class="camera-badge" title="Upload new photo">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                    </label>
+                </div>
+
+                <div class="profile-meta">
+                    <h1>
+                        <span id="profileName">User</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#0d3826">
+                            <path d="M12 2l2.4 2.1 3.2-.4 1.3 2.9 3.1 1-0.4 3.2 2.1 2.4-2.1 2.4 0.4 3.2-3.1 1-1.3 2.9-3.2-.4-2.4 2.1-2.4-2.1-3.2.4-1.3-2.9-3.1-1 0.4-3.2-2.1-2.4 2.1-2.4-0.4-3.2 3.1-1 1.3-2.9 3.2.4z"/>
+                            <polyline points="9 12 11 14 15 10" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </h1>
+
+                    <p class="profile-role" id="profileRole">Foreign Tourist</p>
+
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 0.9 2 2v12c0 1.1-0.9 2-2 2H4c-1.1 0-2-0.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span id="profileEmail">user@example.com</span>
+                        </div>
+
+                        <div class="contact-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span id="profilePhone">+91 98765 43210</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-edit" id="editProfileBtn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9"></path>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+                Edit Profile
+            </button>
+        </section>
+
+        <!-- EDIT PROFILE FORM -->
+        <div id="editProfileForm">
+            <div class="edit-card">
+                <h3>Edit Profile</h3>
+
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="editPhotoUrl">Profile Picture URL (or use camera badge above)</label>
+                        <input type="url" id="editPhotoUrl" placeholder="https://example.com/avatar.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editName">Full Name</label>
+                        <input type="text" id="editName" placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editPhone">Phone Number</label>
+                        <input type="tel" id="editPhone" placeholder="Enter your phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editRole">Tourist Type</label>
+                        <input type="text" id="editRole" placeholder="e.g. Foreign Tourist">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editDistrict">District</label>
+                        <select id="editDistrict">
+                            <option value="">Select your district</option>
+                            <option value="Chümoukedima">Chümoukedima</option>
+                            <option value="Dimapur">Dimapur</option>
+                            <option value="Kiphire">Kiphire</option>
+                            <option value="Kohima">Kohima</option>
+                            <option value="Longleng">Longleng</option>
+                            <option value="Meluri">Meluri</option>
+                            <option value="Mokokchung">Mokokchung</option>
+                            <option value="Mon">Mon</option>
+                            <option value="Niuland">Niuland</option>
+                            <option value="Noklak">Noklak</option>
+                            <option value="Peren">Peren</option>
+                            <option value="Phek">Phek</option>
+                            <option value="Shamator">Shamator</option>
+                            <option value="Tseminyu">Tseminyu</option>
+                            <option value="Tuensang">Tuensang</option>
+                            <option value="Wokha">Wokha</option>
+                            <option value="Zünheboto">Zünheboto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="edit-buttons">
+                    <button class="save-btn" id="saveProfileBtn">Save Changes</button>
+                    <button class="cancel-btn" id="cancelProfileBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTRATION STATUS -->
+        <section class="status-card">
+            <div class="status-header">
+                <div class="status-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0d3826" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <polyline points="9 12 11 14 15 10"></polyline>
+                    </svg>
+                    <span>Registration Status</span>
+                </div>
+                <span class="badge-status">REGISTERED</span>
+            </div>
+
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-label">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0d3826" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        District
+                    </div>
+                    <div class="status-value" id="statusDistrict">Kohima</div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-label">Registered On</div>
+                    <div class="status-value">27 Aug 2026, 11:30 AM</div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-label">Valid Till</div>
+                    <div class="status-value">26 Nov 2026</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU -->
+        <nav class="menu-group">
+            <a href="#documents" class="menu-item">
+                <div class="menu-item-left">
+                    <div class="icon-box icon-blue">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                            <line x1="7" y1="8" x2="7.01" y2="8"></line>
+                            <line x1="11" y1="8" x2="17" y2="8"></line>
+                            <line x1="7" y1="12" x2="7.01" y2="12"></line>
+                            <line x1="11" y1="12" x2="17" y2="12"></line>
+                            <line x1="7" y1="16" x2="17" y2="16"></line>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="menu-text-title">My Documents</div>
+                        <div class="menu-text-subtitle">Passport, Visa, ILP/PAP & other documents</div>
+                    </div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+
+            <a href="#emergency" class="menu-item">
+                <div class="menu-item-left">
+                    <div class="icon-box icon-emerald">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94"></path>
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.19 18.85a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="menu-text-title">Emergency Contacts</div>
+                        <div class="menu-text-subtitle">Manage your emergency contacts</div>
+                    </div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+
+            <a href="#notifications" class="menu-item">
+                <div class="menu-item-left">
+                    <div class="icon-box icon-purple">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="menu-text-title">Notifications</div>
+                        <div class="menu-text-subtitle">Safety alerts, messages & updates</div>
+                    </div>
+                </div>
+                <div class="menu-item-right">
+                    <span class="counter-badge">3</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+
+            <a href="#settings" class="menu-item">
+                <div class="menu-item-left">
+                    <div class="icon-box icon-gray">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="menu-text-title">Settings</div>
+                        <div class="menu-text-subtitle">App preferences, language & privacy</div>
+                    </div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+
+            <a href="#logout" class="menu-item logout" id="logoutBtn">
+                <div class="menu-item-left">
+                    <div class="icon-box icon-red">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="menu-text-title">Logout</div>
+                        <div class="menu-text-subtitle">Sign out of your account</div>
+                    </div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+        </nav>
+
+        <!-- SAFETY -->
+        <section class="safety-banner">
+            <div class="safety-content">
+                <div class="safety-title-row">
+                    <div class="safety-icon-wrapper">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#0d3826">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <span class="safety-title">Your Safety, Our Priority</span>
+                </div>
+                <p class="safety-desc">We're here to support you through your journey in Nagaland.</p>
+            </div>
+
+            <div class="safety-art">
+                <svg viewBox="0 0 140 85" width="100%" height="100%" fill="none">
+                    <polygon points="10,85 55,25 100,85" fill="#a4c6b5" opacity="0.6" />
+                    <polygon points="50,85 85,15 130,85" fill="#88b59f" opacity="0.8" />
+                    <ellipse cx="70" cy="95" rx="80" ry="25" fill="#588d75" />
+                    <polygon points="110,80 115,65 120,80" fill="#1b4d3e" />
+                    <polygon points="118,82 123,60 128,82" fill="#143e32" />
+                    <rect x="90" y="70" width="12" height="10" fill="#a47148" />
+                    <polygon points="88,70 96,62 104,70" fill="#c0392b" />
+                </svg>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- DOCUMENTS MODAL -->
+    <div id="docsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>My Travel Documents</h3>
+                <button type="button" class="modal-close" id="closeDocsBtn">&times;</button>
+            </div>
+
+            <form id="addDocForm" class="doc-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="docType">Document Type</label>
+                        <select id="docType" required>
+                            <option value="Inner Line Permit (ILP)">Inner Line Permit (ILP)</option>
+                            <option value="Protected Area Permit (PAP)">Protected Area Permit (PAP)</option>
+                            <option value="Passport">Passport</option>
+                            <option value="Visa">Visa</option>
+                            <option value="Other ID">Other Official ID</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="docIdentifier">Doc Number / Reference (Optional)</label>
+                        <input type="text" id="docIdentifier" placeholder="e.g. Permit #, Passport #">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="docFile">Attach File (PDF, JPG, PNG)</label>
+                        <input type="file" id="docFile" accept=".pdf,image/*" required>
+                    </div>
+                </div>
+                <button type="submit" class="save-btn" id="uploadDocBtn">Upload Document</button>
+            </form>
+
+            <div class="doc-list-section">
+                <h4>Saved Documents</h4>
+                <div id="docListContainer" class="doc-list">
+                    <p class="empty-text">Loading documents...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div>© 2026 ExploreNaga</div>
+        <div>Stay connected, Travel Safely</div>
+    </footer>
+</div>
+
+<!-- FIREBASE MODULE LOGIC -->
+<script type="module">
+    import {
+        onAuthStateChanged,
+        updateProfile,
+        signOut
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    import { 
+        getFirestore, 
+        collection, 
+        addDoc, 
+        query, 
+        where, 
+        getDocs, 
+        deleteDoc, 
+        doc,
+        serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    import { 
+        getStorage, 
+        ref, 
+        uploadBytes, 
+        getDownloadURL, 
+        deleteObject 
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
+    import { auth } from "./firebase.js";
+
+    const db = getFirestore();
+    const storage = getStorage();
+
+    /* ELEMENTS */
+    const editProfileBtn = document.getElementById("editProfileBtn");
+    const editProfileForm = document.getElementById("editProfileForm");
+    const saveProfileBtn = document.getElementById("saveProfileBtn");
+    const cancelProfileBtn = document.getElementById("cancelProfileBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    const avatarFileInput = document.getElementById("avatarFileInput");
+    const profileImage = document.getElementById("profileImage");
+    const topProfileImage = document.getElementById("topProfileImage");
+    const mainDefaultIcon = document.getElementById("mainDefaultIcon");
+    const topDefaultIcon = document.getElementById("topDefaultIcon");
+    const editPhotoUrl = document.getElementById("editPhotoUrl");
+
+    // Modal elements
+    const docsModal = document.getElementById("docsModal");
+    const closeDocsBtn = document.getElementById("closeDocsBtn");
+    const addDocForm = document.getElementById("addDocForm");
+    const docListContainer = document.getElementById("docListContainer");
+    const uploadDocBtn = document.getElementById("uploadDocBtn");
+
+    let chosenBase64Image = null;
+
+    /* HELPER: RENDER AVATARS */
+    function renderAvatar(photoUrl) {
+        if (photoUrl) {
+            profileImage.src = photoUrl;
+            profileImage.style.display = "block";
+            mainDefaultIcon.style.display = "none";
+
+            topProfileImage.src = photoUrl;
+            topProfileImage.style.display = "block";
+            topDefaultIcon.style.display = "none";
+        } else {
+            profileImage.removeAttribute("src");
+            profileImage.style.display = "none";
+            mainDefaultIcon.style.display = "block";
+
+            topProfileImage.removeAttribute("src");
+            topProfileImage.style.display = "none";
+            topDefaultIcon.style.display = "block";
+        }
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    /* PHOTO UPLOAD PREVIEW */
+    avatarFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.size > 2 * 1024 * 1024) {
+            alert("Please select an image smaller than 2MB.");
+            avatarFileInput.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            chosenBase64Image = event.target.result;
+            renderAvatar(chosenBase64Image);
+            editPhotoUrl.value = "";
+        };
+        reader.readAsDataURL(file);
+    });
+
+    /* TOGGLE EDIT FORM */
+    editProfileBtn.addEventListener("click", () => {
+        const isHidden = editProfileForm.style.display === "none" || editProfileForm.style.display === "";
+
+        if (isHidden) {
+            editProfileForm.style.display = "block";
+            editProfileBtn.innerHTML = `
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                Close
+            `;
+            editProfileForm.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+            closeEditForm();
+        }
+    });
+
+    function closeEditForm() {
+        editProfileForm.style.display = "none";
+        editProfileBtn.innerHTML = `
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+            Edit Profile
+        `;
+    }
+
+    cancelProfileBtn.addEventListener("click", closeEditForm);
+
+    /* DOCUMENT MODAL EVENTS */
+    const docsMenuLink = document.querySelector('a[href="#documents"]');
+    docsMenuLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        docsModal.style.display = "flex";
+        if (auth.currentUser) {
+            fetchUserDocuments(auth.currentUser.uid);
+        }
+    });
+
+    closeDocsBtn.addEventListener("click", () => {
+        docsModal.style.display = "none";
+    });
+
+    /* FETCH DOCUMENTS */
+    async function fetchUserDocuments(uid) {
+        docListContainer.innerHTML = '<p class="empty-text">Loading...</p>';
+
+        try {
+            const q = query(collection(db, "documents"), where("userId", "==", uid));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                docListContainer.innerHTML = '<p class="empty-text">No documents uploaded yet.</p>';
+                return;
+            }
+
+            docListContainer.innerHTML = "";
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const docId = docSnap.id;
+
+                const item = document.createElement("div");
+                item.className = "doc-item";
+                item.innerHTML = `
+                    <div class="doc-info">
+                        <span class="doc-title">${escapeHtml(data.docType)}</span>
+                        <span class="doc-meta">${data.identifier ? escapeHtml(data.identifier) : "File attached"}</span>
+                    </div>
+                    <div class="doc-actions">
+                        <a href="${encodeURI(data.fileUrl)}" target="_blank" rel="noopener noreferrer" class="doc-btn-view">View</a>
+                        <button type="button" class="doc-btn-del" data-id="${docId}" data-path="${escapeHtml(data.storagePath)}">Delete</button>
+                    </div>
+                `;
+                docListContainer.appendChild(item);
+            });
+
+            document.querySelectorAll(".doc-btn-del").forEach((btn) => {
+                btn.addEventListener("click", () => deleteDocument(btn.dataset.id, btn.dataset.path));
+            });
+
+        } catch (err) {
+            console.error("Fetch error:", err);
+            docListContainer.innerHTML = '<p class="empty-text">Unable to load documents.</p>';
+        }
+    }
+
+    /* UPLOAD DOCUMENT */
+    addDocForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if (!user) return alert("Please log in first.");
+
+        const fileInput = document.getElementById("docFile");
+        const file = fileInput.files[0];
+        const docType = document.getElementById("docType").value;
+        const identifier = document.getElementById("docIdentifier").value.trim();
+
+        if (!file) return alert("Please select a file.");
+
+        uploadDocBtn.disabled = true;
+        uploadDocBtn.textContent = "Uploading...";
+
+        try {
+            const filePath = `documents/${user.uid}/${Date.now()}_${file.name}`;
+            const storageReference = ref(storage, filePath);
+
+            await uploadBytes(storageReference, file);
+            const downloadUrl = await getDownloadURL(storageReference);
+
+            await addDoc(collection(db, "documents"), {
+                userId: user.uid,
+                docType: docType,
+                identifier: identifier || "",
+                fileUrl: downloadUrl,
+                storagePath: filePath,
+                createdAt: serverTimestamp()
+            });
+
+            addDocForm.reset();
+            await fetchUserDocuments(user.uid);
+        } catch (error) {
+            console.error("Upload failed:", error);
+            alert("Upload failed: " + error.message);
+        } finally {
+            uploadDocBtn.disabled = false;
+            uploadDocBtn.textContent = "Upload Document";
+        }
+    });
+
+    /* DELETE DOCUMENT */
+    async function deleteDocument(docId, storagePath) {
+        if (!confirm("Are you sure you want to delete this document?")) return;
+
+        try {
+            if (storagePath) {
+                const storageReference = ref(storage, storagePath);
+                await deleteObject(storageReference).catch(() => {});
+            }
+            await deleteDoc(doc(db, "documents", docId));
+            fetchUserDocuments(auth.currentUser.uid);
+        } catch (error) {
+            console.error("Delete failed:", error);
+            alert("Failed to delete document.");
+        }
+    }
+
+    /* LOAD PROFILE ON AUTH CHANGE */
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const uid = user.uid;
+
+        const savedName = localStorage.getItem(`profile_name_${uid}`) || user.displayName || "User";
+        const savedPhone = localStorage.getItem(`profile_phone_${uid}`) || "";
+        const savedRole = localStorage.getItem(`profile_role_${uid}`) || "Foreign Tourist";
+        const savedDistrict = localStorage.getItem(`profile_district_${uid}`) || "Kohima";
+        const savedPhoto = localStorage.getItem(`profile_photo_${uid}`) || user.photoURL || null;
+
+        document.getElementById("profileName").textContent = savedName;
+        document.getElementById("topUserName").textContent = savedName;
+        document.getElementById("editName").value = savedName;
+
+        document.getElementById("profileEmail").textContent = user.email || "";
+
+        renderAvatar(savedPhoto);
+        if (savedPhoto && !savedPhoto.startsWith("data:")) {
+            editPhotoUrl.value = savedPhoto;
+        }
+
+        document.getElementById("profilePhone").textContent = savedPhone || "+91 98765 43210";
+        document.getElementById("editPhone").value = savedPhone;
+
+        document.getElementById("profileRole").textContent = savedRole;
+        document.getElementById("editRole").value = savedRole;
+
+        document.getElementById("statusDistrict").textContent = savedDistrict;
+        document.getElementById("editDistrict").value = savedDistrict;
+    });
+
+    /* SAVE PROFILE CHANGES */
+    saveProfileBtn.addEventListener("click", async () => {
+        const user = auth.currentUser;
+        if (!user) {
+            alert("You are not logged in.");
+            return;
+        }
+
+        const uid = user.uid;
+        const name = document.getElementById("editName").value.trim();
+        const phone = document.getElementById("editPhone").value.trim();
+        const role = document.getElementById("editRole").value.trim();
+        const district = document.getElementById("editDistrict").value.trim();
+        const manualUrl = editPhotoUrl.value.trim();
+
+        if (!name) {
+            alert("Please enter your full name.");
+            return;
+        }
+
+        const existingPhoto = localStorage.getItem(`profile_photo_${uid}`) || user.photoURL || null;
+        const finalPhoto = chosenBase64Image || manualUrl || existingPhoto;
+
+        try {
+            const authPayload = { displayName: name };
+            if (manualUrl) {
+                authPayload.photoURL = manualUrl;
+            }
+            await updateProfile(user, authPayload);
+
+            localStorage.setItem(`profile_name_${uid}`, name);
+            localStorage.setItem(`profile_phone_${uid}`, phone);
+            localStorage.setItem(`profile_role_${uid}`, role || "Foreign Tourist");
+            localStorage.setItem(`profile_district_${uid}`, district || "Kohima");
+
+            if (finalPhoto) {
+                localStorage.setItem(`profile_photo_${uid}`, finalPhoto);
+                localStorage.setItem(`profile_pic_${uid}`, finalPhoto);
+            }
+
+            document.getElementById("profileName").textContent = name;
+            document.getElementById("topUserName").textContent = name;
+            document.getElementById("profilePhone").textContent = phone || "Not provided";
+            document.getElementById("profileRole").textContent = role || "Foreign Tourist";
+            document.getElementById("statusDistrict").textContent = district || "Kohima";
+
+            renderAvatar(finalPhoto);
+
+            chosenBase64Image = null;
+            avatarFileInput.value = "";
+
+            alert("Profile updated successfully!");
+            closeEditForm();
+        } catch (error) {
+            console.error(error);
+            alert("Unable to update profile: " + error.message);
+        }
+    });
+
+    /* LOGOUT */
+    logoutBtn.addEventListener("click", async (event) => {
+        event.preventDefault();
+        try {
+            await signOut(auth);
+            window.location.href = "login.html";
+        } catch (error) {
+            console.error(error);
+            alert("Logout failed.");
+        }
+    });
+
+    /* BACK TO DASHBOARD */
+    document.getElementById("backBtn").addEventListener("click", () => {
+        window.location.href = "dashboard.html";
+    });
+</script>
+</body>
+</html>

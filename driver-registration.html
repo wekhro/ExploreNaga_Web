@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver & Guide Registration | ExploreNaga</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center py-6 sm:py-10 px-4 antialiased text-gray-800 min-h-screen">
+
+  <!-- Desktop Proportional Container: max-w-3xl gives ample width without taking full edge-to-edge space -->
+  <div class="relative w-full max-w-3xl bg-white shadow-xl rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col pb-6 border border-gray-100 my-auto">
+
+    <!-- ================= HEADER ================= -->
+    <header class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100 bg-white sticky top-0 z-40">
+      <button onclick="window.history.back()" class="p-2 text-emerald-900 hover:bg-emerald-50 rounded-xl transition" aria-label="Go Back">
+        <i data-lucide="arrow-left" class="w-6 h-6"></i>
+      </button>
+
+      <div class="text-center">
+        <h1 class="font-bold text-lg sm:text-xl text-emerald-950 leading-tight">Driver Registration</h1>
+        <p class="text-xs text-gray-500 font-medium">ExploreNaga Verified Partner Network</p>
+      </div>
+
+      <div class="w-10"></div> <!-- Spacer to maintain center balance -->
+    </header>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="px-6 sm:px-8 pt-6 space-y-5 flex-1 overflow-y-auto">
+
+      <!-- Advisory Banner -->
+      <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 sm:p-5 flex items-start gap-4">
+        <div class="p-2.5 bg-emerald-100 text-emerald-800 rounded-xl shrink-0">
+          <i data-lucide="shield-check" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h2 class="font-bold text-sm text-emerald-950">Nagaland Transport Safety Network</h2>
+          <p class="text-xs text-emerald-800 mt-1 leading-relaxed">
+            Registered commercial drivers and guides receive tourist dispatch requests and scheduled safety check-in alerts across all state hill routes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Status Display -->
+      <div id="statusCard" class="hidden border border-emerald-200 bg-emerald-50/60 rounded-2xl p-5 space-y-2 text-sm">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-emerald-950">Application Status</span>
+          <span id="applicationStatusBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Pending Review</span>
+        </div>
+        <p id="statusDescription" class="text-gray-600 text-xs leading-relaxed">
+          Your details are submitted. Local Transport Association checks are usually completed within 24 hours.
+        </p>
+      </div>
+
+      <!-- Registration Form -->
+      <form id="driverRegForm" class="space-y-4">
+        
+        <!-- Full Name -->
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1.5">Full Legal Name (as per Driving License)</label>
+          <input type="text" id="driverName" required placeholder="e.g., Keviselie Angami" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:border-emerald-700 focus:outline-none focus:bg-white transition">
+        </div>
+
+        <!-- Phone & District -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1.5">Contact Phone</label>
+            <input type="tel" id="driverPhone" required pattern="[0-9]{10}" placeholder="10-digit number" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:border-emerald-700 focus:outline-none focus:bg-white transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1.5">Base District</label>
+            <select id="driverDistrict" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:border-emerald-700 focus:outline-none focus:bg-white transition">
+              <option>Kohima</option>
+              <option>Dimapur</option>
+              <option>Wokha</option>
+              <option>Mokokchung</option>
+              <option>Phek</option>
+              <option>Mon</option>
+              <option>Peren</option>
+              <option>Tuensang</option>
+              <option>Zunheboto</option>
+              <option>Kiphire</option>
+              <option>Longleng</option>
+              <option>Chümoukedima</option>
+              <option>Niuland</option>
+              <option>Noklak</option>
+              <option>Shamator</option>
+              <option>Tseminyu</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Driving License Details -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1.5">Driving License Number</label>
+            <input type="text" id="licenseNumber" required placeholder="e.g., NL01-20210001234" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:border-emerald-700 focus:outline-none focus:bg-white uppercase transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-700 mb-1.5">License Expiry Date</label>
+            <input type="date" id="licenseExpiry" required class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:border-emerald-700 focus:outline-none focus:bg-white transition">
+          </div>
+        </div>
+
+        <!-- Vehicle Details Group -->
+        <div class="p-4 sm:p-5 bg-gray-50 border border-gray-200 rounded-2xl space-y-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-gray-700 block">Vehicle & Route Coverage</span>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1.5">Vehicle Type</label>
+              <select id="vehicleType" class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-emerald-700 focus:outline-none transition">
+                <option value="suv">SUV / 4x4 (Sumo, Bolero, Scorpio)</option>
+                <option value="hatchback">Hatchback / Sedan (Alto, WagonR)</option>
+                <option value="taxi">City Taxi / Local Transit</option>
+                <option value="bus">Mini Bus / Traveller</option>
+                <option value="guide_only">Trek Guide Only (No Vehicle)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1.5">Vehicle Reg. Number</label>
+              <input type="text" id="vehicleRegNumber" placeholder="e.g., NL07-T-5421" class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-emerald-700 focus:outline-none uppercase transition">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1.5">Operating Routes Covered</label>
+            <input type="text" id="serviceRoutes" placeholder="e.g., Kohima - Viswema - Dzükou Trailhead" class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-emerald-700 focus:outline-none transition">
+          </div>
+        </div>
+
+        <!-- Requirements Checklist -->
+        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 text-xs text-gray-600 space-y-1.5">
+          <span class="font-bold text-gray-900 block">Verification Requirements:</span>
+          <p>• Valid Indian Driving License with Commercial/Transport endorsement (if driving a vehicle).</p>
+          <p>• Commercial taxi permit or recommendation letter from the Local Village Council / Tourism Board.</p>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitBtn" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] text-sm mt-2">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span id="submitBtnText">Submit Driver Application</span>
+        </button>
+      </form>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="px-6 sm:px-8 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 mt-2">
+      <span>© 2026 ExploreNaga Safety</span>
+      <a href="dashboard.html" class="text-emerald-800 font-semibold hover:underline">Back to Dashboard</a>
+    </footer>
+
+  </div>
+
+  <!-- ================= FIREBASE FIRESTORE SYNC ================= -->
+  <script type="module">
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { 
+      doc, 
+      getDoc, 
+      setDoc, 
+      serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { auth, db } from "./firebase.js";
+
+    let currentUser = null;
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        await checkExistingDriverRegistration(user.uid);
+      } else {
+        window.location.href = "login.html";
+      }
+      lucide.createIcons();
+    });
+
+    async function checkExistingDriverRegistration(uid) {
+      try {
+        const docRef = doc(db, "driver_registrations", uid);
+        const snapshot = await getDoc(docRef);
+
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          const statusCard = document.getElementById("statusCard");
+          const badge = document.getElementById("applicationStatusBadge");
+          const desc = document.getElementById("statusDescription");
+          const submitBtn = document.getElementById("submitBtn");
+          const submitBtnText = document.getElementById("submitBtnText");
+
+          statusCard.classList.remove("hidden");
+          const currentStatus = data.status || "Pending Review";
+          badge.textContent = currentStatus;
+
+          if (currentStatus === "Approved") {
+            badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800";
+            desc.textContent = `Verified Partner • License: ${data.licenseNumber}`;
+            submitBtn.disabled = true;
+            submitBtn.className = "w-full bg-emerald-600 text-white font-semibold py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 cursor-default opacity-90";
+            submitBtn.innerHTML = `<i data-lucide="badge-check" class="w-5 h-5"></i><span>Verified Driver Partner</span>`;
+          } else if (currentStatus === "Rejected") {
+            badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700";
+            desc.textContent = "Application needs correction. Please update details and resubmit.";
+            submitBtnText.textContent = "Resubmit Driver Application";
+          } else {
+            badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+            desc.textContent = "Your application is under active review by the local transport board.";
+            submitBtnText.textContent = "Update Driver Details";
+          }
+
+          document.getElementById("driverName").value = data.name || "";
+          document.getElementById("driverPhone").value = data.phone || "";
+          document.getElementById("driverDistrict").value = data.district || "Kohima";
+          document.getElementById("licenseNumber").value = data.licenseNumber || "";
+          document.getElementById("licenseExpiry").value = data.licenseExpiry || "";
+          document.getElementById("vehicleType").value = data.vehicleType || "suv";
+          document.getElementById("vehicleRegNumber").value = data.vehicleRegNumber || "";
+          document.getElementById("serviceRoutes").value = data.serviceRoutes || "";
+        }
+      } catch (err) {
+        console.error("Error checking driver registration:", err);
+      }
+    }
+
+    document.getElementById("driverRegForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Saving Application...</span>`;
+
+      const rawRoutes = document.getElementById("serviceRoutes").value;
+      const routesIndex = rawRoutes
+        .split(/[-–,→]/)
+        .map(r => r.trim().toLowerCase())
+        .filter(r => r.length > 0);
+
+      const payload = {
+        userId: currentUser.uid,
+        userEmail: currentUser.email || "",
+        name: document.getElementById("driverName").value.trim(),
+        phone: document.getElementById("driverPhone").value.trim(),
+        district: document.getElementById("driverDistrict").value,
+        licenseNumber: document.getElementById("licenseNumber").value.trim().toUpperCase(),
+        licenseExpiry: document.getElementById("licenseExpiry").value,
+        vehicleType: document.getElementById("vehicleType").value,
+        vehicleRegNumber: document.getElementById("vehicleRegNumber").value.trim().toUpperCase(),
+        serviceRoutes: rawRoutes.trim(),
+        routesIndex: routesIndex,
+        status: "Pending Review",
+        isOnline: true,
+        updatedAt: serverTimestamp()
+      };
+
+      try {
+        await setDoc(doc(db, "driver_registrations", currentUser.uid), payload, { merge: true });
+        alert("Driver registration submitted successfully!");
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        console.error("Failed to submit driver registration:", err);
+        alert("Submission failed. Please check your network and Firestore rules.");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i><span>Submit Driver Application</span>`;
+        lucide.createIcons();
+      }
+    });
+
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>

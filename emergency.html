@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency & Help - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 via-emerald-50/40 to-teal-50/50 flex items-center justify-center p-3 sm:p-6 lg:p-10 text-slate-800 min-h-screen">
+
+  <!-- Centered Layout Canvas -->
+  <div class="w-full max-w-6xl min-h-[90vh] bg-white/95 backdrop-blur-xl shadow-2xl shadow-slate-900/10 rounded-3xl border border-slate-200/80 overflow-hidden flex flex-col my-auto z-10">
+
+    <!-- Header Bar -->
+    <header class="flex items-center justify-between px-6 sm:px-10 py-5 border-b border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="flex items-center gap-4">
+        <button onclick="smartBack()" class="p-2 -ml-1 text-slate-700 hover:text-emerald-900 hover:bg-emerald-50 rounded-xl transition active:scale-95" aria-label="Go back">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </button>
+        <div>
+          <h1 class="font-extrabold text-lg sm:text-2xl text-slate-900 tracking-tight flex items-center gap-2.5">
+            <span>Emergency & Assistance</span>
+            <span class="text-xs font-bold bg-red-100 text-red-700 border border-red-200 px-2.5 py-0.5 rounded-full hidden sm:inline-block">24/7 Operations</span>
+          </h1>
+          <p class="text-xs text-slate-500 font-medium">Nagaland Central Disaster, Police & Medical Dispatch Network</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1.5 text-xs bg-red-50 text-red-700 font-bold px-3 py-1.5 rounded-full border border-red-200 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+          Direct Dispatch
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Content Grid -->
+    <main class="p-6 sm:p-10 space-y-8 flex-1 overflow-y-auto">
+
+      <!-- Hero Emergency Actions -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
+        
+        <!-- Primary 112 Dial Banner -->
+        <div class="lg:col-span-2 bg-gradient-to-r from-red-600 via-rose-600 to-red-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-red-950/10 flex flex-col justify-between space-y-6">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-xs uppercase font-extrabold tracking-widest text-red-200 bg-red-800/40 px-3 py-1 rounded-full inline-block">
+                Toll Free All-India Response
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-black mt-2 tracking-tight">National Emergency (112)</h2>
+              <p class="text-xs sm:text-sm text-red-100 mt-1 max-w-xl leading-relaxed">
+                Centralized dispatch linking State Police Command, Fire & Emergency Services, Naga Hospital Authority, and Highway Interceptors across all 16 districts.
+              </p>
+            </div>
+            <div class="p-3.5 bg-white/15 rounded-2xl shrink-0 hidden sm:block">
+              <i data-lucide="phone-call" class="w-8 h-8 text-white"></i>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <a href="tel:112" class="flex-1 bg-white hover:bg-red-50 text-red-700 font-extrabold py-3.5 px-6 rounded-2xl text-sm flex items-center justify-center gap-2.5 shadow-md shadow-red-950/20 transition active:scale-[0.98]">
+              <i data-lucide="phone" class="w-4 h-4 fill-red-700"></i>
+              Call 112 Toll Free
+            </a>
+            <button onclick="copyEmergencyPayload()" class="bg-red-800/60 hover:bg-red-800 text-white font-bold py-3.5 px-5 rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 border border-red-400/30 transition active:scale-[0.98]">
+              <i data-lucide="copy" class="w-4 h-4"></i>
+              Copy Distress Info
+            </button>
+          </div>
+        </div>
+
+        <!-- Coordinates & Sensor Hub -->
+        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 flex flex-col justify-between space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+              <i data-lucide="navigation-2" class="w-4 h-4 text-emerald-600"></i>
+              GPS Distress Ping
+            </span>
+            <button 
+              id="locBtn" 
+              onclick="getCoordinates()" 
+              class="text-xs font-bold text-emerald-800 bg-emerald-100/70 hover:bg-emerald-200 border border-emerald-200 px-3 py-1.5 rounded-xl transition"
+            >
+              Get GPS Fix
+            </button>
+          </div>
+
+          <div id="coordDisplay" class="text-xs text-slate-600 font-mono bg-white p-4 rounded-2xl border border-slate-200 leading-relaxed shadow-xs flex-1 flex flex-col justify-center">
+            Tap "Get GPS Fix" to display offline hardware coordinates to relay to local responders.
+          </div>
+
+          <div class="flex items-center gap-2 text-[11px] text-slate-400 font-medium">
+            <i data-lucide="info" class="w-3.5 h-3.5 text-slate-400"></i>
+            Functions without cellular internet via hardware satellites.
+          </div>
+        </div>
+      </section>
+
+      <!-- Dynamic District & State Helplines -->
+      <section class="space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 px-1">
+          <div>
+            <h3 class="font-extrabold text-sm sm:text-base text-slate-900 tracking-tight">Dedicated Support Lines</h3>
+            <p class="text-xs text-slate-500 font-medium">Categorized official authorities and local rescue units</p>
+          </div>
+          <span id="helplineCount" class="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-1 rounded-full"></span>
+        </div>
+
+        <div id="helplineGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- Dynamic Advisory & Valley Bulletins -->
+      <section id="advisoryContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="px-6 sm:px-10 py-4 border-t border-slate-100 bg-white flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400 font-medium">
+      <span>ExploreNaga Emergency Directory &copy; 2026</span>
+      <div class="flex items-center gap-4">
+        <span class="text-slate-500 font-semibold">State Operations Control Room Kohima</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Application Logic & Data Models -->
+  <script>
+    // Configurable Emergency Directory
+    const EMERGENCY_DIRECTORY = [
+      {
+        title: "State Disaster Mgmt (NSDMA)",
+        desc: "Mountain rescue, flash floods & landslides",
+        contact: "1070",
+        type: "tel",
+        theme: { bg: "bg-amber-50", text: "text-amber-600", btnBg: "bg-amber-100 hover:bg-amber-200", btnText: "text-amber-900" },
+        icon: "shield-alert"
+      },
+      {
+        title: "Medical & Ambulance",
+        desc: "Naga Hospital Kohima & District Civil ERs",
+        contact: "108",
+        type: "tel",
+        theme: { bg: "bg-emerald-50", text: "text-emerald-600", btnBg: "bg-emerald-100 hover:bg-emerald-200", btnText: "text-emerald-900" },
+        icon: "ambulance"
+      },
+      {
+        title: "Kohima Tourist Police / FRO",
+        desc: "Foreign registration & tourist assistance",
+        contact: "03702244273",
+        type: "tel",
+        theme: { bg: "bg-blue-50", text: "text-blue-600", btnBg: "bg-blue-100 hover:bg-blue-200", btnText: "text-blue-900" },
+        icon: "badge-alert"
+      },
+      {
+        title: "Women's Helpline",
+        desc: "Safety, harassment report & immediate response",
+        contact: "181",
+        type: "tel",
+        theme: { bg: "bg-purple-50", text: "text-purple-600", btnBg: "bg-purple-100 hover:bg-purple-200", btnText: "text-purple-900" },
+        icon: "shield"
+      },
+      {
+        title: "Fire & Rescue Operations",
+        desc: "Regional fire headquarters & wildland teams",
+        contact: "101",
+        type: "tel",
+        theme: { bg: "bg-rose-50", text: "text-rose-600", btnBg: "bg-rose-100 hover:bg-rose-200", btnText: "text-rose-900" },
+        icon: "flame"
+      },
+      {
+        title: "Childline Nagaland",
+        desc: "Child welfare, protection & transit support",
+        contact: "1098",
+        type: "tel",
+        theme: { bg: "bg-teal-50", text: "text-teal-600", btnBg: "bg-teal-100 hover:bg-teal-200", btnText: "text-teal-900" },
+        icon: "heart-handshake"
+      }
+    ];
+
+    // Configurable Safety Advisories
+    const SAFETY_ADVISORIES = [
+      {
+        title: "Dzükou Valley & Japfü Peak Protocol",
+        icon: "compass",
+        theme: "border-emerald-200/80 bg-emerald-50/40 text-emerald-950",
+        iconColor: "text-emerald-700",
+        content: "If stranded off-trail, stay on high ridges to maintain cellular signal. Southern Angami Youth Organisation (SAYO) operates registration points at Viswema and Jakhama gates. Contact checkpoint guides or NSDMA (1070) before dusk."
+      },
+      {
+        title: "Monsoon & Mountain Pass Alert",
+        icon: "cloud-rain",
+        theme: "border-amber-200/80 bg-amber-50/40 text-amber-950",
+        iconColor: "text-amber-700",
+        content: "Road segments along NH-29 and eastern district corridors (Tuensang, Kiphire, Noklak) are vulnerable to landslides during heavy rains. Avoid traversing high elevation passes after 6:00 PM when hill transit closes."
+      }
+    ];
+
+    let currentLat = null;
+    let currentLon = null;
+
+    // Render Dynamic Content
+    function renderApp() {
+      // 1. Helpline Cards
+      const helplineContainer = document.getElementById("helplineGrid");
+      document.getElementById("helplineCount").textContent = `${EMERGENCY_DIRECTORY.length} Numbers`;
+      helplineContainer.innerHTML = EMERGENCY_DIRECTORY.map(item => `
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition duration-150 group">
+          <div class="flex items-center gap-3.5">
+            <div class="p-2.5 ${item.theme.bg} ${item.theme.text} rounded-xl shrink-0 group-hover:scale-105 transition">
+              <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-extrabold text-sm text-slate-900 leading-tight">${item.title}</h4>
+              <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5 line-clamp-1">${item.desc}</p>
+            </div>
+          </div>
+          <a
+            href="${item.type}:${item.contact}"
+            class="px-3.5 py-2 ${item.theme.btnBg} ${item.theme.btnText} font-extrabold text-xs rounded-xl transition shrink-0 ml-2"
+          >
+            ${item.contact}
+          </a>
+        </div>
+      `).join("");
+
+      // 2. Advisory Cards
+      const advisoryContainer = document.getElementById("advisoryContainer");
+      advisoryContainer.innerHTML = SAFETY_ADVISORIES.map(card => `
+        <div class="border rounded-2xl p-5 text-xs space-y-2 ${card.theme}">
+          <h4 class="font-extrabold text-sm flex items-center gap-2">
+            <i data-lucide="${card.icon}" class="w-4 h-4 ${card.iconColor}"></i>
+            ${card.title}
+          </h4>
+          <p class="leading-relaxed opacity-90">${card.content}</p>
+        </div>
+      `).join("");
+
+      lucide.createIcons();
+    }
+
+    // Geolocation Service
+    function getCoordinates() {
+      const display = document.getElementById("coordDisplay");
+      const btn = document.getElementById("locBtn");
+
+      if (!navigator.geolocation) {
+        display.innerHTML = `<span class="text-rose-600 font-bold">Geolocation is not supported by your browser.</span>`;
+        return;
+      }
+
+      btn.textContent = "Locating...";
+      btn.disabled = true;
+      display.innerHTML = `<span class="text-slate-500 animate-pulse">Querying hardware GPS satellites...</span>`;
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          currentLat = pos.coords.latitude.toFixed(5);
+          currentLon = pos.coords.longitude.toFixed(5);
+          const acc = Math.round(pos.coords.accuracy);
+
+          display.innerHTML = `
+            <div class="space-y-1">
+              <div class="text-emerald-950 font-bold">Fix Locked (±${acc}m accuracy)</div>
+              <div><strong class="text-slate-700">Latitude:</strong> ${currentLat}</div>
+              <div><strong class="text-slate-700">Longitude:</strong> ${currentLon}</div>
+            </div>
+          `;
+          btn.textContent = "Refresh GPS";
+          btn.disabled = false;
+        },
+        (err) => {
+          display.innerHTML = `<span class="text-rose-600 font-bold">Location access denied or timed out. Check phone permissions.</span>`;
+          btn.textContent = "Retry";
+          btn.disabled = false;
+        },
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+      );
+    }
+
+    // Quick Clipboard Action for Dispatch Calls
+    function copyEmergencyPayload() {
+      const payload = currentLat && currentLon 
+        ? `EMERGENCY ALERT (Nagaland)\nMy current coordinates: Lat ${currentLat}, Lon ${currentLon}.\nPlease dispatch assistance.` 
+        : `EMERGENCY ALERT (Nagaland)\nPlease dispatch assistance. (GPS coordinates not attached).`;
+
+      navigator.clipboard.writeText(payload).then(() => {
+        alert("Emergency distress message copied to clipboard!");
+      }).catch(() => {
+        alert("Distress text: " + payload);
+      });
+    }
+
+    window.smartBack = function() {
+      if (window.history.length > 1 && document.referrer.includes(window.location.host)) {
+        window.history.back();
+      } else {
+        window.location.href = "dashboard.html";
+      }
+    };
+
+    // Boot
+    renderApp();
+  </script>
+</body>
+</html>

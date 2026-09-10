@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExploreNaga - Tourism Guide</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet CSS & JS (Free Interactive Map Engine) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        /* ================= FLOWING TICKER ANIMATION ================= */
+        .ticker-wrapper {
+            width: 100%;
+            background-color: #064e3b;
+            color: #ffffff;
+            overflow: hidden;
+            padding: 8px 0;
+            border-bottom: 1px solid #047857;
+            user-select: none;
+        }
+
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: flowText 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-track:hover {
+            animation-play-state: paused;
+        }
+
+        .ticker-content {
+            display: inline-flex;
+            align-items: center;
+            gap: 24px;
+            padding-right: 24px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .ticker-content span,
+        .ticker-content a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .ticker-link {
+            background-color: #047857;
+            color: #ffffff !important;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .ticker-link:hover {
+            background-color: #059669;
+            text-decoration: underline;
+        }
+
+        .ticker-bullet {
+            color: #34d399;
+            font-size: 14px;
+        }
+
+        @keyframes flowText {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ================= CLEAN LIGHT MAP SECTION ================= */
+        .map-section {
+            margin: 28px 0 24px 0;
+            width: 100%;
+        }
+
+        .map-card-wrapper {
+            background-color: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #edf2f7;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .map-header-bar h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .map-header-bar p {
+            margin: 2px 0 0 0;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .app-launch-btn {
+            background-color: #059669;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 7px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .app-launch-btn:hover {
+            background-color: #047857;
+            transform: translateY(-1px);
+        }
+
+        #nagaMapContainer {
+            width: 100%;
+            height: 400px;
+            background-color: #f8fafc;
+            z-index: 1;
+        }
+
+        /* Clickable SVG Pin Marker */
+        .clickable-pin {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transform: translate(-50%, -100%);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+            transition: transform 0.15s ease;
+        }
+
+        .clickable-pin:hover {
+            transform: translate(-50%, -108%) scale(1.08);
+        }
+
+        .clickable-pin svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .pin-label {
+            background-color: #ffffff;
+            color: #1e293b;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 6px;
+            margin-top: -2px;
+            white-space: nowrap;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Clean White Popup Window */
+        .leaflet-popup-content-wrapper {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border-radius: 14px !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+            padding: 6px !important;
+        }
+
+        .leaflet-popup-tip {
+            background: #ffffff !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Placeholder for dynamic menu.html -->
+    <div id="menu-container"></div>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <button class="menu-button" onclick="openMenu()" aria-label="Open menu">
+            ☰
+        </button>
+
+        <div class="logo">
+            <div class="logo-icon">▲</div>
+            <div>
+                <h2>ExploreNaga 🌿</h2>
+                <p>Stay connected, Travel Safely</p>
+            </div>
+        </div>
+
+        <div class="header-buttons">
+            <button class="safety-button" onclick="openMenu()">
+                ✧
+            </button>
+            <button class="login-button" onclick="window.location.href='login.html'">
+                Login
+            </button>
+        </div>
+    </header>
+
+    <!-- ================= FLOWING TICKER BANNER ================= -->
+    <div class="ticker-wrapper" aria-label="Live announcements">
+        <div class="ticker-track">
+            <!-- First Instance -->
+            <div class="ticker-content">
+                <span>🌿 Welcome to Nagaland</span>
+                <span class="ticker-bullet">•</span>
+                <a href="driver-registration.html" class="ticker-link">🚕 Driver & Partner Registration Open</a>
+                <span class="ticker-bullet">•</span>
+                <span>📋 Inner Line Permit (ILP) required for domestic visitors</span>
+                <span class="ticker-bullet">•</span>
+                <span>🏔️ Dzükou Valley: Check weather forecast before ascent</span>
+                <span class="ticker-bullet">•</span>
+                <span>🚗 Commercial Tata Sumos depart 06:00 AM – 07:00 AM</span>
+                <span class="ticker-bullet">•</span>
+                <span>🚨 24/7 State Emergency Assistance: Dial 112 / 1070</span>
+                <span class="ticker-bullet">•</span>
+            </div>
+
+            <!-- Duplicate Instance for Seamless Infinite Flow -->
+            <div class="ticker-content" aria-hidden="true">
+                <span>🌿 Welcome to Nagaland</span>
+                <span class="ticker-bullet">•</span>
+                <a href="driver-registration.html" class="ticker-link">🚕 Driver & Partner Registration Open</a>
+                <span class="ticker-bullet">•</span>
+                <span>📋 Inner Line Permit (ILP) required for domestic visitors</span>
+                <span class="ticker-bullet">•</span>
+                <span>🏔️ Dzükou Valley: Check weather forecast before ascent</span>
+                <span class="ticker-bullet">•</span>
+                <span>🚗 Commercial Tata Sumos depart 06:00 AM – 07:00 AM</span>
+                <span class="ticker-bullet">•</span>
+                <span>🚨 24/7 State Emergency Assistance: Dial 112 / 1070</span>
+                <span class="ticker-bullet">•</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= HERO IMAGE ================= -->
+    <section class="hero">
+        <img id="heroImage" src="images/Sheep Farm.jpeg" alt="Sheep Farm, Kohima, Nagaland">
+        <button class="arrow left" onclick="previousSlide()">‹</button>
+        <button class="arrow right" onclick="nextSlide()">›</button>
+
+        <div class="dots">
+            <span onclick="showSlide(0)" class="dot active"></span>
+            <span onclick="showSlide(1)" class="dot"></span>
+            <span onclick="showSlide(2)" class="dot"></span>
+            <span onclick="showSlide(3)" class="dot"></span>
+        </div>
+    </section>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main>
+        <p class="welcome-text">Welcome to Nagaland, India</p>
+        <h1>ExploreNaga 🌿</h1>
+
+        <!-- Quick Options with Direct Links -->
+        <div class="options">
+            <button class="option" onclick="window.location.href='login.html'">
+                <span class="option-icon">🔒</span>
+                <span>Login to check-in/SOS</span>
+            </button>
+
+            <button class="option" id="transport" onclick="window.location.href='transport-fares.html'">
+                <span class="option-icon">🚌</span>
+                <span>Transport Fares<small>(Bus, shared taxi, etc.)</small></span>
+                <span class="arrow-down">⌄</span>
+            </button>
+
+            <button class="option" id="safety" onclick="window.location.href='essentials.html?tab=ilp'">
+                <span class="option-icon">ⓘ</span>
+                <span>Essential Info<small>(Entry Requirements, Do's & Don'ts)</small></span>
+            </button>
+        </div>
+
+        <!-- ================= CLEAN NAGALAND MAP WITH CLICKABLE MARKERS ================= -->
+        <div class="map-section">
+            <div class="map-card-wrapper">
+                <div class="map-header-bar">
+                    <div>
+                        <h3>📍 Nagaland Interactive Map</h3>
+                        <p>Click any district marker to get directions in the Google Maps App</p>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Nagaland" target="_blank" rel="noopener noreferrer" class="app-launch-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span>Open State Map</span>
+                    </a>
+                </div>
+                
+                <!-- Leaflet Light Map Container -->
+                <div id="nagaMapContainer"></div>
+            </div>
+        </div>
+
+        <!-- Destinations Grid -->
+        <div class="destinations-header">
+            <h2 class="section-title" id="destinations">Popular Destinations</h2>
+            <a href="destinations.html" class="view-all-btn">View All →</a>
+        </div>
+
+        <div class="destinations-grid">
+            <div class="destination-card" onclick="window.location.href='destinations.html'">
+                <img src="images/Sheep Farm.jpeg" alt="Sheep Farm, Kohima">
+                <div class="destination-info">
+                    <h3>Sheep Farm</h3>
+                    <p>Kohima</p>
+                </div>
+            </div>
+            <div class="destination-card" onclick="window.location.href='destinations.html'">
+                <img src="images/Kacharu.jpeg" alt="Kachari Ruins, Dimapur">
+                <div class="destination-info">
+                    <h3>Kachari Ruins</h3>
+                    <p>Dimapur</p>
+                </div>
+            </div>
+            <div class="destination-card" onclick="window.location.href='destinations.html'">
+                <img src="images/khonoma.webp" alt="Khonoma Village">
+                <div class="destination-info">
+                    <h3>Khonoma Village</h3>
+                    <p>Kohima District</p>
+                </div>
+            </div>
+            <div class="destination-card" onclick="window.location.href='destinations.html'">
+                <img src="images/Dzukou.jpeg" alt="Dzükou Valley">
+                <div class="destination-info">
+                    <h3>Dzükou Valley</h3>
+                    <p>Kohima</p>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="footer-links">
+            <a href="safety.html">Our Safety</a>
+            <a href="essentials.html?tab=language">Language & Phrasebook</a>
+            <a href="essentials.html?tab=etiquette">Respect Culture</a>
+        </div>
+        <p>© 2026 ExploreNaga</p>
+    </footer>
+
+    <!-- Global Application Script -->
+    <script src="script.js"></script>
+
+    <!-- Leaflet Clickable Markers & Official OpenStreetMap Tiles (No Watermark, No API Key) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // All 16 Nagaland District Headquarters
+            const DISTRICTS = [
+                { name: "Dimapur", lat: 25.9042, lng: 93.7291, desc: "Rail & Airport Hub" },
+                { name: "Chümoukedima", lat: 25.8010, lng: 93.7745, desc: "NH-29 Foothills HQ" },
+                { name: "Niuland", lat: 25.9620, lng: 93.8962, desc: "Agro-tourism & River Valley" },
+                { name: "Kohima", lat: 25.6751, lng: 94.1086, desc: "State Capital & Hornbill Grounds" },
+                { name: "Peren", lat: 25.5186, lng: 93.7402, desc: "Jalukie Valley & Hills" },
+                { name: "Tseminyu", lat: 25.9189, lng: 94.2096, desc: "Rengma Heritage Corridor" },
+                { name: "Wokha", lat: 26.0988, lng: 94.2604, desc: "Doyang Amur Falcon Roost" },
+                { name: "Phek", lat: 25.6852, lng: 94.4984, desc: "Pfütsero & Glory Peak" },
+                { name: "Meluri", lat: 25.6980, lng: 94.7523, desc: "Shilloi Lake & Pochury Region" },
+                { name: "Zunheboto", lat: 25.9628, lng: 94.5204, desc: "Sumi Heartland" },
+                { name: "Mokokchung", lat: 26.3256, lng: 94.5298, desc: "Ao Cultural Capital" },
+                { name: "Longleng", lat: 26.4789, lng: 94.8115, desc: "Phom Highland Ridges" },
+                { name: "Tuensang", lat: 26.2827, lng: 94.8315, desc: "Eastern Hub Headquarters" },
+                { name: "Shamator", lat: 26.0592, lng: 94.8960, desc: "Yimkhiung & Tikhir Hills" },
+                { name: "Noklak", lat: 26.1963, lng: 95.0069, desc: "Khiamniungan Border Frontier" },
+                { name: "Kiphire", lat: 25.8672, lng: 94.7824, desc: "Base of Mt. Saramati (3,841 m)" },
+                { name: "Mon Village", lat: 26.7410, lng: 95.0617, desc: "Konyak Territory & Longwa" }
+            ];
+
+            // Initialize Map Centered on Nagaland
+            const map = L.map('nagaMapContainer', {
+                center: [26.1584, 94.5624],
+                zoom: 8,
+                minZoom: 7,
+                maxZoom: 18,
+                scrollWheelZoom: false // Prevents page scrolling hijack
+            });
+
+            // 100% Free, Official OpenStreetMap Tiles (No API key, No watermark)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Red Pin Icon SVG
+            const pinSvg = `
+                <svg viewBox="0 0 24 24" fill="#ef4444" stroke="#ffffff" stroke-width="1.5">
+                    <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 16 8 16s8-10.75 8-16c0-4.42-3.58-8-8-8zm0 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+                </svg>
+            `;
+
+            // Add Clickable Markers for all 16 Districts
+            DISTRICTS.forEach(pt => {
+                const customIcon = L.divIcon({
+                    className: 'clickable-pin',
+                    html: `
+                        ${pinSvg}
+                        <div class="pin-label">${pt.name}</div>
+                    `,
+                    iconSize: [80, 42],
+                    iconAnchor: [40, 26]
+                });
+
+                const marker = L.marker([pt.lat, pt.lng], { icon: customIcon }).addTo(map);
+
+                // Direct Google Maps navigation URL
+                const gmapsAppUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pt.name + ', Nagaland')}`;
+
+                // Pop-up when marker is clicked
+                marker.bindPopup(`
+                    <div style="font-family: inherit; padding: 4px; min-width: 170px;">
+                        <h4 style="font-weight: 800; font-size: 14px; color: #0f172a; margin: 0 0 2px 0;">${pt.name}</h4>
+                        <p style="font-size: 11px; color: #64748b; margin: 0 0 10px 0;">${pt.desc}</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <a href="${gmapsAppUrl}" target="_blank" rel="noopener noreferrer" style="background: #ef4444; color: white; text-align: center; text-decoration: none; font-size: 11px; font-weight: 700; padding: 7px 10px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                                📍 Open in Google Maps App
+                            </a>
+                            <a href="transport-fares.html" style="background: #f1f5f9; color: #0f172a; text-align: center; text-decoration: none; font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 8px; display: block; border: 1px solid #cbd5e1;">
+                                🚌 View Bus & Sumo Fares
+                            </a>
+                        </div>
+                    </div>
+                `);
+            });
+        });
+    </script>
+</body>
+
+</html>

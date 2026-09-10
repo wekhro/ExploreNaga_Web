@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transport & Fares Directory - ExploreNaga</title>
+
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Animated background blur orbs */
+    .orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: 0.6;
+      animation: floatOrb 10s ease-in-out infinite alternate;
+    }
+    @keyframes floatOrb {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-30px) scale(1.1); }
+    }
+
+    /* Side Menu Drawer */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(6, 78, 59, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .menu-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 290px;
+      height: 100vh;
+      background-color: #ffffff;
+      z-index: 60;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+    }
+    .side-menu.active {
+      transform: translateX(0);
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-emerald-50 via-teal-50/70 to-amber-50/50 flex justify-center py-4 sm:py-10 px-3 sm:px-6 antialiased text-slate-800 min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient background glow orbs -->
+  <div class="orb w-72 h-72 bg-emerald-300 -top-10 -left-10"></div>
+  <div class="orb w-96 h-96 bg-teal-200 top-1/3 -right-20" style="animation-delay: -3s;"></div>
+  <div class="orb w-80 h-80 bg-amber-200 bottom-10 left-1/4" style="animation-delay: -6s;"></div>
+
+  <!-- Overlay Backdrop for Drawer Menu -->
+  <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+  <!-- Side Menu Drawer -->
+  <aside id="sideMenu" class="side-menu flex flex-col justify-between p-6">
+    <div class="space-y-6">
+      <div class="flex items-center justify-between border-b border-emerald-100 pb-4">
+        <div class="flex items-center gap-2.5 text-emerald-950 font-bold text-lg">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/30">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+          </div>
+          <span>ExploreNaga</span>
+        </div>
+        <button onclick="closeMenu()" class="p-1.5 rounded-lg text-slate-400 hover:bg-emerald-50 hover:text-emerald-900 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <nav class="space-y-2 text-sm font-semibold text-slate-600">
+        <a href="#" class="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/20">
+          <i data-lucide="bus" class="w-4 h-4"></i> Bus & Sumo Directory
+        </a>
+        <a href="index.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl hover:bg-emerald-50 text-slate-700 transition">
+          <i data-lucide="map" class="w-4 h-4 text-emerald-600"></i> Interactive 16-District Map
+        </a>
+        <a href="essentials.html?tab=ilp" class="flex items-center gap-3 px-3.5 py-3 rounded-xl hover:bg-emerald-50 text-slate-700 transition">
+          <i data-lucide="file-text" class="w-4 h-4 text-emerald-600"></i> ILP Entry Portal
+        </a>
+        <a href="safety.html" class="flex items-center gap-3 px-3.5 py-3 rounded-xl hover:bg-emerald-50 text-slate-700 transition">
+          <i data-lucide="phone-call" class="w-4 h-4 text-emerald-600"></i> Emergency SOS & Helplines
+        </a>
+      </nav>
+    </div>
+
+    <div class="text-xs bg-emerald-50/80 border border-emerald-200/60 rounded-2xl p-3.5 text-emerald-900 space-y-1">
+      <p class="font-bold flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-700"></i> NST Regulated Tariff</p>
+      <p class="text-emerald-800/80">Semi-Deluxe: ~₹1.56/km • Super: ~₹2.00/km</p>
+    </div>
+  </aside>
+
+  <!-- Google Maps Embed Modal -->
+  <div id="mapModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[82vh] border border-slate-100">
+      <div class="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-slate-100 bg-white">
+        <div>
+          <h3 id="mapModalTitle" class="font-extrabold text-slate-900 text-sm sm:text-base tracking-tight">Route Navigation</h3>
+          <p id="mapModalSubtitle" class="text-xs text-emerald-700 font-medium">Interactive Turn-by-Turn Road Corridor</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a id="externalMapLink" href="#" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 px-3.5 py-2 rounded-xl shadow-md shadow-emerald-600/20 hover:from-emerald-700 hover:to-teal-700 transition flex items-center gap-1.5">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Google Maps App
+          </a>
+          <button onclick="closeMapModal()" class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 bg-slate-100 relative">
+        <iframe id="mapFrame" class="w-full h-full border-0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Card Container with Glassmorphism -->
+  <div class="w-full max-w-4xl bg-white/90 backdrop-blur-xl shadow-2xl shadow-emerald-900/10 rounded-3xl border border-white/60 overflow-hidden flex flex-col pb-6 my-auto z-10">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-emerald-100/60 bg-white/70 backdrop-blur-md sticky top-0 z-40">
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="javascript:void(0)" onclick="smartBack()" class="p-2 -ml-1 text-slate-700 hover:text-emerald-900 hover:bg-emerald-50 rounded-xl transition active:scale-95" aria-label="Go back">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </a>
+        <div>
+          <h1 class="font-extrabold text-lg sm:text-2xl text-slate-900 tracking-tight flex items-center gap-2">
+            <span>Transport & Fares</span>
+            <span class="text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 px-2.5 py-0.5 rounded-full hidden sm:inline-block">16 Districts</span>
+          </h1>
+          <p class="text-xs text-emerald-800/80 font-medium">Current Inter-District Tata Sumo & NST Bus Directory</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <span id="feedBadge" class="flex items-center gap-1.5 text-xs bg-emerald-100/90 text-emerald-950 font-bold px-3 py-1.5 rounded-full border border-emerald-300 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          Live Feed
+        </span>
+        <button onclick="openMenu()" class="p-2 text-slate-700 hover:text-emerald-950 hover:bg-emerald-50 rounded-xl transition" aria-label="Open menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </header>
+
+    <main class="p-5 sm:p-8 space-y-6 flex-1 overflow-y-auto">
+
+      <!-- Quick Metrics Hero Bar -->
+      <div class="grid grid-cols-3 gap-2.5 sm:gap-4 text-center">
+        <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/70 p-3 sm:p-4 rounded-2xl">
+          <span class="block text-lg sm:text-2xl font-extrabold text-emerald-900">16</span>
+          <span class="text-[11px] sm:text-xs font-semibold text-emerald-700">Districts Linked</span>
+        </div>
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/70 p-3 sm:p-4 rounded-2xl">
+          <span class="block text-lg sm:text-2xl font-extrabold text-amber-900">06:00 AM</span>
+          <span class="text-[11px] sm:text-xs font-semibold text-amber-700">Morning Departures</span>
+        </div>
+        <div class="bg-gradient-to-br from-teal-50 to-cyan-50 border border-teal-200/70 p-3 sm:p-4 rounded-2xl">
+          <span class="block text-lg sm:text-2xl font-extrabold text-teal-900">₹1.56/km</span>
+          <span class="text-[11px] sm:text-xs font-semibold text-teal-700">NST Base Tariff</span>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="space-y-3">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-emerald-600 absolute left-4 top-3.5"></i>
+          <input 
+            id="routeSearch" 
+            type="text" 
+            placeholder="Search district, hub, or peak (e.g., Noklak, Mon, Dzukou, Meluri)..."
+            class="w-full pl-11 pr-4 py-3 bg-white border border-emerald-100 rounded-2xl text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
+          >
+        </div>
+
+        <!-- Mode & Region Filter Pills -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 text-xs sm:text-sm font-bold">
+          <button onclick="setFilter('all', this)" class="filter-btn active px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-700 to-teal-700 text-white shadow-md shadow-emerald-700/20 transition shrink-0">All Routes</button>
+          <button onclick="setFilter('western-gateway', this)" class="filter-btn px-4 py-2 rounded-xl bg-white text-slate-600 border border-emerald-100 hover:bg-emerald-50 hover:text-emerald-900 transition shrink-0">Western Foothills</button>
+          <button onclick="setFilter('central-south', this)" class="filter-btn px-4 py-2 rounded-xl bg-white text-slate-600 border border-emerald-100 hover:bg-emerald-50 hover:text-emerald-900 transition shrink-0">Central & South</button>
+          <button onclick="setFilter('eastern-frontier', this)" class="filter-btn px-4 py-2 rounded-xl bg-white text-slate-600 border border-emerald-100 hover:bg-emerald-50 hover:text-emerald-900 transition shrink-0">Eastern Frontier</button>
+          <button onclick="setFilter('heritage', this)" class="filter-btn px-4 py-2 rounded-xl bg-white text-slate-600 border border-emerald-100 hover:bg-emerald-50 hover:text-emerald-900 transition shrink-0">Heritage & Trails</button>
+          <button onclick="setFilter('drivers', this)" class="filter-btn px-4 py-2 rounded-xl bg-amber-50 text-amber-950 border border-amber-200 hover:bg-amber-100 transition shrink-0 flex items-center gap-1.5">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-700"></i> Verified Drivers
+          </button>
+        </div>
+      </div>
+
+      <!-- General Advisory Banner -->
+      <div class="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-l-4 border-amber-500 rounded-2xl p-4 text-xs sm:text-sm text-amber-950 flex items-start gap-3">
+        <div class="p-1 rounded-lg bg-amber-500 text-white shrink-0 mt-0.5">
+          <i data-lucide="info" class="w-4 h-4"></i>
+        </div>
+        <div class="leading-relaxed space-y-1">
+          <p><strong class="font-bold">Departure Window:</strong> Commercial shared Tata Sumos depart strictly between <strong>06:00 AM – 07:00 AM</strong>. Ticket counters close bookings the prior afternoon (by 03:00 PM).</p>
+          <p><strong class="font-bold">Night Driving:</strong> Commercial hill transit halts after 06:00 PM across Nagaland passes due to fog and mountain safety rules.</p>
+        </div>
+      </div>
+
+      <!-- Section 1: Verified Registered Drivers -->
+      <div id="driversSection" class="space-y-3">
+        <div class="flex justify-between items-center text-xs sm:text-sm px-1">
+          <span class="font-extrabold tracking-wide text-emerald-950 flex items-center gap-2">
+            <i data-lucide="award" class="w-4 h-4 text-emerald-600"></i> Verified Local Drivers & Partner Network
+          </span>
+          <span id="driverCount" class="text-xs font-bold bg-emerald-100 text-emerald-900 px-3 py-1 rounded-full border border-emerald-300">
+            Checking...
+          </span>
+        </div>
+
+        <div id="driversList" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <div class="col-span-full p-6 bg-white border border-emerald-100 rounded-3xl text-center text-xs sm:text-sm text-slate-400">
+            Loading active partner network...
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Regional Fare Benchmarks & Routes -->
+      <div id="routesSection" class="space-y-3 pt-2">
+        <div class="flex justify-between items-center text-xs sm:text-sm px-1 text-slate-500 font-semibold">
+          <span id="routeCount" class="text-emerald-900 font-bold">Loading routes...</span>
+          <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">Standard Regulated Benchmarks</span>
+        </div>
+
+        <!-- Dynamic Live Routes Grid -->
+        <div id="routesList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+
+      <!-- Footer Booking Guidelines -->
+      <div class="bg-gradient-to-br from-emerald-950 to-slate-900 text-white rounded-3xl p-5 sm:p-6 space-y-3 text-xs shadow-xl mt-8">
+        <h4 class="font-bold text-emerald-300 flex items-center gap-2 text-sm sm:text-base">
+          <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i> Key Commercial Counter Stands
+        </h4>
+        <ul class="text-xs space-y-2 text-slate-300 list-disc pl-5 leading-relaxed">
+          <li><strong>Kohima:</strong> BOC Stand (South towards Pfütsero, Meluri, Dzükou, Manipur), TCP Gate & High School Junction (North/East towards Mokokchung, Wokha, Tseminyu).</li>
+          <li><strong>Dimapur:</strong> Purana Bazar & Railway Station frontage (all intra-state hill routes including Peren, Niuland, and Mon).</li>
+          <li><strong>Mokokchung:</strong> Main Town Bus Stand (Primary feeder connecting Tuensang, Longleng, and Zunheboto).</li>
+        </ul>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module">
+    import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { db } from "./firebase.js";
+
+    // All 16 Nagaland District Routes with rich local tags
+    const DEFAULT_NAGALAND_ROUTES = [
+      {
+        name: "Dimapur to Kohima (via Chümoukedima)",
+        district: "Dimapur / Kohima",
+        category: "gateway",
+        region: "western-gateway",
+        routeFrom: "Dimapur Railway Station",
+        destination: "Kohima Capital",
+        estimatedTime: "~2.5 - 3.5 hrs (74 km)",
+        tag: "Primary Lifeline",
+        fares: { sharedSumo: "₹350 - ₹450", bus: "₹120 - ₹150", privateTaxi: "₹2,200 - ₹2,800" },
+        counter: "Purana Bazar (Dimapur) & NST Stand (Kohima).",
+        permitNote: "Smooth 4-lane NH-29; ILP checkpoint active at Chumoukedima border."
+      },
+      {
+        name: "Dimapur to Niuland Town",
+        district: "Niuland",
+        category: "gateway",
+        region: "western-gateway",
+        routeFrom: "Dimapur (Purana Bazar)",
+        destination: "Niuland",
+        estimatedTime: "~1 - 1.5 hrs (30 km)",
+        tag: "Foothill Valley",
+        fares: { sharedSumo: "₹100 - ₹150", bus: "₹50 - ₹70", privateTaxi: "₹1,000 - ₹1,400" },
+        counter: "Purana Bazar Stand, Dimapur.",
+        permitNote: "Smooth plains road; popular agro-tourism and river retreat area."
+      },
+      {
+        name: "Dimapur to Peren (via Jalukie)",
+        district: "Peren",
+        category: "central-south",
+        region: "western-gateway",
+        routeFrom: "Dimapur",
+        destination: "Peren (Jalukie)",
+        estimatedTime: "~3 - 3.5 hrs (85 km)",
+        tag: "Agrarian Hub",
+        fares: { sharedSumo: "₹250 - ₹350", bus: "₹135 - ₹170", privateTaxi: "₹2,500 - ₹3,000" },
+        counter: "NST Stand / Jalukie Sumo stand at Dimapur.",
+        permitNote: "Jalukie is the valley trade center; Peren town sits on the high ridge."
+      },
+      {
+        name: "Kohima to Tseminyu Town",
+        district: "Tseminyu",
+        category: "central-south",
+        region: "central-south",
+        routeFrom: "Kohima (High School Jcn)",
+        destination: "Tseminyu",
+        estimatedTime: "~1.5 - 2 hrs (50 km)",
+        tag: "Historical Heritage",
+        fares: { sharedSumo: "₹150 - ₹200", bus: "₹80 - ₹100", privateTaxi: "₹1,500 - ₹1,800" },
+        counter: "High School Junction / TCP Gate, Kohima.",
+        permitNote: "Land of the Rengma Nagas. Situated directly on NH-2."
+      },
+      {
+        name: "Kohima to Wokha & Doyang",
+        district: "Wokha",
+        category: "central-south",
+        region: "central-south",
+        routeFrom: "Kohima",
+        destination: "Wokha Town",
+        estimatedTime: "~2.5 - 3 hrs (80 km)",
+        tag: "Amur Falcon Roost",
+        fares: { sharedSumo: "₹350 - ₹450", bus: "₹125 - ₹160", privateTaxi: "₹2,800 - ₹3,500" },
+        counter: "High School Sumo Stand Kohima; local cabs at Wokha for Doyang Lake.",
+        permitNote: "Peak falcon roosting season at Doyang Reservoir runs Oct – Nov."
+      },
+      {
+        name: "Kohima to Zunheboto Town",
+        district: "Zunheboto",
+        category: "central-south",
+        region: "central-south",
+        routeFrom: "Kohima",
+        destination: "Zunheboto",
+        estimatedTime: "~5 - 6 hrs (145 km)",
+        tag: "Sumi Heartland",
+        fares: { sharedSumo: "₹550 - ₹650", bus: "₹225 - ₹290", privateTaxi: "₹4,500 - ₹5,500" },
+        counter: "South Point / High School Stand Kohima.",
+        permitNote: "Home to the largest Baptist church building in Asia (SBAZ)."
+      },
+      {
+        name: "Kohima to Phek (via Pfütsero)",
+        district: "Phek",
+        category: "central-south",
+        region: "central-south",
+        routeFrom: "Kohima (BOC Stand)",
+        destination: "Phek Town",
+        estimatedTime: "~4 - 5 hrs (125 km)",
+        tag: "Coldest Town",
+        fares: { sharedSumo: "₹450 - ₹550", bus: "₹195 - ₹250", privateTaxi: "₹4,000 - ₹5,000" },
+        counter: "BOC Sumo Counter Kohima.",
+        permitNote: "Passes Pfütsero (coldest town); magnificent terraced fields at Khezhakeno."
+      },
+      {
+        name: "Phek / Pfütsero to Meluri",
+        district: "Meluri",
+        category: "central-south",
+        region: "central-south",
+        routeFrom: "Pfütsero / Phek",
+        destination: "Meluri Town",
+        estimatedTime: "~3 - 4 hrs (85 km)",
+        tag: "Pochury Frontier",
+        fares: { sharedSumo: "₹350 - ₹450", bus: "₹140 - ₹180", privateTaxi: "₹3,000 - ₹3,800" },
+        counter: "Meluri stand at Pfütsero / Phek bazaar.",
+        permitNote: "Gateway to Shilloi Lake and Mt. Saramati foothills."
+      },
+      {
+        name: "Dimapur / Kohima to Mokokchung",
+        district: "Mokokchung",
+        category: "heritage",
+        region: "central-south",
+        routeFrom: "Dimapur / Kohima",
+        destination: "Mokokchung",
+        estimatedTime: "~5 - 6.5 hrs (150 km)",
+        tag: "Ao Cultural Hub",
+        fares: { sharedSumo: "₹600 - ₹750", bus: "₹320 - ₹410", privateTaxi: "₹5,000 - ₹6,500" },
+        counter: "NST Colony Dimapur & High School Stand Kohima.",
+        permitNote: "Cultural capital of Nagaland; visit Ungma & Mopungchuket villages."
+      },
+      {
+        name: "Mokokchung to Tuensang",
+        district: "Tuensang",
+        category: "central-south",
+        region: "eastern-frontier",
+        routeFrom: "Mokokchung Town",
+        destination: "Tuensang",
+        estimatedTime: "~4.5 - 5.5 hrs (115 km)",
+        tag: "Eastern Hub",
+        fares: { sharedSumo: "₹450 - ₹550", bus: "₹180 - ₹230", privateTaxi: "₹4,000 - ₹5,000" },
+        counter: "Tuensang Counter, Mokokchung Main Stand.",
+        permitNote: "Historic central hub of eastern Nagaland (Chang, Yimkhiung, Sangtam)."
+      },
+      {
+        name: "Tuensang to Shamator",
+        district: "Shamator",
+        category: "heritage",
+        region: "eastern-frontier",
+        routeFrom: "Tuensang / Kiphire",
+        destination: "Shamator Town",
+        estimatedTime: "~2.5 - 3 hrs (50 km)",
+        tag: "Yimkhiung & Tikhir",
+        fares: { sharedSumo: "₹250 - ₹300", bus: "₹90 - ₹120", privateTaxi: "₹2,200 - ₹2,800" },
+        counter: "Main Bazaar Sumo Counters, Tuensang / Kiphire.",
+        permitNote: "Scenic hilltop district; base for exploring Chessore and cultural trails."
+      },
+      {
+        name: "Tuensang to Noklak (Khiamniungan)",
+        district: "Noklak",
+        category: "heritage",
+        region: "eastern-frontier",
+        routeFrom: "Tuensang",
+        destination: "Noklak Town",
+        estimatedTime: "~2.5 - 3.5 hrs (55 km)",
+        tag: "Border District",
+        fares: { sharedSumo: "₹250 - ₹350", bus: "₹85 - ₹110", privateTaxi: "₹2,500 - ₹3,200" },
+        counter: "Noklak Stand, Tuensang Town.",
+        permitNote: "The Land of Khiamniungans; famous cane craft & traditional trails."
+      },
+      {
+        name: "Tuensang / Meluri to Kiphire",
+        district: "Kiphire",
+        category: "central-south",
+        region: "eastern-frontier",
+        routeFrom: "Tuensang",
+        destination: "Kiphire Town",
+        estimatedTime: "~4 - 5 hrs (105 km)",
+        tag: "Saramati Peak Base",
+        fares: { sharedSumo: "₹450 - ₹550", bus: "₹165 - ₹210", privateTaxi: "₹4,000 - ₹4,800" },
+        counter: "Kiphire Counter at Tuensang or Meluri Bazaar.",
+        permitNote: "Base for Mt. Saramati (highest peak, 3,841 m) and Fakim Sanctuary."
+      },
+      {
+        name: "Mokokchung to Longleng",
+        district: "Longleng",
+        category: "heritage",
+        region: "eastern-frontier",
+        routeFrom: "Mokokchung",
+        destination: "Longleng Town",
+        estimatedTime: "~3.5 - 4.5 hrs (85 km)",
+        tag: "Phom Heartland",
+        fares: { sharedSumo: "₹350 - ₹450", bus: "₹135 - ₹170", privateTaxi: "₹3,200 - ₹4,000" },
+        counter: "Longleng counter, Mokokchung stand.",
+        permitNote: "Land of the Phom Nagas; famous for pottery, bamboo work, and steep ridges."
+      },
+      {
+        name: "Mon Town to Longwa Heritage Village",
+        district: "Mon",
+        category: "heritage",
+        region: "eastern-frontier",
+        routeFrom: "Mon Town",
+        destination: "Longwa Village",
+        estimatedTime: "~2 - 2.5 hrs (42 km)",
+        tag: "International Border",
+        fares: { sharedSumo: "₹200 - ₹250", bus: "N/A", privateTaxi: "₹2,500 - ₹3,000" },
+        counter: "Mon Main Sumo Stand (departs ~12:00 PM; returns 06:00 AM).",
+        permitNote: "Indo-Myanmar international border cuts directly through the Angh’s Morung."
+      },
+      {
+        name: "Kohima to Viswema & Jakhama (Dzükou)",
+        district: "Kohima",
+        category: "heritage",
+        region: "central-south",
+        routeFrom: "Kohima (BOC Stand)",
+        destination: "Viswema / Jakhama",
+        estimatedTime: "~45 - 60 mins (25 km)",
+        tag: "Trek Access",
+        fares: { sharedSumo: "₹80 - ₹120", bus: "N/A", privateTaxi: "₹1,500 - ₹2,000 (4x4 drop)" },
+        counter: "BOC Sumo Point Kohima. Vehicles drop at highway turn-off.",
+        permitNote: "SAYO entry fee ₹100 domestic, ₹200 foreign at Viswema counter."
+      }
+    ];
+
+    let liveRoutes = [...DEFAULT_NAGALAND_ROUTES];
+    let liveDrivers = [];
+    let activeFilter = "all";
+    let activeSearch = "";
+
+    const routesContainer = document.getElementById("routesList");
+    const driversContainer = document.getElementById("driversList");
+    const countDisplay = document.getElementById("routeCount");
+    const driverCountDisplay = document.getElementById("driverCount");
+    const searchInput = document.getElementById("routeSearch");
+
+    window.openMenu = function() {
+      document.getElementById("sideMenu").classList.add("active");
+      document.getElementById("menuOverlay").classList.add("active");
+    };
+
+    window.closeMenu = function() {
+      document.getElementById("sideMenu").classList.remove("active");
+      document.getElementById("menuOverlay").classList.remove("active");
+    };
+
+    // Google Maps Directions Modal
+    window.openMapModal = function(fromPlace, toPlace) {
+      const modal = document.getElementById("mapModal");
+      const title = document.getElementById("mapModalTitle");
+      const subtitle = document.getElementById("mapModalSubtitle");
+      const frame = document.getElementById("mapFrame");
+      const externalLink = document.getElementById("externalMapLink");
+
+      const queryOrigin = encodeURIComponent(`${fromPlace}, Nagaland`);
+      const queryDest = encodeURIComponent(`${toPlace}, Nagaland`);
+
+      title.textContent = `${fromPlace} ➔ ${toPlace}`;
+      subtitle.textContent = "Nagaland Road Corridor Navigation";
+
+      // Google Maps Embed route
+      frame.src = `https://maps.google.com/maps?saddr=${queryOrigin}&daddr=${queryDest}&output=embed`;
+      externalLink.href = `https://www.google.com/maps/dir/${queryOrigin}/${queryDest}`;
+
+      modal.classList.remove("hidden");
+    };
+
+    window.closeMapModal = function() {
+      const modal = document.getElementById("mapModal");
+      const frame = document.getElementById("mapFrame");
+      frame.src = "";
+      modal.classList.add("hidden");
+    };
+
+    window.smartBack = function() {
+      if (window.history.length > 1 && document.referrer.includes(window.location.host)) {
+        window.history.back();
+      } else {
+        window.location.href = "index.html";
+      }
+    };
+
+    renderCards();
+
+    // Firebase live data synchronization
+    if (db) {
+      onSnapshot(collection(db, "driver_registrations"), (snapshot) => {
+        liveDrivers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderDrivers();
+      }, (err) => {
+        console.warn("Driver listener fallback:", err);
+        driverCountDisplay.textContent = "0 Available";
+        driversContainer.innerHTML = `
+          <div class="col-span-full p-6 bg-white border border-emerald-100 rounded-3xl text-center text-xs text-slate-400">
+            No registered drivers active right now.
+          </div>
+        `;
+      });
+
+      onSnapshot(collection(db, "destinations"), (snapshot) => {
+        if (!snapshot.empty) {
+          const fetched = [];
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            fetched.push({
+              name: data.name || "Destination",
+              district: data.district || "",
+              category: data.category || "heritage",
+              region: data.region || "central-south",
+              routeFrom: data.routeFrom || "Main Hub",
+              destination: data.name || "",
+              estimatedTime: data.estimatedTime || "",
+              tag: data.tag || data.district || "Hotspot",
+              fares: data.fares || { sharedSumo: "₹---", bus: "₹---", privateTaxi: "₹---" },
+              counter: data.counter || "",
+              permitNote: data.permitNote || "",
+              keywords: (data.keywords || "") + " " + (data.name || "") + " " + (data.district || "")
+            });
+          });
+          liveRoutes = fetched;
+          renderCards();
+        }
+      }, (err) => {
+        console.warn("Using offline dataset:", err);
+      });
+    }
+
+    function renderDrivers() {
+      const filteredDrivers = liveDrivers.filter(driver => {
+        const text = `${driver.name || ''} ${driver.district || ''} ${driver.serviceRoutes || ''} ${driver.vehicleType || ''}`.toLowerCase();
+        return text.includes(activeSearch);
+      });
+
+      driverCountDisplay.textContent = `${filteredDrivers.length} Active`;
+
+      if (filteredDrivers.length === 0) {
+        driversContainer.innerHTML = `
+          <div class="col-span-full p-6 bg-white border border-emerald-100 rounded-3xl text-center text-xs text-slate-400">
+            ${activeSearch ? `No drivers match "${activeSearch}".` : 'No registered drivers available yet.'}
+          </div>
+        `;
+        return;
+      }
+
+      driversContainer.innerHTML = filteredDrivers.map(d => `
+        <div class="bg-white/90 border border-emerald-100 rounded-3xl p-5 shadow-sm space-y-3 text-xs transition hover:shadow-lg hover:-translate-y-0.5">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold text-sm text-slate-900">${d.name || 'Verified Driver'}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900">
+                  ${d.status || 'Active'}
+                </span>
+              </div>
+              <p class="text-xs text-emerald-800/80 font-medium mt-0.5">${d.district || 'Nagaland'} • ${d.vehicleType || 'SUV / Sumo 4WD'}</p>
+            </div>
+            <a href="tel:${d.phone || ''}" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 shadow-md shadow-emerald-600/20 transition active:scale-95">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i> Call
+            </a>
+          </div>
+
+          <div class="text-[11px] text-slate-600 bg-emerald-50/60 p-3 rounded-2xl border border-emerald-100/70 flex items-center justify-between">
+            <span>Reg: <strong class="text-slate-900 font-bold">${d.vehicleRegNumber || 'Commercial'}</strong></span>
+            <span class="truncate max-w-[190px]">Route: <strong>${d.serviceRoutes || 'Inter-District'}</strong></span>
+          </div>
+        </div>
+      `).join("");
+
+      lucide.createIcons();
+    }
+
+    function renderCards() {
+      const filtered = liveRoutes.filter(route => {
+        const matchesCategory = 
+          activeFilter === "all" || 
+          activeFilter === "drivers" ||
+          route.category === activeFilter || 
+          route.region === activeFilter;
+
+        const searchableText = `${route.name} ${route.district} ${route.routeFrom} ${route.destination}`.toLowerCase();
+        const matchesQuery = searchableText.includes(activeSearch);
+
+        return matchesCategory && matchesQuery;
+      });
+
+      countDisplay.textContent = `Showing ${filtered.length} of ${liveRoutes.length} routes`;
+
+      if (filtered.length === 0) {
+        routesContainer.innerHTML = `
+          <div class="text-center py-12 text-sm text-slate-400 col-span-full bg-white/60 rounded-3xl border border-dashed border-emerald-200">
+            No routes matching "${activeSearch}". Try searching "Mon", "Noklak", "Mokokchung", or "Meluri".
+          </div>
+        `;
+        return;
+      }
+
+      routesContainer.innerHTML = filtered.map(item => `
+        <div class="bg-white/95 border border-emerald-100 rounded-3xl p-5 shadow-sm space-y-4 transition-all duration-200 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between group">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-100/80 px-2.5 py-1 rounded-full">
+                ${item.tag || item.district}
+              </span>
+              <span class="text-xs text-slate-500 font-semibold flex items-center gap-1">
+                <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400"></i>
+                ${item.estimatedTime}
+              </span>
+            </div>
+
+            <div>
+              <h3 class="font-extrabold text-base text-slate-900 group-hover:text-emerald-950 transition">
+                ${item.name}
+              </h3>
+              <p class="text-xs text-slate-500 font-medium flex items-center gap-1.5 mt-0.5">
+                <i data-lucide="navigation" class="w-3 h-3 text-emerald-600 shrink-0"></i>
+                <span>${item.routeFrom} ➔ ${item.destination}</span>
+              </p>
+            </div>
+
+            <!-- Fare Grid Breakdown -->
+            <div class="grid grid-cols-3 gap-1.5 bg-slate-50 border border-emerald-50 rounded-2xl p-2.5 text-center text-xs">
+              <div class="p-1 rounded-xl bg-white border border-slate-100 shadow-xs">
+                <span class="block text-[10px] uppercase font-bold text-slate-400">Sumo</span>
+                <span class="font-extrabold text-slate-800">${item.fares?.sharedSumo || '—'}</span>
+              </div>
+              <div class="p-1 rounded-xl bg-white border border-slate-100 shadow-xs">
+                <span class="block text-[10px] uppercase font-bold text-slate-400">NST Bus</span>
+                <span class="font-extrabold text-slate-800">${item.fares?.bus || '—'}</span>
+              </div>
+              <div class="p-1 rounded-xl bg-white border border-slate-100 shadow-xs">
+                <span class="block text-[10px] uppercase font-bold text-slate-400">Private</span>
+                <span class="font-extrabold text-slate-800">${item.fares?.privateTaxi || '—'}</span>
+              </div>
+            </div>
+
+            <!-- Counter & Permit Notes -->
+            <div class="text-[11px] text-slate-600 space-y-1 bg-emerald-50/40 border border-emerald-100/50 rounded-2xl p-2.5 leading-relaxed">
+              <p><strong class="text-emerald-950 font-bold">Counter:</strong> ${item.counter || 'Local District Stand'}</p>
+              ${item.permitNote ? `<p class="text-slate-500 text-[10.5px]">${item.permitNote}</p>` : ''}
+            </div>
+          </div>
+
+          <!-- Bottom Action Button -->
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+            <span class="text-[11px] font-semibold text-slate-400">Fixed Tariff Corridor</span>
+            <button 
+              onclick="openMapModal('${item.routeFrom.replace(/'/g, "\\'")}', '${item.destination.replace(/'/g, "\\'")}')" 
+              class="text-xs font-bold text-emerald-800 hover:text-emerald-950 bg-emerald-100/70 hover:bg-emerald-200/80 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5"
+            >
+              <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> View Corridor
+            </button>
+          </div>
+        </div>
+      `).join("");
+
+      lucide.createIcons();
+    }
+
+    // Filter pill tab selection
+    window.setFilter = function(filterKey, buttonEl) {
+      activeFilter = filterKey;
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.remove("active", "bg-gradient-to-r", "from-emerald-700", "to-teal-700", "text-white", "shadow-md");
+        btn.classList.add("bg-white", "text-slate-600");
+      });
+
+      buttonEl.classList.remove("bg-white", "text-slate-600");
+      buttonEl.classList.add("active", "bg-gradient-to-r", "from-emerald-700", "to-teal-700", "text-white", "shadow-md");
+
+      const driversSec = document.getElementById("driversSection");
+      const routesSec = document.getElementById("routesSection");
+
+      if (filterKey === "drivers") {
+        driversSec.classList.remove("hidden");
+        routesSec.classList.add("hidden");
+      } else {
+        driversSec.classList.remove("hidden");
+        routesSec.classList.remove("hidden");
+      }
+
+      renderCards();
+    };
+
+    // Live search debouncing
+    searchInput.addEventListener("input", (e) => {
+      activeSearch = e.target.value.trim().toLowerCase();
+      renderDrivers();
+      renderCards();
+    });
+
+    // Close modal on Escape key press
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeMapModal();
+        closeMenu();
+      }
+    });
+
+    // Initialize Lucide icons on layout mount
+    lucide.createIcons();
+  </script>
+</body>
+</html>
